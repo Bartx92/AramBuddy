@@ -534,6 +534,7 @@ namespace GenesisSpellLibrary.Spells
             Q = new Spell.Targeted(SpellSlot.Q, 625);
             W = new Spell.Skillshot(SpellSlot.W, 950, SkillShotType.Circular);
             E = new Spell.Skillshot(SpellSlot.E, 1075, SkillShotType.Linear, 250, 1600, 80) { AllowedCollisionCount = 0 }; // TODO: Support Elise
+            R = null;
             this.EisCC = true;
         }
     }
@@ -1670,7 +1671,7 @@ namespace GenesisSpellLibrary.Spells
             this.Q = new Spell.Skillshot(SpellSlot.Q, 1025, SkillShotType.Linear, 0, 750, 210) { AllowedCollisionCount = 0 };
             this.W = new Spell.Active(SpellSlot.W, 2100);
             this.E = new Spell.Targeted(SpellSlot.E, 675);
-            this.R = new Spell.Active(SpellSlot.R);
+            R = null;
             this.EisCC = true;
         }
     }

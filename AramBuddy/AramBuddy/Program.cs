@@ -56,7 +56,8 @@
 
         private static void Events_OnGameEnd(EventArgs args)
         {
-            Core.DelayAction(() => Game.QuitGame(), 250);
+            if(MenuIni["quit"].Cast<CheckBox>().CurrentValue)
+            Core.DelayAction(() => Game.QuitGame(), 5000);
         }
 
         private static void Init()
@@ -64,6 +65,7 @@
             MenuIni = MainMenu.AddMenu("AramBuddy", "AramBuddy");
             MenuIni.AddGroupLabel("AramBuddy Settings");
             MenuIni.Add("DisableSpells", new CheckBox("Disable Built-in Casting Logic", false));
+            MenuIni.Add("quit", new CheckBox("Quit On Game End"));
             MenuIni.Add("Safe", new Slider("Safe Slider (Recommended 1250)", 1250, 0, 2500));
             MenuIni.AddLabel("More Value = more defensive playstyle");
             
@@ -107,7 +109,7 @@
                 Circle.Draw(Color.White, 100, Pathing.Position);
             }
 
-            foreach (var spell in ModesManager.Spelllist)
+            foreach (var spell in ModesManager.Spelllist.Where(s => s != null))
             {
                 Circle.Draw(Color.Chartreuse, spell.Range, Player.Instance);
             }

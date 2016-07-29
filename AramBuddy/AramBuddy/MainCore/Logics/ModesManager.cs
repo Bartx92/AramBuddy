@@ -72,7 +72,7 @@
         /// </summary>
         public static void ModesBase()
         {
-            foreach (var spell in Spelllist.Where(s => s.IsReady() && !s.IsSaver()))
+            foreach (var spell in Spelllist.Where(s => s != null && s.IsReady() && !s.IsSaver()))
             {
                 if (Combo || (Harass && (Player.Instance.ManaPercent > 60 || Player.Instance.ManaPercent.Equals(0))))
                 {

@@ -55,11 +55,11 @@ namespace AramBuddy
                     if (nexus.Any(n => n.IsDead) || nexus.Any(n => n.Health == 0.0f))
                     {
                         // Invoke the event
-                        //OnGameEnd(EventArgs.Empty);
+                        OnGameEnd(EventArgs.Empty);
 
                         // Set gameEndNotified to true, as the event has been completed
                         gameEndNotified = true;
-
+                        
                         Console.WriteLine("Game ended!");
                     }
                 };
