@@ -29,7 +29,7 @@ namespace BuildBuddy
 
             SetColor();
 
-            foreach (var champ in Data.Champions)
+            foreach (var champ in Data.Data.Champions)
             {
                 ChampionComboBox.Items.Add(champ);
             }

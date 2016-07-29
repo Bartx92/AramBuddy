@@ -98,13 +98,13 @@ namespace AramBuddy.AutoShop.Sequences
 
                 // If the index file already exists, stop running the method as the user probably wants to continue
                 // using their build sequence on its current index
-                if (File.Exists(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + ".dat"))
+                if (File.Exists(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
                 {
                     return;
                 }
 
                 // Create the index file
-                using (StreamWriter sw = File.AppendText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + ".dat"))
+                using (StreamWriter sw = File.AppendText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
                 {
                     // Write the default value (0) to the index file
                     sw.Write(0);
@@ -136,16 +136,16 @@ namespace AramBuddy.AutoShop.Sequences
                 Directory.CreateDirectory(Setup.TempPath);
 
                 // The contents of the index file
-                string data = File.ReadAllText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + ".dat");
+                string data = File.ReadAllText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat");
 
                 // The incremented index of the index file
                 int index = int.Parse(data) + 1;
 
                 // Delete the index file
-                File.Delete(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + ".dat");
+                File.Delete(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat");
 
                 // Re-write the index file
-                using (StreamWriter sw = File.AppendText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + ".dat"))
+                using (StreamWriter sw = File.AppendText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
                 {
                     // Write the new, incremented index on the index file
                     sw.Write(index);
@@ -175,7 +175,7 @@ namespace AramBuddy.AutoShop.Sequences
             try
             {
                 // Get the data from the index file
-                string data = File.ReadAllText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + ".dat");
+                string data = File.ReadAllText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat");
 
                 // return the parsed data to an integer
                 return int.Parse(data);
@@ -207,16 +207,16 @@ namespace AramBuddy.AutoShop.Sequences
                 Directory.CreateDirectory(Setup.TempPath);
 
                 // Return if the index file does not exist
-                if (!File.Exists(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + ".dat"))
+                if (!File.Exists(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
                 {
                     return;
                 }
 
                 // Delete the index file
-                File.Delete(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + ".dat");
+                File.Delete(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat");
 
                 // Rewrite to the index file
-                using (StreamWriter sw = File.AppendText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + ".dat"))
+                using (StreamWriter sw = File.AppendText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
                 {
                     // Write the default index file value (0) to the index file
                     sw.Write(0);

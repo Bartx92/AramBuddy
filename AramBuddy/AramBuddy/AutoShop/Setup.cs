@@ -57,7 +57,7 @@ namespace AramBuddy.AutoShop
                 Directory.CreateDirectory(BuildPath);
 
                 // Check if the index file exists
-                if (!File.Exists(TempPath + "\\buildindex" + Player.Instance.NetworkId + ".dat"))
+                if (!File.Exists(TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
                 {
                     // If not, create the index file
                     Buy.CreateIndexFile();
@@ -182,9 +182,9 @@ namespace AramBuddy.AutoShop
         private static void Events_OnGameStart(EventArgs args)
         {
             // Delete the index file if it exists
-            if (File.Exists(TempPath + "\\buildindex" + Player.Instance.NetworkId + ".dat"))
+            if (File.Exists(TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
             {
-                File.Delete(TempPath + "\\buildindex" + Player.Instance.NetworkId + ".dat");
+                File.Delete(TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat");
             }
         }
 
@@ -195,9 +195,9 @@ namespace AramBuddy.AutoShop
         private static void Events_OnGameEnd(EventArgs args)
         {
             // Delete the index file if it exists
-            if (File.Exists(TempPath + "\\buildindex" + Player.Instance.NetworkId + ".dat"))
+            if (File.Exists(TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
             {
-                File.Delete(TempPath + "\\buildindex" + Player.Instance.NetworkId + ".dat");
+                File.Delete(TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat");
             }
         }
 

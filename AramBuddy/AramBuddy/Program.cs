@@ -46,7 +46,7 @@
             }
 
             // Initialize the AutoShop.
-            AutoShop.Setup.Init();
+            Setup.Init();
 
             Timer = Game.Time;
             Game.OnTick += Game_OnTick;
