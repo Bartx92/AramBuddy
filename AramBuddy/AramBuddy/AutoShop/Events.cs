@@ -33,7 +33,7 @@ namespace AramBuddy.AutoShop
         public delegate void OnItemBought(Item args);
 
         /// <summary>
-        ///     A handler for the OnItemBought event
+        ///     A handler for the OnPlayerDeathHandler event
         /// </summary>
         /// <param name="sender">The Obj_AI_Base that caused this event to happen</param>
         /// <param name="args">The arguments the event provides</param>

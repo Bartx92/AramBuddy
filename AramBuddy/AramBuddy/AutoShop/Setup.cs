@@ -55,16 +55,13 @@ namespace AramBuddy.AutoShop
                     {
                         Core.DelayAction(
                             () =>
-                                {
-                                    if (item.IsOwned(Player.Instance))
-                                    {
-                                        Buy.TempValue -= item.ItemInfo.Gold.Total;
+                            {
+                                Buy.TempValue -= item.ItemInfo.Gold.Total;
 
-                                        // Try to buy more than one item if we can afford it
-                                        Buy.BuyNextItem(CurrentChampionBuild);
-                                    }
-                                },
-                            new Random().Next(1000, 1000 + Game.Ping));
+                                // Try to buy more than one item if we can afford it
+                                Buy.BuyNextItem(CurrentChampionBuild);
+                            },
+                            new Random().Next(500 - Game.Ping, 1000 + Game.Ping));
                     };
 
                 // Create the build path directory
