@@ -30,8 +30,7 @@ namespace AramBuddy.AutoShop.Sequences
                 {
                     // Notify the user that the build is finished
                     Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") +
-                                      "AramBuddy Info] Build is finished - Cannot buy any more items!");
+                    Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Info] Build is finished - Cannot buy any more items!");
                     Console.ResetColor();
 
                     // Return false because we could not buy items
@@ -47,9 +46,8 @@ namespace AramBuddy.AutoShop.Sequences
                     item.Value.ValidForPlayer && item.Value.InStore && item.Value.Gold.Purchasable &&
                     item.Value.AvailableForMap && (Player.Instance.Gold - TempValue >= item.Value.Gold.Total))
                 {
-                    TempValue += item.Value.Gold.Total;
-
                     // Buy the actual item from the shop
+                    TempValue += item.Value.Gold.Total;
                     Shop.BuyItem(item.Key);
 
                     // Increment the static item index
@@ -60,10 +58,8 @@ namespace AramBuddy.AutoShop.Sequences
                     Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Info] Item bought: " + item.Value.Name + " - Item Value: " + item.Value.Gold.Total);
                     Console.ResetColor();
 
-                    // Try to buy more than one item if we can afford it
-                    BuyNextItem(build);
-
                     // Success
+                    Events.OnOnBuyItem(new Item(item.Key));
                     return true;
                 }
 

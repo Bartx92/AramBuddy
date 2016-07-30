@@ -1,4 +1,6 @@
-﻿namespace AramBuddy
+﻿using AramBuddy.AutoShop.Sequences;
+
+namespace AramBuddy
 {
     using System;
     using System.Linq;
@@ -57,7 +59,7 @@
         private static void Events_OnGameEnd(EventArgs args)
         {
             if(MenuIni["quit"].Cast<CheckBox>().CurrentValue)
-            Core.DelayAction(() => Game.QuitGame(), 5000);
+            Core.DelayAction(() => Game.QuitGame(), 10000);
         }
 
         private static void Init()

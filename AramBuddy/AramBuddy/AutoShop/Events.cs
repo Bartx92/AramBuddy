@@ -1,7 +1,9 @@
 ﻿#region
 
 using System;
+using AramBuddy.AutoShop.Sequences;
 using EloBuddy;
+using EloBuddy.SDK;
 
 #endregion
 
@@ -25,7 +27,13 @@ namespace AramBuddy.AutoShop
         public delegate void OnBuyAllowHandler(EventArgs args);
 
         /// <summary>
-        ///     A handler for the OnPlayerDeath event
+        ///     A handler for the OnItemBought event
+        /// </summary>
+        /// <param name="args">The arguments the event provides</param>
+        public delegate void OnItemBought(Item args);
+
+        /// <summary>
+        ///     A handler for the OnItemBought event
         /// </summary>
         /// <param name="sender">The Obj_AI_Base that caused this event to happen</param>
         /// <param name="args">The arguments the event provides</param>
@@ -85,6 +93,14 @@ namespace AramBuddy.AutoShop
 
                 // When the player dies, invoke the event
                 OnPlayerDeath += delegate { OnBuyAllow(EventArgs.Empty); };
+
+                Obj_AI_Base.OnBuffLose +=delegate(Obj_AI_Base sender, Obj_AI_BaseBuffLoseEventArgs args)
+                    {
+                        if (sender.IsMe && args.Buff.DisplayName.ToLower().Equals("aramshopdisableplayer"))
+                        {
+                            OnBuyAllow(EventArgs.Empty);
+                        }
+                    };
             }
             catch (NullReferenceException ex)
             {
@@ -158,5 +174,15 @@ namespace AramBuddy.AutoShop
         ///     Fires when the player dies
         /// </summary>
         public static event OnPlayerDeathHandler OnPlayerDeath;
+
+        /// <summary>
+        ///     Fires when buying items is allowed
+        /// </summary>
+        public static event OnItemBought OnBuyItem;
+
+        public static void OnOnBuyItem(Item item)
+        {
+            OnBuyItem?.Invoke(item);
+        }
     }
 }
