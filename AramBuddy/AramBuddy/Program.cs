@@ -64,6 +64,7 @@
         {
             MenuIni = MainMenu.AddMenu("AramBuddy", "AramBuddy");
             MenuIni.AddGroupLabel("AramBuddy Settings");
+            MenuIni.Add("debug", new CheckBox("Enable Debugging Mode", false));
             MenuIni.Add("DisableSpells", new CheckBox("Disable Built-in Casting Logic", false));
             MenuIni.Add("quit", new CheckBox("Quit On Game End"));
             MenuIni.Add("Safe", new Slider("Safe Slider (Recommended 1250)", 1250, 0, 2500));
@@ -78,7 +79,8 @@
 
         private static void Drawing_OnEndScene(EventArgs args)
         {
-            Drawing.DrawText(
+            if (!MenuIni["debug"].Cast<CheckBox>().CurrentValue) return;
+                Drawing.DrawText(
                 Drawing.Width * 0.01f,
                 Drawing.Height * 0.025f,
                 System.Drawing.Color.White,

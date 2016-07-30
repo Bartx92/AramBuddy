@@ -12,6 +12,9 @@ namespace AramBuddy.AutoShop.Sequences
 {
     internal class Buy
     {
+        // Saves the value of the bought item so it doesn't try to buy things it cant buy.
+        public static int TempValue;
+
         /// <summary>
         ///     Attempts to buy the next item, and continues to buy next items until
         ///     it is no longer allowed to do so.
@@ -42,8 +45,10 @@ namespace AramBuddy.AutoShop.Sequences
                 // Check if we can buy the item
                 if ((item.Value != null) && (item.Key != null) && (item.Key != ItemId.Unknown) &&
                     item.Value.ValidForPlayer && item.Value.InStore && item.Value.Gold.Purchasable &&
-                    item.Value.AvailableForMap && (Player.Instance.Gold >= item.Value.Gold.Total))
+                    item.Value.AvailableForMap && (Player.Instance.Gold - TempValue >= item.Value.Gold.Total))
                 {
+                    TempValue += item.Value.Gold.Total;
+
                     // Buy the actual item from the shop
                     Shop.BuyItem(item.Key);
 

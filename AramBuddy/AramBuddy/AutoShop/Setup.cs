@@ -53,6 +53,14 @@ namespace AramBuddy.AutoShop
                 // When the game starts
                 AramBuddy.Events.OnGameStart += Events_OnGameStart;
 
+                // Item Bought Event, reduce the temp value when we buy the item.
+                Shop.OnBuyItem += delegate(AIHeroClient sender, ShopActionEventArgs args)
+                    {
+                        if(!sender.IsMe) return;
+                        var item = new Item(args.Id);
+                        Buy.TempValue -= item.ItemInfo.Gold.Total;
+                    };
+
                 // Create the build path directory
                 Directory.CreateDirectory(BuildPath);
 
