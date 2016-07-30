@@ -18,11 +18,33 @@ namespace AramBuddy.MainCore.Logics
         /// </summary>
         public static void BestPosition()
         {
+            // Hunting Bard chimes kappa.
+            if (Player.Instance.Hero == Champion.Bard && ObjectsManager.BardChime != null && ObjectsManager.BardChime.Distance(Player.Instance) <= 500)
+            {
+                Program.Moveto = "BardChime";
+                Position = ObjectsManager.BardChime.Position.Random();
+                return;
+            }
+
             // Moves to HealthRelic if the bot needs heal.
-            if ((Player.Instance.HealthPercent < 70 || (Player.Instance.ManaPercent < 10 && Player.Instance.Mana > 0)) && ObjectsManager.HealthRelic != null)
+            if ((Player.Instance.HealthPercent < 65 || (Player.Instance.ManaPercent < 10 && Player.Instance.Mana > 0)) && ObjectsManager.HealthRelic != null)
             {
                 Program.Moveto = "HealthRelic";
                 Position = ObjectsManager.HealthRelic.Position.Random();
+                return;
+            }
+
+            if (Player.Instance.HealthPercent <= 50 && ObjectsManager.ThreshLantern != null && ObjectsManager.ThreshLantern.Distance(Player.Instance) <= 800)
+            {
+                if (Player.Instance.Distance(ObjectsManager.ThreshLantern) > 300)
+                {
+                    Program.Moveto = "ThreshLantern";
+                    Position = ObjectsManager.ThreshLantern.Position.Random();
+                }
+                else
+                {
+                    Player.UseObject(ObjectsManager.ThreshLantern);
+                }
                 return;
             }
 

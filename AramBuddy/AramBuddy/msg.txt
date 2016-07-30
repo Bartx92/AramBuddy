@@ -1,1 +1,1 @@
-Fixed AutoShop using max price instead of current item price !
+Added Thresh Lantern, Bard Health Shrines and Bard Chimes Logics !

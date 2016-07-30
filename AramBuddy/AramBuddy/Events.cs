@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using AramBuddy.MainCore.Utility;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Events;
@@ -51,7 +52,7 @@ namespace AramBuddy
                     }
 
                     // If the nexus is dead or its health is equal to 0
-                    if (nexus.Any(n => n.IsDead) || nexus.Any(n => n.Health == 0.0f))
+                    if (nexus.Any(n => n.IsDead || n.Health.Equals(0)))
                     {
                         // Invoke the event
                         OnGameEnd(EventArgs.Empty);
@@ -59,7 +60,7 @@ namespace AramBuddy
                         // Set gameEndNotified to true, as the event has been completed
                         gameEndNotified = true;
 
-                        Console.WriteLine("Game ended!");
+                        Logger.Send("Game ended!", Logger.LogLevel.Info);
                     }
                 };
 
@@ -76,7 +77,7 @@ namespace AramBuddy
                     {
                         //OnGameStart(EventArgs.Empty);
 
-                        Console.WriteLine("Game started!");
+                        Logger.Send("Game started!", Logger.LogLevel.Info);
                     }
                 };
 

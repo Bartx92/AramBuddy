@@ -68,7 +68,7 @@ namespace AramBuddy
             MenuIni.Add("quit", new CheckBox("Quit On Game End"));
             MenuIni.Add("Safe", new Slider("Safe Slider (Recommended 1250)", 1250, 0, 2500));
             MenuIni.AddLabel("More Value = more defensive playstyle");
-
+            
             // Initialize Bot Functions.
             Brain.Init();
 
@@ -113,6 +113,10 @@ namespace AramBuddy
             foreach (var spell in ModesManager.Spelllist.Where(s => s != null))
             {
                 Circle.Draw(Color.Chartreuse, spell.Range, Player.Instance);
+            }
+            foreach (var chime in ObjectsManager.BardChimes.Where(c => Player.Instance.Hero == Champion.Bard && c.IsValid && !c.IsDead))
+            {
+                Circle.Draw(Color.White, chime.BoundingRadius * 2, chime.Position);
             }
         }
 

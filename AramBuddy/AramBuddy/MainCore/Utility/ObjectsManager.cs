@@ -8,6 +8,37 @@ namespace AramBuddy.MainCore.Utility
 {
     internal class ObjectsManager
     {
+        public static void Init()
+        {
+            // Clears and adds new HealthRelics and bardhealthshrines.
+            HealthRelics.Clear();
+            foreach (var hr in ObjectManager.Get<GameObject>().Where(o => o.Name.ToLower().Contains("healthrelic") && o.IsValid).Where(hr => hr != null))
+            {
+                HealthRelics.Add(hr);
+            }
+            foreach (var bardshrine in ObjectManager.Get<GameObject>().Where(o => o.Name.ToLower().Contains("bardhealthshrine") && o.IsAlly && o.IsValid).Where(hr => hr != null))
+            {
+                HealthRelics.Add(bardshrine);
+            }
+
+            // Clears and adds new Bard Chimes.
+            BardChimes.Clear();
+            foreach (var bardchime in ObjectManager.Get<GameObject>().Where(o => o.Name.ToLower().Contains("bardchimeminion") && o.IsAlly && o.IsValid).Where(hr => hr != null))
+            {
+                BardChimes.Add(bardchime);
+            }
+
+            // Clears and adds new EnemyTraps.
+            EnemyTraps.Clear();
+            foreach (var trap in ObjectManager.Get<Obj_AI_Minion>().Where(trap => trap.IsEnemy && !trap.IsDead && TrapsNames.Contains(trap.Name)))
+            {
+                EnemyTraps.Add(trap);
+            }
+
+            GameObject.OnCreate += GameObject_OnCreate;
+            GameObject.OnDelete += GameObject_OnDelete;
+        }
+
         /// <summary>
         ///     Checks if healthrelic is created and add it to the list.
         /// </summary>
@@ -16,13 +47,24 @@ namespace AramBuddy.MainCore.Utility
             if (sender.Name.ToLower().Contains("healthrelic"))
             {
                 HealthRelics.Add(sender);
-                Chat.Print("create healthrelic");
+                Logger.Send("create healthrelic", Logger.LogLevel.Info);
             }
 
             if (TrapsNames.Contains(sender.Name) && sender.IsEnemy)
             {
-                Chat.Print("create trap");
                 EnemyTraps.Add((Obj_AI_Minion)sender);
+                Logger.Send("create trap", Logger.LogLevel.Info);
+            }
+
+            if (sender.Name.ToLower().Contains("bardhealthshrine") && sender.IsAlly)
+            {
+                HealthRelics.Remove(sender);
+                Logger.Send("create BardHealthShrine", Logger.LogLevel.Info);
+            }
+            if (sender.Name.ToLower().Contains("bardchimeminion") && sender.IsAlly)
+            {
+                HealthRelics.Remove(sender);
+                Logger.Send("create BardcChimeMinion", Logger.LogLevel.Info);
             }
         }
 
@@ -34,12 +76,22 @@ namespace AramBuddy.MainCore.Utility
             if (sender.Name.ToLower().Contains("healthrelic"))
             {
                 HealthRelics.Remove(sender);
-                Chat.Print("delete healthrelic");
+                Logger.Send("delete healthrelic", Logger.LogLevel.Info);
             }
             if (EnemyTraps.Contains(sender) && sender.IsEnemy)
             {
                 EnemyTraps.Remove((Obj_AI_Minion)sender);
-                Chat.Print("delete trap");
+                Logger.Send("delete trap", Logger.LogLevel.Info);
+            }
+            if (sender.Name.ToLower().Contains("bardhealthshrine") && sender.IsAlly)
+            {
+                HealthRelics.Remove(sender);
+                Logger.Send("delete BardHealthShrine", Logger.LogLevel.Info);
+            }
+            if (sender.Name.ToLower().Contains("bardchimeminion") && sender.IsAlly)
+            {
+                HealthRelics.Remove(sender);
+                Logger.Send("delete BardcChimeMinion", Logger.LogLevel.Info);
             }
         }
 
@@ -49,7 +101,12 @@ namespace AramBuddy.MainCore.Utility
         public static List<string> TrapsNames = new List<string>() { "Cupcake Trap", "Noxious Trap", "Jack In The Box" };
 
         /// <summary>
-        ///     HealthRelics list.
+        ///     BardChimes list.
+        /// </summary>
+        public static List<GameObject> BardChimes = new List<GameObject>();
+
+        /// <summary>
+        ///     HealthRelics and BardHealthShrines list.
         /// </summary>
         public static List<GameObject> HealthRelics = new List<GameObject>();
 
@@ -57,6 +114,39 @@ namespace AramBuddy.MainCore.Utility
         ///     HealthRelics list.
         /// </summary>
         public static List<Obj_AI_Minion> EnemyTraps = new List<Obj_AI_Minion>();
+
+        /// <summary>
+        ///     Returns Valid HealthRelic and BardHealthShrine.
+        /// </summary>
+        public static GameObject HealthRelic
+        {
+            get
+            {
+                return HealthRelics.OrderBy(e => e.Distance(Player.Instance)).FirstOrDefault(e => e.IsValid && e.Distance(Player.Instance) < 2000 && e.CountEnemiesInRange(1100) < 1);
+            }
+        }
+
+        /// <summary>
+        ///     Thresh Lantern.
+        /// </summary>
+        public static Obj_AI_Base ThreshLantern
+        {
+            get
+            {
+                return ObjectManager.Get<Obj_AI_Base>().FirstOrDefault(l => l.IsValid && !l.IsDead && Player.Instance.Hero != Champion.Thresh && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 500 || l.CountEnemiesInRange(1000) < 1) && l.IsAlly && l.Name.Equals("ThreshLantern"));
+            }
+        }
+
+        /// <summary>
+        ///     Thresh Lantern.
+        /// </summary>
+        public static GameObject BardChime
+        {
+            get
+            {
+                return BardChimes.OrderBy(c => c.Distance(Player.Instance)).FirstOrDefault(l => l.IsValid && !l.IsDead && Player.Instance.Hero == Champion.Bard && (!l.Position.UnderEnemyTurret() || l.Position.UnderEnemyTurret() && Misc.SafeToDive) && l.IsAlly && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 500 || l.CountEnemiesInRange(1000) < 1));
+            }
+        }
 
         /// <summary>
         ///     Returns Nearest Enemy.
@@ -120,17 +210,6 @@ namespace AramBuddy.MainCore.Utility
                 return
                     BestAlliesToFollow.OrderByDescending(a => Misc.TeamTotal(a.ServerPosition) - Misc.TeamTotal(a.ServerPosition, true))
                         .FirstOrDefault(a => a.CountAlliesInRange(1000) > a.CountEnemiesInRange(1000));
-            }
-        }
-
-        /// <summary>
-        ///     Returns Valid HealthRelic.
-        /// </summary>
-        public static GameObject HealthRelic
-        {
-            get
-            {
-                return HealthRelics.OrderBy(e => e.Distance(Player.Instance)).FirstOrDefault(e => e.IsValid && e.Distance(Player.Instance) < 2000 && e.CountEnemiesInRange(1100) < 1);
             }
         }
 

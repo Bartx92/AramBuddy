@@ -20,27 +20,12 @@ namespace AramBuddy.MainCore
             // Initialize Genesis Spell Library.
             SpellManager.Initialize();
             SpellLibrary.Initialize();
-
-            // Clears and adds new HealthRelics.
-            ObjectsManager.HealthRelics.Clear();
-            foreach (var hr in ObjectManager.Get<GameObject>().Where(o => o.Name.ToLower().Contains("healthrelic") && o.IsValid).Where(hr => hr != null))
-            {
-                ObjectsManager.HealthRelics.Add(hr);
-            }
-
-            // Clears and adds new Traps.
-            ObjectsManager.EnemyTraps.Clear();
-            foreach (var trap in ObjectManager.Get<Obj_AI_Minion>().Where(trap => trap.IsEnemy && !trap.IsDead && ObjectsManager.TrapsNames.Contains(trap.Name)))
-            {
-                ObjectsManager.EnemyTraps.Add(trap);
-            }
+            ObjectsManager.Init();
 
             // Overrides Orbwalker Movements
             Orbwalker.OverrideOrbwalkPosition = OverrideOrbwalkPosition;
 
             Obj_AI_Base.OnBasicAttack += Obj_AI_Base_OnBasicAttack;
-            GameObject.OnCreate += ObjectsManager.GameObject_OnCreate;
-            GameObject.OnDelete += ObjectsManager.GameObject_OnDelete;
             Gapcloser.OnGapcloser += SpellsCasting.GapcloserOnOnGapcloser;
             Interrupter.OnInterruptableSpell += SpellsCasting.Interrupter_OnInterruptableSpell;
             Obj_AI_Base.OnBasicAttack += SpellsCasting.Obj_AI_Base_OnBasicAttack;
