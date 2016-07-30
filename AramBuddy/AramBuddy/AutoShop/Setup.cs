@@ -122,6 +122,10 @@ namespace AramBuddy.AutoShop
 
                     // and set up event listeners
                     SetUpEventListeners();
+                    if (Player.Instance.IsInShopRange())
+                    {
+                        Buy.BuyNextItem(CurrentChampionBuild);
+                    }
                     Console.ResetColor();
                 }
                 else
