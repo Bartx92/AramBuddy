@@ -1,14 +1,11 @@
-﻿namespace AramBuddy.MainCore.Logics
+﻿using System.Linq;
+using AramBuddy.MainCore.Utility;
+using EloBuddy;
+using EloBuddy.SDK;
+using SharpDX;
+
+namespace AramBuddy.MainCore.Logics
 {
-    using System.Linq;
-
-    using AramBuddy.MainCore.Utility;
-
-    using EloBuddy;
-    using EloBuddy.SDK;
-
-    using SharpDX;
-
     internal class Pathing
     {
         /// <summary>
@@ -131,7 +128,6 @@
         /// </summary>
         public static void RangedLogic()
         {
-
             // if SafestAllyToFollow2 exsists moves to SafestAllyToFollow2.
             if (ObjectsManager.SafestAllyToFollow2 != null)
             {
@@ -191,8 +187,7 @@
         public static void MoveTo(Vector3 pos)
         {
             // This to prevent the bot from spamming unnecessary movements.
-            if (!Player.Instance.Path.LastOrDefault().IsInRange(pos, 75) && !Player.Instance.IsInRange(pos, 75)
-                && Core.GameTickCount - lastmove >= 500)
+            if (!Player.Instance.Path.LastOrDefault().IsInRange(pos, 75) && !Player.Instance.IsInRange(pos, 75) && Core.GameTickCount - lastmove >= 500)
             {
                 // This to prevent diving.
                 if (pos.UnderEnemyTurret() && !Misc.SafeToDive)
@@ -201,7 +196,8 @@
                 }
 
                 // This to prevent Walking into walls, buildings or traps.
-                if (NavMesh.GetCollisionFlags(pos) == CollisionFlags.Wall || NavMesh.GetCollisionFlags(pos) == CollisionFlags.Building || ObjectsManager.EnemyTraps.Any(t => t.IsInRange(pos, t.BoundingRadius * 4)))
+                if (NavMesh.GetCollisionFlags(pos) == CollisionFlags.Wall || NavMesh.GetCollisionFlags(pos) == CollisionFlags.Building
+                    || ObjectsManager.EnemyTraps.Any(t => t.IsInRange(pos, t.BoundingRadius * 4)))
                 {
                     return;
                 }

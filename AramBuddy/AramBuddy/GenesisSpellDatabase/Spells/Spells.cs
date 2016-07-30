@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
@@ -130,10 +129,9 @@ namespace GenesisSpellLibrary.Spells
             {
                 return false;
             }
-            int x = EntityManager.Heroes.Enemies.Count(e => e.Distance(player) < 1000);
-            return (player.HasBuffOfType(BuffType.Fear) || player.HasBuffOfType(BuffType.Silence) || player.HasBuffOfType(BuffType.Snare)
-                    || player.HasBuffOfType(BuffType.Stun) || player.HasBuffOfType(BuffType.Charm) || player.HasBuffOfType(BuffType.Blind)
-                    || player.HasBuffOfType(BuffType.Taunt)) || (x > 3);
+            var x = EntityManager.Heroes.Enemies.Count(e => e.Distance(player) < 1000);
+            return (player.HasBuffOfType(BuffType.Fear) || player.HasBuffOfType(BuffType.Silence) || player.HasBuffOfType(BuffType.Snare) || player.HasBuffOfType(BuffType.Stun)
+                    || player.HasBuffOfType(BuffType.Charm) || player.HasBuffOfType(BuffType.Blind) || player.HasBuffOfType(BuffType.Taunt)) || (x > 3);
         }
     }
 
@@ -529,12 +527,13 @@ namespace GenesisSpellLibrary.Spells
         public sealed override Spell.SpellBase W { get; set; }
         public sealed override Spell.SpellBase E { get; set; }
         public sealed override Spell.SpellBase R { get; set; }
+
         public Elise()
         {
-            Q = new Spell.Targeted(SpellSlot.Q, 625);
-            W = new Spell.Skillshot(SpellSlot.W, 950, SkillShotType.Circular);
-            E = new Spell.Skillshot(SpellSlot.E, 1075, SkillShotType.Linear, 250, 1600, 80) { AllowedCollisionCount = 0 }; // TODO: Support Elise
-            R = null;
+            this.Q = new Spell.Targeted(SpellSlot.Q, 625);
+            this.W = new Spell.Skillshot(SpellSlot.W, 950, SkillShotType.Circular);
+            this.E = new Spell.Skillshot(SpellSlot.E, 1075, SkillShotType.Linear, 250, 1600, 80) { AllowedCollisionCount = 0 }; // TODO: Support Elise
+            this.R = null;
             this.EisCC = true;
         }
     }
@@ -703,22 +702,22 @@ namespace GenesisSpellLibrary.Spells
             this.R = new Spell.Targeted(SpellSlot.R, 400);
             this.QisCC = true;
             this.WisSaver = true;
-
         }
     }
 
-    public class Gnar : SpellBase 
+    public class Gnar : SpellBase
     {
         public sealed override Spell.SpellBase Q { get; set; }
         public sealed override Spell.SpellBase W { get; set; }
         public sealed override Spell.SpellBase E { get; set; }
         public sealed override Spell.SpellBase R { get; set; }
+
         public Gnar()
         {
-            Q = new Spell.Skillshot(SpellSlot.Q, 1100, SkillShotType.Linear, 250, 1200, 55) { AllowedCollisionCount = int.MaxValue };
-            W = new Spell.Active(SpellSlot.W);
-            E = new Spell.Skillshot(SpellSlot.E, 475, SkillShotType.Circular, 500, int.MaxValue, 150);
-            R = new Spell.Skillshot(SpellSlot.R, 500, SkillShotType.Linear, 250, 1000, 200) { AllowedCollisionCount = int.MaxValue };
+            this.Q = new Spell.Skillshot(SpellSlot.Q, 1100, SkillShotType.Linear, 250, 1200, 55) { AllowedCollisionCount = int.MaxValue };
+            this.W = new Spell.Active(SpellSlot.W);
+            this.E = new Spell.Skillshot(SpellSlot.E, 475, SkillShotType.Circular, 500, int.MaxValue, 150);
+            this.R = new Spell.Skillshot(SpellSlot.R, 500, SkillShotType.Linear, 250, 1000, 200) { AllowedCollisionCount = int.MaxValue };
             this.QisCC = true;
             this.EisDash = true;
             this.RisCC = true;
@@ -914,11 +913,12 @@ namespace GenesisSpellLibrary.Spells
         public sealed override Spell.SpellBase W { get; set; }
         public sealed override Spell.SpellBase E { get; set; }
         public sealed override Spell.SpellBase R { get; set; }
+
         public Jayce()
         {
-            Q = new Spell.Skillshot(SpellSlot.Q, 600, SkillShotType.Linear, 250, 1000, 80) { AllowedCollisionCount = 0 };
-            W = new Spell.Active(SpellSlot.W, 700);
-            E = new Spell.Skillshot(SpellSlot.E, 325, SkillShotType.Circular, 250, 1000, 200);
+            this.Q = new Spell.Skillshot(SpellSlot.Q, 600, SkillShotType.Linear, 250, 1000, 80) { AllowedCollisionCount = 0 };
+            this.W = new Spell.Active(SpellSlot.W, 700);
+            this.E = new Spell.Skillshot(SpellSlot.E, 325, SkillShotType.Circular, 250, 1000, 200);
         }
     } // TODO: FUCK THERE ARE 3 OF YOU?!
 
@@ -928,12 +928,13 @@ namespace GenesisSpellLibrary.Spells
         public sealed override Spell.SpellBase W { get; set; }
         public sealed override Spell.SpellBase E { get; set; }
         public sealed override Spell.SpellBase R { get; set; }
+
         public Jhin()
         {
-            Q = new Spell.Targeted(SpellSlot.Q, 500);
-            W = new Spell.Skillshot(SpellSlot.W, 1000, SkillShotType.Linear, 250, 1000, 80);
-            E = new Spell.Skillshot(SpellSlot.E, 325, SkillShotType.Circular, 250, 1000, 180);
-            R = new Spell.Skillshot(SpellSlot.R, 1300, SkillShotType.Linear, 250, 1250, 80) { AllowedCollisionCount = int.MaxValue };
+            this.Q = new Spell.Targeted(SpellSlot.Q, 500);
+            this.W = new Spell.Skillshot(SpellSlot.W, 1000, SkillShotType.Linear, 250, 1000, 80);
+            this.E = new Spell.Skillshot(SpellSlot.E, 325, SkillShotType.Circular, 250, 1000, 180);
+            this.R = new Spell.Skillshot(SpellSlot.R, 1300, SkillShotType.Linear, 250, 1250, 80) { AllowedCollisionCount = int.MaxValue };
         }
     } // Just fuck you jhin.
 
@@ -1525,11 +1526,12 @@ namespace GenesisSpellLibrary.Spells
         public sealed override Spell.SpellBase W { get; set; }
         public sealed override Spell.SpellBase E { get; set; }
         public sealed override Spell.SpellBase R { get; set; }
+
         public Nidalee()
         {
-            Q = new Spell.Skillshot(SpellSlot.Q, 1150, SkillShotType.Linear, 250, 1000, 70) { AllowedCollisionCount = int.MaxValue };
-            W = new Spell.Skillshot(SpellSlot.W, 700, SkillShotType.Circular);
-            E = new Spell.Targeted(SpellSlot.E, 325);
+            this.Q = new Spell.Skillshot(SpellSlot.Q, 1150, SkillShotType.Linear, 250, 1000, 70) { AllowedCollisionCount = int.MaxValue };
+            this.W = new Spell.Skillshot(SpellSlot.W, 700, SkillShotType.Circular);
+            this.E = new Spell.Targeted(SpellSlot.E, 325);
             this.EisSaver = true;
         }
     }
@@ -1546,7 +1548,7 @@ namespace GenesisSpellLibrary.Spells
 
         public Nocturne()
         {
-            this.Q = new Spell.Skillshot(SpellSlot.Q, 1125, SkillShotType.Linear, 250, 1000, 70) {AllowedCollisionCount = int.MaxValue};
+            this.Q = new Spell.Skillshot(SpellSlot.Q, 1125, SkillShotType.Linear, 250, 1000, 70) { AllowedCollisionCount = int.MaxValue };
             this.W = new Spell.Active(SpellSlot.W);
             this.E = new Spell.Targeted(SpellSlot.E, 425);
             this.R = new Spell.Active(SpellSlot.R, 2500);
@@ -1671,7 +1673,7 @@ namespace GenesisSpellLibrary.Spells
             this.Q = new Spell.Skillshot(SpellSlot.Q, 1025, SkillShotType.Linear, 0, 750, 210) { AllowedCollisionCount = 0 };
             this.W = new Spell.Active(SpellSlot.W, 2100);
             this.E = new Spell.Targeted(SpellSlot.E, 675);
-            R = null;
+            this.R = null;
             this.EisCC = true;
         }
     }
@@ -2112,9 +2114,9 @@ namespace GenesisSpellLibrary.Spells
 
         public Taliyah()
         {
-            Q = new Spell.Skillshot(SpellSlot.Q, 900, SkillShotType.Linear, 250, 2000, 60) { AllowedCollisionCount = 0 };
-            W = new Spell.Skillshot(SpellSlot.W, 800, SkillShotType.Circular, 250, int.MaxValue, 180);
-            E = new Spell.Skillshot(SpellSlot.E, 700, SkillShotType.Cone);
+            this.Q = new Spell.Skillshot(SpellSlot.Q, 900, SkillShotType.Linear, 250, 2000, 60) { AllowedCollisionCount = 0 };
+            this.W = new Spell.Skillshot(SpellSlot.W, 800, SkillShotType.Circular, 250, int.MaxValue, 180);
+            this.E = new Spell.Skillshot(SpellSlot.E, 700, SkillShotType.Cone);
             this.WisCC = true;
         }
     }
@@ -2427,14 +2429,10 @@ namespace GenesisSpellLibrary.Spells
 
         public Velkoz()
         {
-            this.Q = new Spell.Skillshot(SpellSlot.Q, 1050, SkillShotType.Linear, 250, 1300, 50)
-                         { MinimumHitChance = HitChance.High, AllowedCollisionCount = 0 };
-            this.W = new Spell.Skillshot(SpellSlot.W, 1050, SkillShotType.Linear, 250, 1700, 80)
-                         { MinimumHitChance = HitChance.High, AllowedCollisionCount = int.MaxValue };
-            this.E = new Spell.Skillshot(SpellSlot.E, 850, SkillShotType.Circular, 500, 1500, 120)
-                         { MinimumHitChance = HitChance.High, AllowedCollisionCount = int.MaxValue };
-            this.R = new Spell.Skillshot(SpellSlot.R, 1550, SkillShotType.Linear)
-                         { MinimumHitChance = HitChance.High, AllowedCollisionCount = int.MaxValue };
+            this.Q = new Spell.Skillshot(SpellSlot.Q, 1050, SkillShotType.Linear, 250, 1300, 50) { MinimumHitChance = HitChance.High, AllowedCollisionCount = 0 };
+            this.W = new Spell.Skillshot(SpellSlot.W, 1050, SkillShotType.Linear, 250, 1700, 80) { MinimumHitChance = HitChance.High, AllowedCollisionCount = int.MaxValue };
+            this.E = new Spell.Skillshot(SpellSlot.E, 850, SkillShotType.Circular, 500, 1500, 120) { MinimumHitChance = HitChance.High, AllowedCollisionCount = int.MaxValue };
+            this.R = new Spell.Skillshot(SpellSlot.R, 1550, SkillShotType.Linear) { MinimumHitChance = HitChance.High, AllowedCollisionCount = int.MaxValue };
             this.EisCC = true;
         }
     }
@@ -2743,7 +2741,7 @@ namespace GenesisSpellLibrary.Spells
             this.W = new Spell.Skillshot(SpellSlot.W, 825, SkillShotType.Circular, 250, int.MaxValue, 20);
             this.E = new Spell.Skillshot(SpellSlot.E, 1100, SkillShotType.Linear, 250, 1150, 70);
             this.R = new Spell.Skillshot(SpellSlot.R, 700, SkillShotType.Circular, 250, 1200, 500);
-            
+
             this.QisCC = true;
             this.EisCC = true;
             this.RisCC = true;

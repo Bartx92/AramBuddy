@@ -1,6 +1,6 @@
 ﻿#region
 
-using System;
+using AramBuddy.MainCore.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -34,24 +34,16 @@ namespace AramBuddy.AutoShop.Sequences
                 string[] arr = parsed.data.ToObject<string[]>();
 
                 // Create a new build object
-                build = new Build {BuildData = arr};
+                build = new Build { BuildData = arr };
                 return true;
             }
             catch (JsonSerializationException ex)
             {
                 // Exception has been cought; Notify the user of the error and print the exception to the console
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") +
-                                  "AramBuddy Error] Exception occurred in AutoShop on JSON parse:" + Environment.NewLine);
-                Console.ResetColor();
-                Console.Write(ex);
+                Logger.Send("Exception occurred in AutoShop on JSON parse:", ex, Logger.LogLevel.Error);
 
                 // Warn the user that AutoShop may not be functioning correctly
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine(
-                    DateTime.Now.ToString("[H:mm:ss - ") +
-                    "AramBuddy Warning] Exception occurred during AutoShop JSON parse. AutoShop will most likely NOT work properly!");
-                Console.ResetColor();
+                Logger.Send("Exception occurred during AutoShop JSON parse. AutoShop will most likely NOT work properly!", Logger.LogLevel.Warn);
                 build = null;
                 return false;
             }

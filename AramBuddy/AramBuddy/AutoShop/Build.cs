@@ -1,15 +1,15 @@
 ﻿// <summary>
 //   The class containing the BuildData used by the interpreter to buy items in order
 // </summary>
+using System;
+using System.IO;
+using System.Linq;
+using System.Net;
+using AramBuddy.MainCore.Utility;
+using EloBuddy;
+
 namespace AramBuddy.AutoShop
 {
-    using System;
-    using System.IO;
-    using System.Linq;
-    using System.Net;
-
-    using EloBuddy;
-
     /// <summary>
     ///     The class containing the BuildData used by the interpreter to buy items in order
     /// </summary>
@@ -52,11 +52,10 @@ namespace AramBuddy.AutoShop
                 return "Tank";
             }
 
-            Console.WriteLine("Failed To Detect " + ChampionName);
-            Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Info] Using Default Build !");
+            Logger.Send("Failed To Detect " + ChampionName, Logger.LogLevel.Warn);
+            Logger.Send("Using Default Build !", Logger.LogLevel.Info);
             return "Default";
         }
-        
 
         /// <summary>
         ///     Creates Builds
@@ -65,7 +64,8 @@ namespace AramBuddy.AutoShop
         {
             try
             {
-                GetResponse(WebRequest.Create("https://raw.githubusercontent.com/plsfixrito/AramBuddy/master/DefaultBuilds/" + BuildName() + ".json"), 
+                GetResponse(
+                    WebRequest.Create("https://raw.githubusercontent.com/plsfixrito/AramBuddy/master/DefaultBuilds/" + BuildName() + ".json"),
                     response =>
                         {
                             var data = new StreamReader(response.GetResponseStream()).ReadToEnd().ToString();
@@ -74,25 +74,20 @@ namespace AramBuddy.AutoShop
                                 File.WriteAllText(Setup.BuildPath + "\\" + BuildName() + ".json", data);
                                 Setup.Builds.Add(BuildName(), File.ReadAllText(Setup.BuildPath + "\\" + BuildName() + ".json"));
 
-                                Console.ForegroundColor = ConsoleColor.Cyan;
-                                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Info] " + BuildName() + " Build Created for " + Player.Instance.ChampionName + " - " + BuildName());
-                                Console.ResetColor();
+                                Logger.Send(BuildName() + " Build Created for " + Player.Instance.ChampionName + " - " + BuildName(), Logger.LogLevel.Info);
                             }
                             else
                             {
-                                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Warning] Wrong Response, No Champion Build Created");
+                                Logger.Send("Wrong Response, No Champion Build Created", Logger.LogLevel.Warn);
                                 Console.WriteLine(data);
-                                Console.ResetColor();
                             }
-                    });
+                        });
             }
             catch (Exception ex)
             {
                 // if faild to create build terminate the AutoShop
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Warning] Failed to create default build for " + Player.Instance.ChampionName);
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Warning] No build is currently used!");
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + ex);
-                Console.ResetColor();
+                Logger.Send("Failed to create default build for " + Player.Instance.ChampionName, ex, Logger.LogLevel.Error);
+                Logger.Send("No build is currently being used!", Logger.LogLevel.Error);
             }
         }
 
@@ -104,29 +99,26 @@ namespace AramBuddy.AutoShop
             try
             {
                 Action wrapperAction = () =>
-                {
-                    Request.BeginGetResponse(
-                        iar =>
-                        {
-                            var Response = (HttpWebResponse)((HttpWebRequest)iar.AsyncState).EndGetResponse(iar);
-                            ResponseAction(Response);
-                        }, 
-                        Request);
-                };
+                    {
+                        Request.BeginGetResponse(
+                            iar =>
+                                {
+                                    var Response = (HttpWebResponse)((HttpWebRequest)iar.AsyncState).EndGetResponse(iar);
+                                    ResponseAction(Response);
+                                },
+                            Request);
+                    };
                 wrapperAction.BeginInvoke(
                     iar =>
-                    {
-                        var Action = (Action)iar.AsyncState;
-                        Action.EndInvoke(iar);
-                    }, 
+                        {
+                            var Action = (Action)iar.AsyncState;
+                            Action.EndInvoke(iar);
+                        },
                     wrapperAction);
             }
             catch (Exception ex)
             {
-
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Warning] Failed to create default build, No Response.");
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + ex);
-                Console.ResetColor();
+                Logger.Send("Failed to create default build, No Response.", ex, Logger.LogLevel.Error);
             }
         }
 
@@ -135,8 +127,8 @@ namespace AramBuddy.AutoShop
         /// </summary>
         public static readonly string[] ADC =
             {
-                "Ashe", "Caitlyn", "Corki", "Draven", "Ezreal", "Jhin", "Jinx", "Kalista", "Kindred", "KogMaw", 
-                "Lucian", "MissFortune", "Sivir", "Quinn", "Tristana", "Twitch", "Urgot", "Varus", "Vayne"
+                "Ashe", "Caitlyn", "Corki", "Draven", "Ezreal", "Jhin", "Jinx", "Kalista", "Kindred", "KogMaw", "Lucian", "MissFortune", "Sivir", "Quinn", "Tristana",
+                "Twitch", "Urgot", "Varus", "Vayne"
             };
 
         /// <summary>
@@ -144,11 +136,10 @@ namespace AramBuddy.AutoShop
         /// </summary>
         public static readonly string[] ManaAP =
             {
-                "Ahri", "Anivia", "Annie", "AurelioSol", "Azir", "Brand", "Cassiopeia", "Diana", "Elise", "Ekko", 
-                "Evelynn", "Fiddlesticks", "Fizz", "Galio", "Gragas", "Heimerdinger", "Janna", "Karma", "Karthus", 
-                "Kassadin", "Kayle", "LeBlanc", "Lissandra", "Lulu", "Lux", "Malzahar", "Morgana", "Nami", 
-                "Nidalee", "Ryze", "Orianna", "Sona", "Soraka", "Swain", "Syndra", "Taliyah", "Teemo", 
-                "TwistedFate", "Veigar", "Viktor", "VelKoz", "Xerath", "Ziggs", "Zilean", "Zyra"
+                "Ahri", "Anivia", "Annie", "AurelioSol", "Azir", "Brand", "Cassiopeia", "Diana", "Elise", "Ekko", "Evelynn", "Fiddlesticks", "Fizz", "Galio",
+                "Gragas", "Heimerdinger", "Janna", "Karma", "Karthus", "Kassadin", "Kayle", "LeBlanc", "Lissandra", "Lulu", "Lux", "Malzahar", "Morgana", "Nami",
+                "Nidalee", "Ryze", "Orianna", "Sona", "Soraka", "Swain", "Syndra", "Taliyah", "Teemo", "TwistedFate", "Veigar", "Viktor", "VelKoz", "Xerath", "Ziggs",
+                "Zilean", "Zyra"
             };
 
         /// <summary>
@@ -161,9 +152,8 @@ namespace AramBuddy.AutoShop
         /// </summary>
         public static readonly string[] AD =
             {
-                "Aatrox", "Darius", "Fiora", "Gangplank", "Jax", "Jayce", "KhaZix", "LeeSin", "MasterYi", "Nocturne", 
-                "Olaf", "Pantheon", "RekSai", "Renekton", "Rengar", "Riven", "Talon", "Tryndamere", "Wukong", 
-                "XinZhao", "Yasuo", "Zed"
+                "Aatrox", "Darius", "Fiora", "Gangplank", "Jax", "Jayce", "KhaZix", "LeeSin", "MasterYi", "Nocturne", "Olaf", "Pantheon", "RekSai", "Renekton", "Rengar",
+                "Riven", "Talon", "Tryndamere", "Wukong", "XinZhao", "Yasuo", "Zed"
             };
 
         /// <summary>
@@ -171,10 +161,9 @@ namespace AramBuddy.AutoShop
         /// </summary>
         public static readonly string[] Tank =
             {
-                "Alistar", "Amumu", "Blitzcrank", "Bard", "Braum", "ChoGath", "DrMundo", "Garen", "Gnar", "Hecarim", 
-                "Illaoi", "Irelia", "JarvanIV", "Leona", "Malphite", "Maokai", "Nasus", "Nautilus", "Nunu", "Poppy", 
-                "Rammus", "Sejuani", "Shaco", "Shen", "Shyvana", "Singed", "Sion", "Skarner", "TahmKench", "Taric", 
-                "Thresh", "Trundle", "Udyr", "Vi", "Volibear", "Warwick", "Yorick", "Zac"
+                "Alistar", "Amumu", "Blitzcrank", "Bard", "Braum", "ChoGath", "DrMundo", "Garen", "Gnar", "Hecarim", "Illaoi", "Irelia", "JarvanIV", "Leona",
+                "Malphite", "Maokai", "Nasus", "Nautilus", "Nunu", "Poppy", "Rammus", "Sejuani", "Shaco", "Shen", "Shyvana", "Singed", "Sion", "Skarner", "TahmKench",
+                "Taric", "Thresh", "Trundle", "Udyr", "Vi", "Volibear", "Warwick", "Yorick", "Zac"
             };
     }
 }

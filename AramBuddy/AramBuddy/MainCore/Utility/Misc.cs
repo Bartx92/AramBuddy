@@ -1,14 +1,12 @@
-﻿namespace AramBuddy.MainCore.Utility
+﻿using System;
+using System.Linq;
+using EloBuddy;
+using EloBuddy.SDK;
+using EloBuddy.SDK.Menu.Values;
+using SharpDX;
+
+namespace AramBuddy.MainCore.Utility
 {
-    using System;
-    using System.Linq;
-
-    using EloBuddy;
-    using EloBuddy.SDK;
-    using EloBuddy.SDK.Menu.Values;
-
-    using SharpDX;
-
     internal static class Misc
     {
         /// <summary>

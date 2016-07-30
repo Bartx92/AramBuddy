@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using AramBuddy.MainCore.Utility;
 using EloBuddy;
 using EloBuddy.SDK;
 
@@ -29,22 +30,19 @@ namespace AramBuddy.AutoShop.Sequences
                 if (build.BuildData.Length < GetIndex() + 1)
                 {
                     // Notify the user that the build is finished
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Info] Build is finished - Cannot buy any more items!");
-                    Console.ResetColor();
+                    Logger.Send("Build is finished - Cannot buy any more items!", Logger.LogLevel.Info);
 
                     // Return false because we could not buy items
                     return false;
                 }
 
                 // Get the item
-                string itemname = build.BuildData.ElementAt(GetIndex());
+                var itemname = build.BuildData.ElementAt(GetIndex());
                 var item = Item.ItemData.FirstOrDefault(i => i.Value.Name == itemname);
 
                 // Check if we can buy the item
-                if ((item.Value != null) && (item.Key != null) && (item.Key != ItemId.Unknown) &&
-                    item.Value.ValidForPlayer && item.Value.InStore && item.Value.Gold.Purchasable &&
-                    item.Value.AvailableForMap && (Player.Instance.Gold - TempValue >= item.Value.Gold.Total))
+                if ((item.Value != null) && (item.Key != null) && (item.Key != ItemId.Unknown) && item.Value.ValidForPlayer && item.Value.InStore && item.Value.Gold.Purchasable
+                    && item.Value.AvailableForMap && (Player.Instance.Gold - TempValue >= item.Value.Gold.Total))
                 {
                     // Buy the actual item from the shop
                     TempValue += item.Value.Gold.Total;
@@ -54,9 +52,7 @@ namespace AramBuddy.AutoShop.Sequences
                     IncrementIndex();
 
                     // Notify the user that the item has been bought and of the value of the item
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Info] Item bought: " + item.Value.Name + " - Item Value: " + item.Value.Gold.Total);
-                    Console.ResetColor();
+                    Logger.Send("Item bought: " + item.Value.Name + " - Item Value: " + item.Value.Gold.Total, Logger.LogLevel.Info);
 
                     // Success
                     Events.OnOnBuyItem(new Item(item.Key));
@@ -69,19 +65,10 @@ namespace AramBuddy.AutoShop.Sequences
             catch (Exception ex)
             {
                 // Exception has been cought; Notify the user of the error and print the exception to the console
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") +
-                                  "AramBuddy Error] Exception occurred in AutoShop on buying the next item:" +
-                                  Environment.NewLine);
-                Console.ResetColor();
-                Console.Write(ex);
+                Logger.Send("Exception occurred in AutoShop on buying the next item: " + Environment.NewLine, ex, Logger.LogLevel.Error);
 
                 // Warn the user that AutoShop may not be functioning correctly
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine(
-                    DateTime.Now.ToString("[H:mm:ss - ") +
-                    "AramBuddy Warning] Exception occurred during AutoShop buy sequence. AutoShop will most likely NOT work properly!");
-                Console.ResetColor();
+                Logger.Send("Exception occurred during AutoShop buy sequence. AutoShop will most likely NOT work properly!", Logger.LogLevel.Warn);
                 return false;
             }
         }
@@ -105,7 +92,7 @@ namespace AramBuddy.AutoShop.Sequences
                 }
 
                 // Create the index file
-                using (StreamWriter sw = File.AppendText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
+                using (var sw = File.AppendText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
                 {
                     // Write the default value (0) to the index file
                     sw.Write(0);
@@ -114,15 +101,10 @@ namespace AramBuddy.AutoShop.Sequences
             catch (Exception ex)
             {
                 // Exception has been cought; Notify the user of the error and print the exception to the console
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Error] Exception occurred in AutoShop on creating build index file:" + Environment.NewLine);
-                Console.Write(ex);
-                Console.ResetColor();
+                Logger.Send("Exception occurred in AutoShop on creating build index file:" + Environment.NewLine, ex, Logger.LogLevel.Error);
 
                 // Warn the user that AutoShop may not be functioning correctly
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Warning] Exception occurred during AutoShop buy sequence. AutoShop will most likely NOT work properly!");
-                Console.ResetColor();
+                Logger.Send("Exception occurred during AutoShop buy sequence. AutoShop will most likely NOT work properly!", Logger.LogLevel.Warn);
             }
         }
 
@@ -137,16 +119,16 @@ namespace AramBuddy.AutoShop.Sequences
                 Directory.CreateDirectory(Setup.TempPath);
 
                 // The contents of the index file
-                string data = File.ReadAllText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat");
+                var data = File.ReadAllText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat");
 
                 // The incremented index of the index file
-                int index = int.Parse(data) + 1;
+                var index = int.Parse(data) + 1;
 
                 // Delete the index file
                 File.Delete(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat");
 
                 // Re-write the index file
-                using (StreamWriter sw = File.AppendText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
+                using (var sw = File.AppendText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
                 {
                     // Write the new, incremented index on the index file
                     sw.Write(index);
@@ -155,15 +137,10 @@ namespace AramBuddy.AutoShop.Sequences
             catch (Exception ex)
             {
                 // Exception has been cought; Notify the user of the error and print the exception to the console
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Error] Exception occurred in AutoShop on increment build index:" + Environment.NewLine);
-                Console.Write(ex);
-                Console.ResetColor();
+                Logger.Send("Exception occurred in AutoShop on increment build index:", ex, Logger.LogLevel.Error);
 
                 // Warn the user that AutoShop may not be functioning correctly
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Warning] Exception occurred during AutoShop buy sequence. AutoShop will most likely NOT work properly!");
-                Console.ResetColor();
+                Logger.Send("Exception occurred during AutoShop buy sequence. AutoShop will most likely NOT work properly!", ex, Logger.LogLevel.Warn);
             }
         }
 
@@ -176,7 +153,7 @@ namespace AramBuddy.AutoShop.Sequences
             try
             {
                 // Get the data from the index file
-                string data = File.ReadAllText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat");
+                var data = File.ReadAllText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat");
 
                 // return the parsed data to an integer
                 return int.Parse(data);
@@ -184,15 +161,10 @@ namespace AramBuddy.AutoShop.Sequences
             catch (Exception ex)
             {
                 // Exception has been cought; Notify the user of the error and print the exception to the console
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Error] Exception occurred in AutoShop on get build index:" + Environment.NewLine);
-                Console.Write(ex);
-                Console.ResetColor();
+                Logger.Send("Exception occurred in AutoShop on get build index:", ex, Logger.LogLevel.Error);
 
                 // Warn the user that AutoShop may not be functioning correctly
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Warning] Exception occurred during AutoShop buy sequence. AutoShop will most likely NOT work properly!");
-                Console.ResetColor();
+                Logger.Send("Exception occurred during AutoShop buy sequence. AutoShop will most likely NOT work properly!", Logger.LogLevel.Warn);
                 return 0;
             }
         }
@@ -217,7 +189,7 @@ namespace AramBuddy.AutoShop.Sequences
                 File.Delete(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat");
 
                 // Rewrite to the index file
-                using (StreamWriter sw = File.AppendText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
+                using (var sw = File.AppendText(Setup.TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
                 {
                     // Write the default index file value (0) to the index file
                     sw.Write(0);
@@ -226,15 +198,10 @@ namespace AramBuddy.AutoShop.Sequences
             catch (Exception ex)
             {
                 // Exception has been cought; Notify the user of the error and print the exception to the console
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Error] Exception occurred in AutoShop reset build index:" + Environment.NewLine);
-                Console.Write(ex);
-                Console.ResetColor();
+                Logger.Send("Exception occurred in AutoShop reset build index:", ex, Logger.LogLevel.Error);
 
                 // Warn the user that AutoShop may not be functioning correctly
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine(DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Warning] Exception occurred during AutoShop buy sequence. AutoShop will most likely NOT work properly!");
-                Console.ResetColor();
+                Logger.Send("Exception occurred during AutoShop buy sequence. AutoShop will most likely NOT work properly!", Logger.LogLevel.Warn);
             }
         }
     }

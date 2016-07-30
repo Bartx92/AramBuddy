@@ -1,13 +1,11 @@
-﻿namespace AramBuddy.MainCore.Logics
+﻿using System.Linq;
+using EloBuddy;
+using EloBuddy.SDK;
+using EloBuddy.SDK.Events;
+using GenesisSpellLibrary;
+
+namespace AramBuddy.MainCore.Logics
 {
-    using System.Linq;
-
-    using EloBuddy;
-    using EloBuddy.SDK;
-    using EloBuddy.SDK.Events;
-
-    using GenesisSpellLibrary;
-
     class SpellsCasting
     {
         /// <summary>
@@ -15,7 +13,8 @@
         /// </summary>
         public static void Casting(Spell.SpellBase spellBase, Obj_AI_Base target)
         {
-            if (spellBase == null || target == null) return;
+            if (spellBase == null || target == null)
+                return;
 
             if (spellBase.IsDash())
             {
@@ -76,7 +75,7 @@
                 }
             }
         }
-        
+
         /// <summary>
         ///     Anti-Gapcloser Logic.
         /// </summary>

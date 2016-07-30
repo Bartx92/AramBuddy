@@ -1,18 +1,15 @@
-﻿namespace AramBuddy.MainCore.Logics
+﻿using System.Collections.Generic;
+using System.Linq;
+using AramBuddy.MainCore.Utility;
+using EloBuddy;
+using EloBuddy.SDK;
+using EloBuddy.SDK.Menu.Values;
+using EloBuddy.SDK.Spells;
+using GenesisSpellLibrary;
+using GenesisSpellLibrary.Spells;
+
+namespace AramBuddy.MainCore.Logics
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using AramBuddy.MainCore.Utility;
-
-    using EloBuddy;
-    using EloBuddy.SDK;
-    using EloBuddy.SDK.Menu.Values;
-    using EloBuddy.SDK.Spells;
-
-    using GenesisSpellLibrary;
-    using GenesisSpellLibrary.Spells;
-
     internal class ModesManager
     {
         protected static SpellBase Spell => SpellManager.CurrentSpells;
@@ -31,7 +28,7 @@
                 }
                 ModesBase();
             }
-            
+
             // Activate Flee mode
             if (Flee)
             {
@@ -83,8 +80,9 @@
                     if (LaneClear)
                     {
                         var spell1 = spell;
-                        foreach (var minion in EntityManager.MinionsAndMonsters.EnemyMinions.Where(
-                            m => m.IsValidTarget(spell1.Range) && (Player.Instance.ManaPercent > 60 || Player.Instance.ManaPercent.Equals(0))))
+                        foreach (
+                            var minion in
+                                EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m.IsValidTarget(spell1.Range) && (Player.Instance.ManaPercent > 60 || Player.Instance.ManaPercent.Equals(0))))
                         {
                             SpellsCasting.Casting(spell, minion);
                         }
@@ -108,7 +106,7 @@
                 }
             }
         }
-        
+
         /// <summary>
         ///     Returns True if combo needs to be active.
         /// </summary>
@@ -117,8 +115,8 @@
             get
             {
                 return Misc.TeamTotal(Player.Instance.ServerPosition) > Misc.TeamTotal(Player.Instance.ServerPosition, true)
-                       && Player.Instance.CountAlliesInRange(1000) >= Player.Instance.CountEnemiesInRange(1000)
-                       && Player.Instance.CountEnemiesInRange(1000) > 0 && ((Player.Instance.ServerPosition.UnderEnemyTurret() && Misc.SafeToDive) || !Player.Instance.IsUnderEnemyturret());
+                       && Player.Instance.CountAlliesInRange(1000) >= Player.Instance.CountEnemiesInRange(1000) && Player.Instance.CountEnemiesInRange(1000) > 0
+                       && ((Player.Instance.ServerPosition.UnderEnemyTurret() && Misc.SafeToDive) || !Player.Instance.IsUnderEnemyturret());
             }
         }
 
@@ -129,9 +127,8 @@
         {
             get
             {
-                return (Misc.TeamTotal(Player.Instance.ServerPosition) < Misc.TeamTotal(Player.Instance.ServerPosition, true)
-                        || Player.Instance.IsUnderHisturret()) && Player.Instance.CountEnemiesInRange(800) > 0
-                       && ((Player.Instance.ServerPosition.UnderEnemyTurret() && Misc.SafeToDive) || !Player.Instance.IsUnderEnemyturret()) && !Flee;
+                return (Misc.TeamTotal(Player.Instance.ServerPosition) < Misc.TeamTotal(Player.Instance.ServerPosition, true) || Player.Instance.IsUnderHisturret())
+                       && Player.Instance.CountEnemiesInRange(800) > 0 && ((Player.Instance.ServerPosition.UnderEnemyTurret() && Misc.SafeToDive) || !Player.Instance.IsUnderEnemyturret()) && !Flee;
             }
         }
 
@@ -142,8 +139,7 @@
         {
             get
             {
-                return Player.Instance.CountEnemiesInRange(1000) < 1 && !Flee
-                       && (Player.Instance.CountAlliesInRange(800) > 1 || Player.Instance.CountMinions() > 0)
+                return Player.Instance.CountEnemiesInRange(1000) < 1 && !Flee && (Player.Instance.CountAlliesInRange(800) > 1 || Player.Instance.CountMinions() > 0)
                        && (Player.Instance.CountMinions(true) > 0 || AttackObject);
             }
         }
@@ -156,9 +152,9 @@
             get
             {
                 return !Player.Instance.IsUnderHisturret()
-                       && ((Misc.TeamTotal(Player.Instance.ServerPosition) < Misc.TeamTotal(Player.Instance.ServerPosition, true)
-                            && Player.Instance.CountAlliesInRange(800) < 2) || (Player.Instance.IsUnderEnemyturret() && !Misc.SafeToDive)
-                           || (Player.Instance.CountEnemiesInRange(800) > Player.Instance.CountAlliesInRange(800)) || (Player.Instance.HealthPercent < 15 && (Player.Instance.IsUnderEnemyturret() || Player.Instance.CountEnemiesInRange(1000) > 1)));
+                       && ((Misc.TeamTotal(Player.Instance.ServerPosition) < Misc.TeamTotal(Player.Instance.ServerPosition, true) && Player.Instance.CountAlliesInRange(800) < 2)
+                           || (Player.Instance.IsUnderEnemyturret() && !Misc.SafeToDive) || (Player.Instance.CountEnemiesInRange(800) > Player.Instance.CountAlliesInRange(800))
+                           || (Player.Instance.HealthPercent < 15 && (Player.Instance.IsUnderEnemyturret() || Player.Instance.CountEnemiesInRange(1000) > 1)));
             }
         }
 
@@ -180,12 +176,9 @@
         {
             get
             {
-                return (ObjectsManager.EnemyNexues != null
-                        && ObjectsManager.EnemyNexues.IsInRange(Player.Instance, Player.Instance.GetAutoAttackRange() + ObjectsManager.EnemyNexues.BoundingRadius))
-                       || (ObjectsManager.EnemyInhb != null
-                           && ObjectsManager.EnemyInhb.IsInRange(Player.Instance, Player.Instance.GetAutoAttackRange() + +ObjectsManager.EnemyInhb.BoundingRadius))
-                       || (ObjectsManager.EnemyTurret != null
-                           && ObjectsManager.EnemyTurret.IsInRange(Player.Instance, Player.Instance.GetAutoAttackRange() +ObjectsManager.EnemyTurret.BoundingRadius));
+                return (ObjectsManager.EnemyNexues != null && ObjectsManager.EnemyNexues.IsInRange(Player.Instance, Player.Instance.GetAutoAttackRange() + ObjectsManager.EnemyNexues.BoundingRadius))
+                       || (ObjectsManager.EnemyInhb != null && ObjectsManager.EnemyInhb.IsInRange(Player.Instance, Player.Instance.GetAutoAttackRange() + +ObjectsManager.EnemyInhb.BoundingRadius))
+                       || (ObjectsManager.EnemyTurret != null && ObjectsManager.EnemyTurret.IsInRange(Player.Instance, Player.Instance.GetAutoAttackRange() + ObjectsManager.EnemyTurret.BoundingRadius));
             }
         }
     }

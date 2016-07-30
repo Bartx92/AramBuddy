@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using EloBuddy;
 using EloBuddy.SDK;
 
@@ -19,7 +18,7 @@ namespace GenesisSpellLibrary.Spells
         public Dictionary<string, object> Options;
 
         public Dictionary<string, Func<AIHeroClient, Obj_AI_Base, bool>> LogicDictionary;
-        
+
         public bool QisCC = false;
 
         public bool QisDash = false;

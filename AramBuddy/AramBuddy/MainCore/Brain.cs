@@ -1,21 +1,15 @@
-﻿namespace AramBuddy.MainCore
+﻿using System.Linq;
+using AramBuddy.GenesisSpellDatabase;
+using AramBuddy.MainCore.Logics;
+using AramBuddy.MainCore.Utility;
+using EloBuddy;
+using EloBuddy.SDK;
+using EloBuddy.SDK.Events;
+using GenesisSpellLibrary;
+using SharpDX;
+
+namespace AramBuddy.MainCore
 {
-    using System.Linq;
-
-    using EloBuddy;
-    using EloBuddy.SDK;
-    using EloBuddy.SDK.Events;
-
-    using GenesisSpellDatabase;
-
-    using GenesisSpellLibrary;
-
-    using Logics;
-
-    using SharpDX;
-
-    using Utility;
-
     internal class Brain
     {
         /// <summary>

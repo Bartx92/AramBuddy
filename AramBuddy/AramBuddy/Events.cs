@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Events;
@@ -59,7 +58,7 @@ namespace AramBuddy
 
                         // Set gameEndNotified to true, as the event has been completed
                         gameEndNotified = true;
-                        
+
                         Console.WriteLine("Game ended!");
                     }
                 };

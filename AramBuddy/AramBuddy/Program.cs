@@ -1,24 +1,19 @@
-﻿using AramBuddy.AutoShop.Sequences;
+﻿using System;
+using System.Linq;
+using AramBuddy.AutoShop;
+using AramBuddy.MainCore;
+using AramBuddy.MainCore.Logics;
+using AramBuddy.MainCore.Utility;
+using EloBuddy;
+using EloBuddy.SDK;
+using EloBuddy.SDK.Events;
+using EloBuddy.SDK.Menu;
+using EloBuddy.SDK.Menu.Values;
+using EloBuddy.SDK.Rendering;
+using SharpDX;
 
 namespace AramBuddy
 {
-    using System;
-    using System.Linq;
-
-    using AramBuddy.AutoShop;
-    using AramBuddy.MainCore;
-    using AramBuddy.MainCore.Logics;
-    using AramBuddy.MainCore.Utility;
-
-    using EloBuddy;
-    using EloBuddy.SDK;
-    using EloBuddy.SDK.Events;
-    using EloBuddy.SDK.Menu;
-    using EloBuddy.SDK.Menu.Values;
-    using EloBuddy.SDK.Rendering;
-
-    using SharpDX;
-
     internal class Program
     {
         public static bool Loaded;
@@ -47,6 +42,8 @@ namespace AramBuddy
                 return;
             }
 
+            CheckVersion.Init();
+
             // Initialize the AutoShop.
             Setup.Init();
 
@@ -58,8 +55,8 @@ namespace AramBuddy
 
         private static void Events_OnGameEnd(EventArgs args)
         {
-            if(MenuIni["quit"].Cast<CheckBox>().CurrentValue)
-            Core.DelayAction(() => Game.QuitGame(), 10000);
+            if (MenuIni["quit"].Cast<CheckBox>().CurrentValue)
+                Core.DelayAction(() => Game.QuitGame(), 10000);
         }
 
         private static void Init()
@@ -71,7 +68,7 @@ namespace AramBuddy
             MenuIni.Add("quit", new CheckBox("Quit On Game End"));
             MenuIni.Add("Safe", new Slider("Safe Slider (Recommended 1250)", 1250, 0, 2500));
             MenuIni.AddLabel("More Value = more defensive playstyle");
-            
+
             // Initialize Bot Functions.
             Brain.Init();
 
@@ -81,14 +78,14 @@ namespace AramBuddy
 
         private static void Drawing_OnEndScene(EventArgs args)
         {
-            if (!MenuIni["debug"].Cast<CheckBox>().CurrentValue) return;
-                Drawing.DrawText(
+            if (!MenuIni["debug"].Cast<CheckBox>().CurrentValue)
+                return;
+            Drawing.DrawText(
                 Drawing.Width * 0.01f,
                 Drawing.Height * 0.025f,
                 System.Drawing.Color.White,
-                "AllyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.ServerPosition) + " | EnemyTeamTotal: "
-                + (int)Misc.TeamTotal(Player.Instance.ServerPosition, true) + " | MoveTo: " + Moveto + " | ActiveMode: " + Orbwalker.ActiveModesFlags
-                + " | Alone: " + Brain.Alone() + " | AttackObject: " + ModesManager.AttackObject + " | LastTurretAttack: "
+                "AllyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.ServerPosition) + " | EnemyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.ServerPosition, true) + " | MoveTo: " + Moveto
+                + " | ActiveMode: " + Orbwalker.ActiveModesFlags + " | Alone: " + Brain.Alone() + " | AttackObject: " + ModesManager.AttackObject + " | LastTurretAttack: "
                 + (Core.GameTickCount - Brain.LastTurretAttack) + " | SafeToDive: " + Misc.SafeToDive);
 
             Drawing.DrawText(
@@ -126,7 +123,7 @@ namespace AramBuddy
                 if (Game.Time - Timer >= 10)
                 {
                     Loaded = true;
-                    
+
                     // Initialize The Bot.
                     Init();
                 }

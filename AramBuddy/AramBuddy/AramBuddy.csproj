@@ -64,6 +64,7 @@
     <Compile Include="AutoShop\Sequences\Buy.cs" />
     <Compile Include="AutoShop\Sequences\Parse.cs" />
     <Compile Include="AutoShop\Setup.cs" />
+    <Compile Include="CheckVersion.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="GenesisSpellDatabase\SpellLibrary.cs" />
     <Compile Include="GenesisSpellDatabase\SpellManager.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="MainCore\Brain.cs" />
     <Compile Include="MainCore\Logics\SpellsCasting.cs" />
     <Compile Include="MainCore\Logics\ModesManager.cs" />
+    <Compile Include="MainCore\Utility\Logger.cs" />
     <Compile Include="MainCore\Utility\LvlupSpells.cs" />
     <Compile Include="MainCore\Utility\Misc.cs" />
     <Compile Include="MainCore\Utility\ObjectsManager.cs" />

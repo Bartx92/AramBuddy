@@ -1,16 +1,14 @@
-﻿namespace GenesisSpellLibrary
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AramBuddy.GenesisSpellDatabase;
+using AramBuddy.MainCore.Utility;
+using EloBuddy;
+using EloBuddy.SDK;
+using GenesisSpellLibrary.Spells;
+
+namespace GenesisSpellLibrary
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using AramBuddy.GenesisSpellDatabase;
-
-    using Spells;
-
-    using EloBuddy;
-    using EloBuddy.SDK;
-
     public static class SpellManager
     {
         static SpellManager()
@@ -23,12 +21,7 @@
             catch (Exception ex)
             {
                 // Exception has been cought; Notify the user of the error and print the exception to the console
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(
-                    DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Error] Exception occurred on initialization of Genesis SpellManager."
-                    + Environment.NewLine);
-                Console.ResetColor();
-                Console.Write(ex);
+                Logger.Send("Exception occurred on initialization of Genesis SpellManager.", ex, Logger.LogLevel.Error);
             }
         }
 
@@ -130,18 +123,13 @@
             catch (Exception ex)
             {
                 // Exception has been cought; Notify the user of the error and print the exception to the console
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(
-                    DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy Error] Exception occurred on PrepareSpells of Genesis SpellManager."
-                    + Environment.NewLine);
-                Console.ResetColor();
-                Console.Write(ex);
+                Logger.Send("Exception occurred on PrepareSpells of Genesis SpellManager.", ex, Logger.LogLevel.Error);
             }
         }
 
         public static void PrepareSpells(AIHeroClient hero)
         {
-            SpellBase spells = SpellLibrary.GetSpells(hero.Hero);
+            var spells = SpellLibrary.GetSpells(hero.Hero);
             //This only needs to be called once per champion, anymore is a memory leak.
             if (spells != null)
             {
