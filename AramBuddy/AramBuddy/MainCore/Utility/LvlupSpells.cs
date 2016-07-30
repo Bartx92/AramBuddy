@@ -111,7 +111,7 @@
         private static readonly List<string> MaxQChampions = new List<string>
                                                                  {
                                                                      "Ahri", "Akali", "Alistar", "Amumu", "Annie", "Ashe", "Azir", "Blitzcrank", "Bard",
-                                                                     "Braum", "Caitlyn", "Cassiopeia", "Cho'Gath", "Corki", "Darius", "Diana",
+                                                                     "Braum", "Caitlyn", "Cassiopeia", "ChoGath", "Corki", "Darius", "Diana",
                                                                      "DrMundo", "Draven", "Elise", "Ekko", "Evelynn", "Ezreal", "Fiora", "Fizz",
                                                                      "Galio", "Gangplank", "Gnar", "Gragas", "Hecarim", "Heimerdinger", "Illaoi",
                                                                      "Irelia", "Janna", "JarvanIV", "Jax", "Jayce", "Jhin", "Jinx", "Karma", "Karthus",
