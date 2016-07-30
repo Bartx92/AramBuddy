@@ -51,12 +51,12 @@ namespace AramBuddy.AutoShop
                 AramBuddy.Events.OnGameStart += Events_OnGameStart;
 
                 // Item Bought Event, reduce the temp value when we buy the item.
-                Events.OnBuyItem += delegate(Item item)
+                Events.OnBuyItem += delegate(int price)
                     {
                         Core.DelayAction(
                             () =>
                             {
-                                Buy.TempValue -= item.ItemInfo.Gold.Total;
+                                Buy.TempValue -= price;
 
                                 // Try to buy more than one item if we can afford it
                                 Buy.BuyNextItem(CurrentChampionBuild);

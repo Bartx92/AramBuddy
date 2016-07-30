@@ -29,8 +29,8 @@ namespace AramBuddy.AutoShop
         /// <summary>
         ///     A handler for the OnItemBought event
         /// </summary>
-        /// <param name="args">The arguments the event provides</param>
-        public delegate void OnItemBought(Item args);
+        /// <param name="price">The arguments the event provides</param>
+        public delegate void OnItemBought(int price);
 
         /// <summary>
         ///     A handler for the OnPlayerDeathHandler event
@@ -158,9 +158,9 @@ namespace AramBuddy.AutoShop
         /// </summary>
         public static event OnItemBought OnBuyItem;
 
-        public static void OnOnBuyItem(Item item)
+        public static void OnOnBuyItem(int price)
         {
-            OnBuyItem?.Invoke(item);
+            OnBuyItem?.Invoke(price);
         }
     }
 }

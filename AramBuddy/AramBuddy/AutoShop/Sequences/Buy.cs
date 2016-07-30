@@ -39,23 +39,26 @@ namespace AramBuddy.AutoShop.Sequences
                 // Get the item
                 var itemname = build.BuildData.ElementAt(GetIndex());
                 var item = Item.ItemData.FirstOrDefault(i => i.Value.Name == itemname);
+                var theitem = new Item(item.Key);
+                var ia = theitem.GetComponents().Where(a => !a.IsOwned(Player.Instance)).Sum(i => i.ItemInfo.Gold.Total);
+                var currentprice = theitem.ItemInfo.Gold.Base + ia;
 
                 // Check if we can buy the item
                 if ((item.Value != null) && (item.Key != null) && (item.Key != ItemId.Unknown) && item.Value.ValidForPlayer && item.Value.InStore && item.Value.Gold.Purchasable
-                    && item.Value.AvailableForMap && (Player.Instance.Gold - TempValue >= item.Value.Gold.Total))
+                    && item.Value.AvailableForMap && (Player.Instance.Gold - TempValue >= currentprice))
                 {
                     // Buy the actual item from the shop
-                    TempValue += item.Value.Gold.Total;
+                    TempValue += currentprice;
                     Shop.BuyItem(item.Key);
 
                     // Increment the static item index
                     IncrementIndex();
 
                     // Notify the user that the item has been bought and of the value of the item
-                    Logger.Send("Item bought: " + item.Value.Name + " - Item Value: " + item.Value.Gold.Total, Logger.LogLevel.Info);
+                    Logger.Send("Item bought: " + item.Value.Name + " - Item Value: " + currentprice, Logger.LogLevel.Info);
 
                     // Success
-                    Events.OnOnBuyItem(new Item(item.Key));
+                    Events.OnOnBuyItem(currentprice);
                     return true;
                 }
 
