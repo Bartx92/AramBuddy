@@ -56,14 +56,14 @@ namespace AramBuddy.MainCore
             if (HR != null)
             {
                 ObjectsManager.HealthRelics.Remove(HR);
-                Chat.Print("Removed HR");
+                Logger.Send("Removed HR", Logger.LogLevel.Info);
             }
 
             var trap = ObjectsManager.EnemyTraps.FirstOrDefault(h => EntityManager.Heroes.Allies.Any(a => !a.IsDead && !h.IsSpecial && a.IsInRange(h.Trap, h.Trap.BoundingRadius * 2)));
             if (trap.Trap != null)
             {
                 ObjectsManager.EnemyTraps.Remove(trap);
-                Chat.Print("remove trap");
+                Logger.Send("Removed trap", Logger.LogLevel.Info);
             }
         }
 

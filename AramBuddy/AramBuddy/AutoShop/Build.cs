@@ -137,7 +137,7 @@ namespace AramBuddy.AutoShop
         public static readonly string[] ManaAP =
             {
                 "Ahri", "Anivia", "Annie", "AurelioSol", "Azir", "Brand", "Cassiopeia", "Diana", "Elise", "Ekko", "Evelynn", "Fiddlesticks", "Fizz", "Galio",
-                "Gragas", "Heimerdinger", "Janna", "Karma", "Karthus", "Kassadin", "Kayle", "LeBlanc", "Lissandra", "Lulu", "Lux", "Malzahar", "Morgana", "Nami",
+                "Gragas", "Heimerdinger", "Janna", "Karma", "Karthus", "Kassadin", "Kayle", "Leblanc", "Lissandra", "Lulu", "Lux", "Malzahar", "Morgana", "Nami",
                 "Nidalee", "Ryze", "Orianna", "Sona", "Soraka", "Swain", "Syndra", "Taliyah", "Teemo", "TwistedFate", "Veigar", "Viktor", "VelKoz", "Xerath", "Ziggs",
                 "Zilean", "Zyra"
             };

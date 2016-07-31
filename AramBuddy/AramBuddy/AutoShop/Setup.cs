@@ -29,6 +29,11 @@ namespace AramBuddy.AutoShop
         public static readonly string TempPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp";
 
         /// <summary>
+        ///     Path to the temporary file which contains the in-game cache
+        /// </summary>
+        public static readonly string TempFile = TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat";
+
+        /// <summary>
         ///     A Dictionary that contains all the builds detected
         ///     in ChampionName:BuildData format
         /// </summary>
@@ -64,11 +69,20 @@ namespace AramBuddy.AutoShop
                             new Random().Next(450 - Game.Ping, 900 + Game.Ping));
                     };
 
+                AramBuddy.Events.OnGameEnd += delegate
+                {
+                    // Remove temp-file OnGameEnd
+                    if (File.Exists(TempFile))
+                    {
+                        File.Delete(TempFile);
+                    }
+                };
+
                 // Create the build path directory
                 Directory.CreateDirectory(BuildPath);
 
                 // Check if the index file exists
-                if (!File.Exists(TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
+                if (!File.Exists(TempFile))
                 {
                     // If not, create the index file
                     Buy.CreateIndexFile();
@@ -177,9 +191,9 @@ namespace AramBuddy.AutoShop
         private static void Events_OnGameStart(EventArgs args)
         {
             // Delete the index file if it exists
-            if (File.Exists(TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
+            if (File.Exists(TempFile))
             {
-                File.Delete(TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat");
+                File.Delete(TempFile);
             }
         }
 
@@ -190,9 +204,9 @@ namespace AramBuddy.AutoShop
         private static void Events_OnGameEnd(EventArgs args)
         {
             // Delete the index file if it exists
-            if (File.Exists(TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat"))
+            if (File.Exists(TempFile))
             {
-                File.Delete(TempPath + "\\buildindex" + Player.Instance.NetworkId + Game.GameId + ".dat");
+                File.Delete(TempFile);
             }
         }
 
