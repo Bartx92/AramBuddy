@@ -65,6 +65,7 @@ namespace AramBuddy.MainCore.Logics
         /// </summary>
         public static void ModesBase()
         {
+            if (Player.Instance.CountEnemiesInRange(1250) > 0 && Player.Instance.HealthPercent <= 25)
             {
                 if (SummonerSpells.Heal.IsReady() && Program.SpellsMenu["Heal"].Cast<CheckBox>().CurrentValue && SummonerSpells.Heal.Slot != SpellSlot.Unknown)
                 {
