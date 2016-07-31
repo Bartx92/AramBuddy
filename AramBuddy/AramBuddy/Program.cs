@@ -78,21 +78,21 @@ namespace AramBuddy
             SpellsMenu.Add("Flash", new CheckBox("Use Flash"));
             SpellsMenu.Add("Cleanse", new CheckBox("Use Cleanse"));
             SpellsMenu.AddSeparator(0);
-            SpellsMenu.AddGroupLabel("Combo");
-            SpellsMenu.Add("Q", new CheckBox("Use Q"));
-            SpellsMenu.Add("W", new CheckBox("Use W"));
-            SpellsMenu.Add("E", new CheckBox("Use E"));
-            SpellsMenu.Add("R", new CheckBox("Use R"));
+            SpellsMenu.AddGroupLabel("Combo - " + Player.Instance.Hero);
+            SpellsMenu.Add("Q" + Player.Instance.Hero, new CheckBox("Use Q"));
+            SpellsMenu.Add("W" + Player.Instance.Hero, new CheckBox("Use W"));
+            SpellsMenu.Add("E" + Player.Instance.Hero, new CheckBox("Use E"));
+            SpellsMenu.Add("R" + Player.Instance.Hero, new CheckBox("Use R"));
             SpellsMenu.AddSeparator(0);
-            SpellsMenu.AddGroupLabel("Harass");
-            SpellsMenu.Add("QHarass", new CheckBox("Use Q"));
-            SpellsMenu.Add("WHarass", new CheckBox("Use W"));
-            SpellsMenu.Add("EHarass", new CheckBox("Use E"));
+            SpellsMenu.AddGroupLabel("Harass - " + Player.Instance.Hero);
+            SpellsMenu.Add("QHarass" + Player.Instance.Hero, new CheckBox("Use Q"));
+            SpellsMenu.Add("WHarass" + Player.Instance.Hero, new CheckBox("Use W"));
+            SpellsMenu.Add("EHarass" + Player.Instance.Hero, new CheckBox("Use E"));
             SpellsMenu.AddSeparator(0);
-            SpellsMenu.AddGroupLabel("LaneClear");
-            SpellsMenu.Add("QLaneClear", new CheckBox("Use Q"));
-            SpellsMenu.Add("WLaneClear", new CheckBox("Use W"));
-            SpellsMenu.Add("ELaneClear", new CheckBox("Use E"));
+            SpellsMenu.AddGroupLabel("LaneClear - " + Player.Instance.Hero);
+            SpellsMenu.Add("QLaneClear" + Player.Instance.Hero, new CheckBox("Use Q"));
+            SpellsMenu.Add("WLaneClear" + Player.Instance.Hero, new CheckBox("Use W"));
+            SpellsMenu.Add("ELaneClear" + Player.Instance.Hero, new CheckBox("Use E"));
 
             // Initialize Bot Functions.
             Brain.Init();

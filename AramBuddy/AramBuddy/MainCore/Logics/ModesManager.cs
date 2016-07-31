@@ -69,7 +69,7 @@ namespace AramBuddy.MainCore.Logics
             {
                 if (Combo || (Harass && (Player.Instance.ManaPercent > 60 || Player.Instance.ManaPercent.Equals(0))))
                 {
-                    SpellsCasting.Casting(spell, TargetSelector.GetTarget(spell.Range, DamageType.Mixed), Program.SpellsMenu[spell.Slot.ToString() + Orbwalker.ActiveModesFlags].Cast<CheckBox>().CurrentValue);
+                    SpellsCasting.Casting(spell, TargetSelector.GetTarget(spell.Range, DamageType.Mixed), Program.SpellsMenu[spell.Slot.ToString() + Orbwalker.ActiveModesFlags + Player.Instance.Hero].Cast<CheckBox>().CurrentValue);
                 }
                 if (spell.Slot != SpellSlot.R)
                 {
@@ -80,7 +80,7 @@ namespace AramBuddy.MainCore.Logics
                             var minion in
                                 EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m.IsValidTarget(spell1.Range) && (Player.Instance.ManaPercent > 60 || Player.Instance.ManaPercent.Equals(0))))
                         {
-                            SpellsCasting.Casting(spell, minion, Program.SpellsMenu[spell.Slot.ToString() + Orbwalker.ActiveModesFlags].Cast<CheckBox>().CurrentValue);
+                            SpellsCasting.Casting(spell, minion, Program.SpellsMenu[spell.Slot.ToString() + Orbwalker.ActiveModesFlags + Player.Instance.Hero].Cast<CheckBox>().CurrentValue);
                         }
                     }
                 }
