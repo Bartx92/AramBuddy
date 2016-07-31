@@ -219,7 +219,7 @@ namespace AramBuddy.MainCore.Logics
 
                 // This to prevent Walking into walls, buildings or traps.
                 if (NavMesh.GetCollisionFlags(pos) == CollisionFlags.Wall || NavMesh.GetCollisionFlags(pos) == CollisionFlags.Building
-                    || ObjectsManager.EnemyTraps.Any(t => t.IsInRange(pos, t.BoundingRadius * 4)))
+                    || ObjectsManager.EnemyTraps.Any(t => t.Trap.IsInRange(pos, t.Trap.BoundingRadius * 2)))
                 {
                     return;
                 }

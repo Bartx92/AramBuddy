@@ -102,7 +102,7 @@ namespace AramBuddy
 
             foreach (var trap in ObjectsManager.EnemyTraps)
             {
-                Circle.Draw(Color.White, trap.BoundingRadius * 3, trap.Position);
+                Circle.Draw(Color.White, trap.Trap.BoundingRadius * 2, trap.Trap.Position);
             }
 
             if (Pathing.Position != null && Pathing.Position != Vector3.Zero)
@@ -114,6 +114,7 @@ namespace AramBuddy
             {
                 Circle.Draw(Color.Chartreuse, spell.Range, Player.Instance);
             }
+
             foreach (var chime in ObjectsManager.BardChimes.Where(c => Player.Instance.Hero == Champion.Bard && c.IsValid && !c.IsDead))
             {
                 Circle.Draw(Color.White, chime.BoundingRadius * 2, chime.Position);

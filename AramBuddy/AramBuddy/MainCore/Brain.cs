@@ -57,8 +57,8 @@ namespace AramBuddy.MainCore
                 Chat.Print("Removed HR");
             }
 
-            var trap = ObjectsManager.EnemyTraps.FirstOrDefault(h => EntityManager.Heroes.Allies.Any(a => !a.IsDead && a.IsInRange(h, h.BoundingRadius * 2)));
-            if (trap != null)
+            var trap = ObjectsManager.EnemyTraps.FirstOrDefault(h => EntityManager.Heroes.Allies.Any(a => !a.IsDead && !h.IsSpecial && a.IsInRange(h.Trap, h.Trap.BoundingRadius * 2)));
+            if (trap.Trap != null)
             {
                 ObjectsManager.EnemyTraps.Remove(trap);
                 Chat.Print("remove trap");
