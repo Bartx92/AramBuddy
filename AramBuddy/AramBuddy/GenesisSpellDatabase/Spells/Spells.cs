@@ -23,13 +23,13 @@ namespace GenesisSpellLibrary.Spells
 {
     public class Aatrox : SpellBase // Quality Tested, Genesis Approved
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Aatrox()
         {
@@ -57,13 +57,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Ahri : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Ahri()
         {
@@ -80,13 +80,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Akali : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Akali()
         {
@@ -101,13 +101,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Alistar : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Alistar()
         {
@@ -137,13 +137,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Amumu : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Amumu()
         {
@@ -159,13 +159,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Anivia : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Anivia()
         {
@@ -179,13 +179,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Annie : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Annie()
         {
@@ -210,13 +210,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Ashe : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Ashe()
         {
@@ -230,13 +230,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Azir : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Azir()
         {
@@ -251,13 +251,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Bard : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Bard()
         {
@@ -275,13 +275,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Blitzcrank : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Blitzcrank()
         {
@@ -296,13 +296,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Brand : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Brand()
         {
@@ -315,13 +315,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Braum : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Braum()
         {
@@ -338,13 +338,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Caitlyn : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Caitlyn()
         {
@@ -358,13 +358,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Cassiopeia : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Cassiopeia()
         {
@@ -378,13 +378,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Chogath : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Chogath()
         {
@@ -399,13 +399,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Corki : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Corki()
         {
@@ -420,13 +420,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Darius : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Darius()
         {
@@ -440,13 +440,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Diana : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Diana()
         {
@@ -461,13 +461,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class DrMundo : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public DrMundo()
         {
@@ -481,13 +481,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Draven : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Draven()
         {
@@ -502,13 +502,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Ekko : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Ekko()
         {
@@ -540,13 +540,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Evelynn : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Evelynn()
         {
@@ -560,13 +560,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Ezreal : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Ezreal()
         {
@@ -580,13 +580,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class FiddleSticks : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public FiddleSticks()
         {
@@ -601,13 +601,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Fiora : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Fiora()
         {
@@ -622,13 +622,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Fizz : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Fizz()
         {
@@ -643,13 +643,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Galio : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Galio()
         {
@@ -665,13 +665,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Gangplank : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Gangplank()
         {
@@ -686,13 +686,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Garen : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Garen()
         {
@@ -726,13 +726,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Gragas : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Gragas()
         {
@@ -747,13 +747,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Graves : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Graves()
         {
@@ -768,13 +768,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Hecarim : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Hecarim()
         {
@@ -787,13 +787,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Heimerdinger : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Heimerdinger()
         {
@@ -807,13 +807,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Illaoi : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Illaoi()
         {
@@ -826,13 +826,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Irelia : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Irelia()
         {
@@ -846,13 +846,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Janna : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Janna()
         {
@@ -869,13 +869,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class JarvanIV : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public JarvanIV()
         {
@@ -888,13 +888,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Jax : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Jax()
         {
@@ -941,13 +941,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Jinx : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Jinx()
         {
@@ -961,13 +961,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Kalista : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Kalista()
         {
@@ -982,13 +982,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Karma : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Karma()
         {
@@ -1004,13 +1004,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Karthus : SpellBase //Want to try
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Karthus()
         {
@@ -1024,13 +1024,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Kassadin : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Kassadin()
         {
@@ -1044,13 +1044,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Katarina : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Katarina()
         {
@@ -1063,13 +1063,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Kayle : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Kayle()
         {
@@ -1085,13 +1085,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Kennen : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Kennen()
         {
@@ -1104,13 +1104,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Khazix : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Khazix()
         {
@@ -1124,13 +1124,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Kindred : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Kindred()
         {
@@ -1145,13 +1145,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class KogMaw : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public KogMaw()
         {
@@ -1164,13 +1164,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Leblanc : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Leblanc()
         {
@@ -1184,13 +1184,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class LeeSin : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public LeeSin()
         {
@@ -1208,13 +1208,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Leona : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Leona()
         {
@@ -1228,13 +1228,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Lissandra : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Lissandra()
         {
@@ -1251,13 +1251,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Lucian : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Lucian()
         {
@@ -1270,13 +1270,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Lulu : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Lulu()
         {
@@ -1293,13 +1293,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Lux : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Lux()
         {
@@ -1314,13 +1314,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Malphite : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Malphite()
         {
@@ -1335,13 +1335,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Malzahar : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Malzahar()
         {
@@ -1356,13 +1356,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Maokai : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Maokai()
         {
@@ -1376,13 +1376,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class MasterYi : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public MasterYi()
         {
@@ -1396,13 +1396,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class MissFortune : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public MissFortune()
         {
@@ -1416,13 +1416,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Mordekaiser : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Mordekaiser()
         {
@@ -1435,13 +1435,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Morgana : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Morgana()
         {
@@ -1457,13 +1457,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Nami : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Nami()
         {
@@ -1479,13 +1479,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Nasus : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Nasus()
         {
@@ -1500,13 +1500,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Nautilus : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Nautilus()
         {
@@ -1539,13 +1539,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Nocturne : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Nocturne()
         {
@@ -1560,13 +1560,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Nunu : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Nunu()
         {
@@ -1580,13 +1580,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Olaf : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Olaf()
         {
@@ -1620,13 +1620,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Pantheon : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Pantheon()
         {
@@ -1640,13 +1640,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Poppy : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Poppy()
         {
@@ -1661,13 +1661,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Quinn : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Quinn()
         {
@@ -1681,13 +1681,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Rammus : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Rammus()
         {
@@ -1701,13 +1701,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class RekSai : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public RekSai()
         {
@@ -1720,13 +1720,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Renekton : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Renekton()
         {
@@ -1742,13 +1742,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Rengar : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Rengar()
         {
@@ -1762,13 +1762,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Riven : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Riven()
         {
@@ -1782,13 +1782,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Rumble : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Rumble()
         {
@@ -1803,13 +1803,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Ryze : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Ryze()
         {
@@ -1824,13 +1824,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Sejuani : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Sejuani()
         {
@@ -1845,13 +1845,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Shaco : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Shaco()
         {
@@ -1867,13 +1867,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Shen : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Shen()
         {
@@ -1890,13 +1890,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Shyvana : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Shyvana()
         {
@@ -1911,13 +1911,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Singed : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Singed()
         {
@@ -1933,13 +1933,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Sion : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Sion()
         {
@@ -1956,13 +1956,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Sivir : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Sivir()
         {
@@ -1977,13 +1977,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Skarner : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Skarner()
         {
@@ -1998,20 +1998,20 @@ namespace GenesisSpellLibrary.Spells
 
     public class Sona : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Sona()
         {
             this.Q = new Spell.Active(SpellSlot.Q, 850);
             this.W = new Spell.Active(SpellSlot.W, 1000);
             this.E = new Spell.Active(SpellSlot.E, 350);
-            this.R = new Spell.Skillshot(SpellSlot.R, 1000, SkillShotType.Circular, 250, 2400, 140) { AllowedCollisionCount = int.MaxValue };
+            this.R = new Spell.Skillshot(SpellSlot.R, 1000, SkillShotType.Linear, 250, 2400, 140) { AllowedCollisionCount = int.MaxValue };
             this.WisSaver = true;
             this.RisCC = true;
         }
@@ -2019,13 +2019,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Soraka : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Soraka()
         {
@@ -2042,13 +2042,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Swain : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Swain()
         {
@@ -2062,13 +2062,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Syndra : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Syndra()
         {
@@ -2083,13 +2083,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class TahmKench : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public TahmKench()
         {
@@ -2105,13 +2105,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Taliyah : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Taliyah()
         {
@@ -2124,13 +2124,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Talon : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Talon()
         {
@@ -2144,13 +2144,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Taric : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Taric()
         {
@@ -2165,13 +2165,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Teemo : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Teemo()
         {
@@ -2186,13 +2186,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Thresh : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Thresh()
         {
@@ -2209,13 +2209,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Tristana : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Tristana()
         {
@@ -2230,13 +2230,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Trundle : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Trundle()
         {
@@ -2250,13 +2250,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Tryndamere : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Tryndamere()
         {
@@ -2273,13 +2273,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class TwistedFate : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public TwistedFate()
         {
@@ -2292,13 +2292,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Twitch : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Twitch()
         {
@@ -2313,13 +2313,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Udyr : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Udyr()
         {
@@ -2334,13 +2334,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Urgot : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Urgot()
         {
@@ -2356,13 +2356,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Varus : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Varus()
         {
@@ -2378,13 +2378,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Vayne : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Vayne()
         {
@@ -2400,13 +2400,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Veigar : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Veigar()
         {
@@ -2420,13 +2420,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Velkoz : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Velkoz()
         {
@@ -2440,13 +2440,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Vi : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Vi()
         {
@@ -2463,13 +2463,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Viktor : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Viktor()
         {
@@ -2483,13 +2483,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Vladimir : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Vladimir()
         {
@@ -2503,13 +2503,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Volibear : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Volibear()
         {
@@ -2523,13 +2523,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Warwick : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Warwick()
         {
@@ -2543,13 +2543,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class MonkeyKing : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public MonkeyKing()
         {
@@ -2563,13 +2563,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Xerath : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Xerath()
         {
@@ -2583,13 +2583,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class XinZhao : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public XinZhao()
         {
@@ -2603,13 +2603,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Yasuo : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Yasuo()
         {
@@ -2624,13 +2624,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Yorick : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Yorick()
         {
@@ -2644,13 +2644,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Zac : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Zac()
         {
@@ -2667,13 +2667,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Zed : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Zed()
         {
@@ -2686,13 +2686,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Ziggs : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Ziggs()
         {
@@ -2707,13 +2707,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Zilean : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Zilean()
         {
@@ -2728,13 +2728,13 @@ namespace GenesisSpellLibrary.Spells
 
     public class Zyra : SpellBase
     {
-        public override sealed Spell.SpellBase Q { get; set; }
+        public sealed override Spell.SpellBase Q { get; set; }
 
-        public override sealed Spell.SpellBase W { get; set; }
+        public sealed override Spell.SpellBase W { get; set; }
 
-        public override sealed Spell.SpellBase E { get; set; }
+        public sealed override Spell.SpellBase E { get; set; }
 
-        public override sealed Spell.SpellBase R { get; set; }
+        public sealed override Spell.SpellBase R { get; set; }
 
         public Zyra()
         {

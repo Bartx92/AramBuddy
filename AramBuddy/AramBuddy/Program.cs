@@ -77,6 +77,7 @@ namespace AramBuddy
             SpellsMenu.Add("Ghost", new CheckBox("Use Ghost"));
             SpellsMenu.Add("Flash", new CheckBox("Use Flash"));
             SpellsMenu.Add("Cleanse", new CheckBox("Use Cleanse"));
+            /*
             SpellsMenu.AddSeparator(0);
             SpellsMenu.AddGroupLabel("Combo - " + Player.Instance.Hero);
             SpellsMenu.Add("Q" + Player.Instance.Hero, new CheckBox("Use Q"));
@@ -93,7 +94,7 @@ namespace AramBuddy
             SpellsMenu.Add("QLaneClear" + Player.Instance.Hero, new CheckBox("Use Q"));
             SpellsMenu.Add("WLaneClear" + Player.Instance.Hero, new CheckBox("Use W"));
             SpellsMenu.Add("ELaneClear" + Player.Instance.Hero, new CheckBox("Use E"));
-
+            */
             // Initialize Bot Functions.
             Brain.Init();
 

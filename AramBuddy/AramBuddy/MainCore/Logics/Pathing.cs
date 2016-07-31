@@ -49,7 +49,7 @@ namespace AramBuddy.MainCore.Logics
             }
 
             // Stays Under tower if the bot health under 15%.
-            if ((ModesManager.Flee || (Player.Instance.HealthPercent < 15 && Player.Instance.CountAlliesInRange(1250) < 3)) && EntityManager.Heroes.Enemies.Count(e => !e.IsDead) > 0)
+            if ((ModesManager.Flee || (Player.Instance.HealthPercent < 10 && Player.Instance.CountAlliesInRange(1300) < 3)) && EntityManager.Heroes.Enemies.Count(e => !e.IsDead) > 0)
             {
                 if (ObjectsManager.SafeAllyTurret != null)
                 {

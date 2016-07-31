@@ -1,1 +1,1 @@
-Added options to the Menu for Spells !
+Fixed bot stops moving randomly !
