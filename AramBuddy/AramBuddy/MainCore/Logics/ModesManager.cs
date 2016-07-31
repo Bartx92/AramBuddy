@@ -104,12 +104,12 @@ namespace AramBuddy.MainCore.Logics
                     }
                 }
             }
-            /*
+
             if (Player.Instance.ManaPercent < 50 && SummonerSpells.Clarity.IsReady() && SummonerSpells.Clarity.Slot != SpellSlot.Unknown)
             {
                 SummonerSpells.Clarity.Cast();
             }
-            */
+
             if (Flee)
             {
                 if (SummonerSpells.Ghost.IsReady() && SummonerSpells.Ghost.Slot != SpellSlot.Unknown && Player.Instance.CountEnemiesInRange(800) > 0)
