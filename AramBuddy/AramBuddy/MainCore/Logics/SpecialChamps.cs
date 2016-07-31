@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using EloBuddy;
+using EloBuddy.SDK;
 
 namespace AramBuddy.MainCore.Logics
 {
@@ -57,6 +58,8 @@ namespace AramBuddy.MainCore.Logics
 
         private static void Game_OnTick(EventArgs args)
         {
+            Orbwalker.DisableAttacking = IsCastingImportantSpell;
+            Orbwalker.DisableMovement = IsCastingImportantSpell;
             if (!Player.Instance.Spellbook.IsChanneling && !Player.Instance.Spellbook.IsCharging && !Player.Instance.Spellbook.IsCastingSpell && IsCastingImportantSpell)
             {
                 IsCastingImportantSpell = false;
