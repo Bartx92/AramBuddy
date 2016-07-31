@@ -22,10 +22,6 @@ namespace AramBuddy.MainCore.Logics
 
             if (!Program.MenuIni["DisableSpells"].Cast<CheckBox>().CurrentValue)
             {
-                if (SummonerSpells.Heal.IsReady() && Player.Instance.HealthPercent < 15)
-                {
-                    SummonerSpells.Heal.Cast();
-                }
                 ModesBase();
             }
 
@@ -94,16 +90,40 @@ namespace AramBuddy.MainCore.Logics
                 }
             }
 
+            if (Player.Instance.CountEnemiesInRange(750) > 0 && Player.Instance.HealthPercent <= 15)
+            {
+                if (SummonerSpells.Heal.IsReady() & SummonerSpells.Heal.Slot != SpellSlot.Unknown)
+                {
+                    SummonerSpells.Heal.Cast();
+                }
+                else
+                {
+                    if (SummonerSpells.Barrier.IsReady() && SummonerSpells.Barrier.Slot != SpellSlot.Unknown)
+                    {
+                        SummonerSpells.Barrier.Cast();
+                    }
+                }
+            }
+            /*
+            if (Player.Instance.ManaPercent < 50 && SummonerSpells.Clarity.IsReady() && SummonerSpells.Clarity.Slot != SpellSlot.Unknown)
+            {
+                SummonerSpells.Clarity.Cast();
+            }
+            */
             if (Flee)
             {
-                if (SummonerSpells.Ghost.IsReady())
+                if (SummonerSpells.Ghost.IsReady() && SummonerSpells.Ghost.Slot != SpellSlot.Unknown && Player.Instance.CountEnemiesInRange(800) > 0)
                 {
                     SummonerSpells.Ghost.Cast();
                 }
-                if (SummonerSpells.Flash.IsReady() && Player.Instance.HealthPercent < 20 && ObjectsManager.AllyNexues != null)
+                if (SummonerSpells.Flash.IsReady() && SummonerSpells.Flash.Slot != SpellSlot.Unknown && Player.Instance.HealthPercent < 20 && ObjectsManager.AllySpawn != null)
                 {
-                    SummonerSpells.Flash.Cast(Player.Instance.ServerPosition.Extend(ObjectsManager.AllyNexues, SummonerSpells.Flash.Range).To3D());
+                    SummonerSpells.Flash.Cast(Player.Instance.ServerPosition.Extend(ObjectsManager.AllySpawn, SummonerSpells.Flash.Range).To3D());
                 }
+            }
+            if (SummonerSpells.Cleanse.IsReady() && SummonerSpells.Cleanse.Slot != SpellSlot.Unknown && Player.Instance.IsCC() && Player.Instance.CountEnemiesInRange(1250) > 0 && Player.Instance.HealthPercent <= 80)
+            {
+                SummonerSpells.Cleanse.Cast();
             }
         }
 

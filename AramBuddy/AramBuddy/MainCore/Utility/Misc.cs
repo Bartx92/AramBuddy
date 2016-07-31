@@ -10,6 +10,15 @@ namespace AramBuddy.MainCore.Utility
     internal static class Misc
     {
         /// <summary>
+        ///     Returns true if target Is CC'D.
+        /// </summary>
+        public static bool IsCC(this Obj_AI_Base target)
+        {
+            return !target.CanMove || target.HasBuffOfType(BuffType.Charm) || target.HasBuffOfType(BuffType.Knockback) || target.HasBuffOfType(BuffType.Knockup) || target.HasBuffOfType(BuffType.Fear)
+                   || target.HasBuffOfType(BuffType.Snare) || target.HasBuffOfType(BuffType.Stun) || target.HasBuffOfType(BuffType.Suppression) || target.HasBuffOfType(BuffType.Taunt) || target.HasBuffOfType(BuffType.Sleep);
+        }
+
+        /// <summary>
         ///     Returns teams totals - used for picking best fights.
         /// </summary>
         public static float TeamTotal(Vector3 Position, bool Enemy = false)

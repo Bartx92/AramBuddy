@@ -1,1 +1,1 @@
-Added More traps for the bot to Avoid !
+Fixed the bot moving while casting important spell !

@@ -20,8 +20,10 @@ namespace AramBuddy.MainCore
             // Initialize Genesis Spell Library.
             SpellManager.Initialize();
             SpellLibrary.Initialize();
+
             ObjectsManager.Init();
 
+            SpecialChamps.Init();
             // Overrides Orbwalker Movements
             Orbwalker.OverrideOrbwalkPosition = OverrideOrbwalkPosition;
 
