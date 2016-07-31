@@ -11,9 +11,9 @@ namespace AramBuddy.MainCore.Logics
         /// <summary>
         ///     Casting Logic.
         /// </summary>
-        public static void Casting(Spell.SpellBase spellBase, Obj_AI_Base target)
+        public static void Casting(Spell.SpellBase spellBase, Obj_AI_Base target, bool Enabled = true)
         {
-            if (spellBase == null || target == null)
+            if (spellBase == null || target == null || !Enabled)
                 return;
 
             if (spellBase.IsDash())
@@ -118,7 +118,7 @@ namespace AramBuddy.MainCore.Logics
                 return;
             }
 
-            foreach (var spell in ModesManager.Spelllist.Where(s => s.IsSaver() && s.IsReady()))
+            foreach (var spell in ModesManager.Spelllist.Where(s => s != null && s.IsSaver() && s.IsReady()))
             {
                 var caster = sender;
                 var enemy = sender as AIHeroClient;
@@ -166,7 +166,7 @@ namespace AramBuddy.MainCore.Logics
                 return;
             }
 
-            foreach (var spell in ModesManager.Spelllist.Where(s => s.IsSaver() && s.IsReady()))
+            foreach (var spell in ModesManager.Spelllist.Where(s => s != null && s.IsSaver() && s.IsReady()))
             {
                 var caster = sender;
                 var target = (AIHeroClient)args.Target;

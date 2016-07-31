@@ -916,9 +916,10 @@ namespace GenesisSpellLibrary.Spells
 
         public Jayce()
         {
-            this.Q = new Spell.Skillshot(SpellSlot.Q, 600, SkillShotType.Linear, 250, 1000, 80) { AllowedCollisionCount = 0 };
-            this.W = new Spell.Active(SpellSlot.W, 700);
-            this.E = new Spell.Skillshot(SpellSlot.E, 325, SkillShotType.Circular, 250, 1000, 200);
+            Q = new Spell.Targeted(SpellSlot.Q, 600);
+            W = new Spell.Active(SpellSlot.W, 285);
+            E = new Spell.Targeted(SpellSlot.E, 240);
+            this.EisCC = true;
         }
     } // TODO: FUCK THERE ARE 3 OF YOU?!
 

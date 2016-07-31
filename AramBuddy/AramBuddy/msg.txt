@@ -1,1 +1,1 @@
-Fixed the bot moving while casting important spell !
+Added options to the Menu for Spells !

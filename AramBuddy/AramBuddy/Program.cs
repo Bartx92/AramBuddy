@@ -26,7 +26,7 @@ namespace AramBuddy
 
         public static bool Moving;
 
-        public static Menu MenuIni;
+        public static Menu MenuIni, SpellsMenu;
 
         private static void Main(string[] args)
         {
@@ -62,13 +62,38 @@ namespace AramBuddy
         private static void Init()
         {
             MenuIni = MainMenu.AddMenu("AramBuddy", "AramBuddy");
+            SpellsMenu = MenuIni.AddSubMenu("Spells");
             MenuIni.AddGroupLabel("AramBuddy Settings");
             MenuIni.Add("debug", new CheckBox("Enable Debugging Mode", false));
             MenuIni.Add("DisableSpells", new CheckBox("Disable Built-in Casting Logic", false));
             MenuIni.Add("quit", new CheckBox("Quit On Game End"));
             MenuIni.Add("Safe", new Slider("Safe Slider (Recommended 1250)", 1250, 0, 2500));
             MenuIni.AddLabel("More Value = more defensive playstyle");
-            
+
+            SpellsMenu.AddGroupLabel("SummonerSpells");
+            SpellsMenu.Add("Heal", new CheckBox("Use Heal"));
+            SpellsMenu.Add("Barrier", new CheckBox("Use Barrier"));
+            SpellsMenu.Add("Clarity", new CheckBox("Use Clarity"));
+            SpellsMenu.Add("Ghost", new CheckBox("Use Ghost"));
+            SpellsMenu.Add("Flash", new CheckBox("Use Flash"));
+            SpellsMenu.Add("Cleanse", new CheckBox("Use Cleanse"));
+            SpellsMenu.AddSeparator(0);
+            SpellsMenu.AddGroupLabel("Combo");
+            SpellsMenu.Add("Q", new CheckBox("Use Q"));
+            SpellsMenu.Add("W", new CheckBox("Use W"));
+            SpellsMenu.Add("E", new CheckBox("Use E"));
+            SpellsMenu.Add("R", new CheckBox("Use R"));
+            SpellsMenu.AddSeparator(0);
+            SpellsMenu.AddGroupLabel("Harass");
+            SpellsMenu.Add("QHarass", new CheckBox("Use Q"));
+            SpellsMenu.Add("WHarass", new CheckBox("Use W"));
+            SpellsMenu.Add("EHarass", new CheckBox("Use E"));
+            SpellsMenu.AddSeparator(0);
+            SpellsMenu.AddGroupLabel("LaneClear");
+            SpellsMenu.Add("QLaneClear", new CheckBox("Use Q"));
+            SpellsMenu.Add("WLaneClear", new CheckBox("Use W"));
+            SpellsMenu.Add("ELaneClear", new CheckBox("Use E"));
+
             // Initialize Bot Functions.
             Brain.Init();
 

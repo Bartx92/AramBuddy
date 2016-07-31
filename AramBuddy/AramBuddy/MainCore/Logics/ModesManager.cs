@@ -14,7 +14,7 @@ namespace AramBuddy.MainCore.Logics
     {
         protected static SpellBase Spell => SpellManager.CurrentSpells;
 
-        public static List<Spell.SpellBase> Spelllist = new List<Spell.SpellBase>() { Spell.Q, Spell.W, Spell.E, Spell.R };
+        public static List<Spell.SpellBase> Spelllist = new List<Spell.SpellBase> { Spell.Q, Spell.W, Spell.E, Spell.R };
 
         public static void OnTick()
         {
@@ -69,7 +69,7 @@ namespace AramBuddy.MainCore.Logics
             {
                 if (Combo || (Harass && (Player.Instance.ManaPercent > 60 || Player.Instance.ManaPercent.Equals(0))))
                 {
-                    SpellsCasting.Casting(spell, TargetSelector.GetTarget(spell.Range, DamageType.Mixed));
+                    SpellsCasting.Casting(spell, TargetSelector.GetTarget(spell.Range, DamageType.Mixed), Program.SpellsMenu[spell.Slot.ToString() + Orbwalker.ActiveModesFlags].Cast<CheckBox>().CurrentValue);
                 }
                 if (spell.Slot != SpellSlot.R)
                 {
@@ -80,7 +80,7 @@ namespace AramBuddy.MainCore.Logics
                             var minion in
                                 EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m.IsValidTarget(spell1.Range) && (Player.Instance.ManaPercent > 60 || Player.Instance.ManaPercent.Equals(0))))
                         {
-                            SpellsCasting.Casting(spell, minion);
+                            SpellsCasting.Casting(spell, minion, Program.SpellsMenu[spell.Slot.ToString() + Orbwalker.ActiveModesFlags].Cast<CheckBox>().CurrentValue);
                         }
                     }
                 }
@@ -92,36 +92,36 @@ namespace AramBuddy.MainCore.Logics
 
             if (Player.Instance.CountEnemiesInRange(750) > 0 && Player.Instance.HealthPercent <= 15)
             {
-                if (SummonerSpells.Heal.IsReady() & SummonerSpells.Heal.Slot != SpellSlot.Unknown)
+                if (SummonerSpells.Heal.IsReady() && Program.SpellsMenu["Heal"].Cast<CheckBox>().CurrentValue && SummonerSpells.Heal.Slot != SpellSlot.Unknown)
                 {
                     SummonerSpells.Heal.Cast();
                 }
                 else
                 {
-                    if (SummonerSpells.Barrier.IsReady() && SummonerSpells.Barrier.Slot != SpellSlot.Unknown)
+                    if (SummonerSpells.Barrier.IsReady() && Program.SpellsMenu["Barrier"].Cast<CheckBox>().CurrentValue && SummonerSpells.Barrier.Slot != SpellSlot.Unknown)
                     {
                         SummonerSpells.Barrier.Cast();
                     }
                 }
             }
 
-            if (Player.Instance.ManaPercent < 50 && SummonerSpells.Clarity.IsReady() && SummonerSpells.Clarity.Slot != SpellSlot.Unknown)
+            if (Player.Instance.ManaPercent < 50 && SummonerSpells.Clarity.IsReady() && Program.SpellsMenu["Clarity"].Cast<CheckBox>().CurrentValue && SummonerSpells.Clarity.Slot != SpellSlot.Unknown)
             {
                 SummonerSpells.Clarity.Cast();
             }
 
             if (Flee)
             {
-                if (SummonerSpells.Ghost.IsReady() && SummonerSpells.Ghost.Slot != SpellSlot.Unknown && Player.Instance.CountEnemiesInRange(800) > 0)
+                if (SummonerSpells.Ghost.IsReady() && Program.SpellsMenu["Ghost"].Cast<CheckBox>().CurrentValue && SummonerSpells.Ghost.Slot != SpellSlot.Unknown && Player.Instance.CountEnemiesInRange(800) > 0)
                 {
                     SummonerSpells.Ghost.Cast();
                 }
-                if (SummonerSpells.Flash.IsReady() && SummonerSpells.Flash.Slot != SpellSlot.Unknown && Player.Instance.HealthPercent < 20 && ObjectsManager.AllySpawn != null)
+                if (SummonerSpells.Flash.IsReady() && Program.SpellsMenu["Flash"].Cast<CheckBox>().CurrentValue && SummonerSpells.Flash.Slot != SpellSlot.Unknown && Player.Instance.HealthPercent < 20 && ObjectsManager.AllySpawn != null)
                 {
                     SummonerSpells.Flash.Cast(Player.Instance.ServerPosition.Extend(ObjectsManager.AllySpawn, SummonerSpells.Flash.Range).To3D());
                 }
             }
-            if (SummonerSpells.Cleanse.IsReady() && SummonerSpells.Cleanse.Slot != SpellSlot.Unknown && Player.Instance.IsCC() && Player.Instance.CountEnemiesInRange(1250) > 0 && Player.Instance.HealthPercent <= 80)
+            if (SummonerSpells.Cleanse.IsReady() && Program.SpellsMenu["Cleanse"].Cast<CheckBox>().CurrentValue && SummonerSpells.Cleanse.Slot != SpellSlot.Unknown && Player.Instance.IsCC() && Player.Instance.CountEnemiesInRange(1250) > 0 && Player.Instance.HealthPercent <= 80)
             {
                 SummonerSpells.Cleanse.Cast();
             }
