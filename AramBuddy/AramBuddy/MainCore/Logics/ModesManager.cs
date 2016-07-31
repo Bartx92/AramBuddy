@@ -65,32 +65,6 @@ namespace AramBuddy.MainCore.Logics
         /// </summary>
         public static void ModesBase()
         {
-            foreach (var spell in Spelllist.Where(s => s != null && s.IsReady() && !s.IsSaver()))
-            {
-                if (Combo || (Harass && (Player.Instance.ManaPercent > 60 || Player.Instance.ManaPercent.Equals(0))))
-                {
-                    SpellsCasting.Casting(spell, TargetSelector.GetTarget(spell.Range, DamageType.Mixed));
-                }
-                if (spell.Slot != SpellSlot.R)
-                {
-                    if (LaneClear)
-                    {
-                        var spell1 = spell;
-                        foreach (
-                            var minion in
-                                EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m.IsValidTarget(spell1.Range) && (Player.Instance.ManaPercent > 60 || Player.Instance.ManaPercent.Equals(0))))
-                        {
-                            SpellsCasting.Casting(spell, minion);
-                        }
-                    }
-                }
-                if (Flee && spell.IsCC() && spell.IsReady())
-                {
-                    SpellsCasting.Casting(spell, TargetSelector.GetTarget(spell.Range, DamageType.Mixed));
-                }
-            }
-
-            if (Player.Instance.CountEnemiesInRange(750) > 0 && Player.Instance.HealthPercent <= 15)
             {
                 if (SummonerSpells.Heal.IsReady() && Program.SpellsMenu["Heal"].Cast<CheckBox>().CurrentValue && SummonerSpells.Heal.Slot != SpellSlot.Unknown)
                 {
@@ -124,6 +98,30 @@ namespace AramBuddy.MainCore.Logics
             if (SummonerSpells.Cleanse.IsReady() && Program.SpellsMenu["Cleanse"].Cast<CheckBox>().CurrentValue && SummonerSpells.Cleanse.Slot != SpellSlot.Unknown && Player.Instance.IsCC() && Player.Instance.CountEnemiesInRange(1250) > 0 && Player.Instance.HealthPercent <= 80)
             {
                 SummonerSpells.Cleanse.Cast();
+            }
+            foreach (var spell in Spelllist.Where(s => s != null && s.IsReady() && !s.IsSaver()))
+            {
+                if (Combo || (Harass && (Player.Instance.ManaPercent > 60 || Player.Instance.ManaPercent.Equals(0))))
+                {
+                    SpellsCasting.Casting(spell, TargetSelector.GetTarget(spell.Range, DamageType.Mixed));
+                }
+                if (spell.Slot != SpellSlot.R)
+                {
+                    if (LaneClear)
+                    {
+                        var spell1 = spell;
+                        foreach (
+                            var minion in
+                                EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m.IsValidTarget(spell1.Range) && (Player.Instance.ManaPercent > 60 || Player.Instance.ManaPercent.Equals(0))))
+                        {
+                            SpellsCasting.Casting(spell, minion);
+                        }
+                    }
+                }
+                if (Flee && spell.IsCC() && spell.IsReady())
+                {
+                    SpellsCasting.Casting(spell, TargetSelector.GetTarget(spell.Range, DamageType.Mixed));
+                }
             }
         }
 

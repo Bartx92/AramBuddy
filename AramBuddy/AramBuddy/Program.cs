@@ -121,7 +121,7 @@ namespace AramBuddy
                 (Misc.TeamTotal(Game.CursorPos) - Misc.TeamTotal(Game.CursorPos, true)).ToString(),
                 5);
 
-            foreach (var hr in ObjectsManager.HealthRelics.Where(h => h.IsValid))
+            foreach (var hr in ObjectsManager.HealthRelics.Where(h => h.IsValid && !h.IsDead))
             {
                 Circle.Draw(Color.White, hr.BoundingRadius * 2, hr.Position);
             }

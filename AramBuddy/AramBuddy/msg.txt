@@ -1,1 +1,1 @@
-Fixed bot stops moving randomly !
+Fixed bard Health Shrines and Chimes detection !

@@ -44,6 +44,12 @@ namespace AramBuddy.MainCore.Utility
                 }
             }
 
+            Game.OnTick += delegate
+            {
+                BardChimes.AddRange(ObjectManager.Get<GameObject>().Where(o => o.Name.ToLower().Contains("bardchimeminion") && o.IsAlly && o.IsValid && !o.IsDead).Where(hr => hr != null && !BardChimes.Contains(hr) && Logger.Send("Added " + hr.Name, Logger.LogLevel.Info)));
+                HealthRelics.AddRange(ObjectManager.Get<GameObject>().Where(o => o.Name.ToLower().Contains("bardhealthshrine") && o.IsAlly && o.IsValid && !o.IsDead).Where(hr => hr != null && !HealthRelics.Contains(hr) && Logger.Send("Added " + hr.Name, Logger.LogLevel.Info)));
+            };
+
             GameObject.OnCreate += GameObject_OnCreate;
             GameObject.OnDelete += GameObject_OnDelete;
         }
@@ -54,37 +60,25 @@ namespace AramBuddy.MainCore.Utility
         public static void GameObject_OnCreate(GameObject sender, EventArgs args)
         {
             var caster = sender as Obj_AI_Base;
-            if(caster == null) return;
-            if (caster.Name.ToLower().Contains("healthrelic"))
+            if (caster != null)
             {
-                HealthRelics.Add(caster);
-                Logger.Send("Create healthrelic", Logger.LogLevel.Info);
+                if (TrapsNames.Contains(sender.Name) && sender.IsEnemy)
+                {
+                    var trap = new traps { Trap = caster, IsSpecial = false };
+                    EnemyTraps.Add(trap);
+                    Logger.Send("Create " + sender.Name, Logger.LogLevel.Info);
+                }
+                if (SpecialTrapsNames.Contains(caster.Name) && caster.IsEnemy)
+                {
+                    var trap = new traps { Trap = caster, IsSpecial = true };
+                    EnemyTraps.Add(trap);
+                    Logger.Send("Create " + sender.Name, Logger.LogLevel.Info);
+                }
             }
-
-            if (TrapsNames.Contains(sender.Name) && sender.IsEnemy)
+            if (sender.Name.ToLower().Contains("healthrelic"))
             {
-                var trap = new traps { Trap = caster, IsSpecial = false };
-                EnemyTraps.Add(trap);
-                Logger.Send("Create Trap", Logger.LogLevel.Info);
-            }
-
-            if (caster.Name.ToLower().Contains("bardhealthshrine") && sender.IsAlly)
-            {
-                HealthRelics.Remove(caster);
-                Logger.Send("Create BardHealthShrine", Logger.LogLevel.Info);
-            }
-
-            if (caster.Name.ToLower().Contains("bardchimeminion") && caster.IsAlly)
-            {
-                HealthRelics.Remove(caster);
-                Logger.Send("Create BardcChimeMinion", Logger.LogLevel.Info);
-            }
-
-            if (SpecialTrapsNames.Contains(caster.Name) && caster.IsEnemy)
-            {
-                var trap = new traps { Trap = caster, IsSpecial = true };
-                EnemyTraps.Add(trap);
-                Logger.Send("Create Special Trap", Logger.LogLevel.Info);
+                HealthRelics.Add(sender);
+                Logger.Send("Create  " + sender.Name, Logger.LogLevel.Info);
             }
         }
 
@@ -94,33 +88,25 @@ namespace AramBuddy.MainCore.Utility
         public static void GameObject_OnDelete(GameObject sender, EventArgs args)
         {
             var caster = sender as Obj_AI_Base;
-            if (caster == null) return;
-            var trap = new traps { Trap = caster, IsSpecial = false };
-            var Specialtrap = new traps { Trap = caster, IsSpecial = true };
-            if (caster.Name.ToLower().Contains("healthrelic"))
+            if (caster != null)
             {
-                HealthRelics.Remove(caster);
-                Logger.Send("Delete healthrelic", Logger.LogLevel.Info);
+                var trap = new traps { Trap = caster, IsSpecial = false };
+                var Specialtrap = new traps { Trap = caster, IsSpecial = true };
+                if (EnemyTraps.Contains(trap) && caster.IsEnemy)
+                {
+                    EnemyTraps.Remove(trap);
+                    Logger.Send("Delete " + sender.Name, Logger.LogLevel.Info);
+                    if (EnemyTraps.Contains(Specialtrap) && caster.IsEnemy)
+                    {
+                        EnemyTraps.Remove(Specialtrap);
+                        Logger.Send("Delete " + sender.Name, Logger.LogLevel.Info);
+                    }
+                }
             }
-            if (EnemyTraps.Contains(trap) && caster.IsEnemy)
+            if (sender.Name.ToLower().Contains("healthrelic"))
             {
-                EnemyTraps.Remove(trap);
-                Logger.Send("Delete Trap", Logger.LogLevel.Info);
-            }
-            if (caster.Name.ToLower().Contains("bardhealthshrine") && caster.IsAlly)
-            {
-                HealthRelics.Remove(caster);
-                Logger.Send("Delete BardHealthShrine", Logger.LogLevel.Info);
-            }
-            if (caster.Name.ToLower().Contains("bardchimeminion") && caster.IsAlly)
-            {
-                HealthRelics.Remove(caster);
-                Logger.Send("Delete BardcChimeMinion", Logger.LogLevel.Info);
-            }
-            if (EnemyTraps.Contains(Specialtrap) && caster.IsEnemy)
-            {
-                EnemyTraps.Remove(Specialtrap);
-                Logger.Send("Delete Special Trap", Logger.LogLevel.Info);
+                HealthRelics.Remove(sender);
+                Logger.Send("Delete " + sender.Name, Logger.LogLevel.Info);
             }
         }
 

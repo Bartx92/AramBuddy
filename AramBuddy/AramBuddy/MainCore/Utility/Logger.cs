@@ -12,7 +12,7 @@ namespace AramBuddy.MainCore.Utility
             Warn
         }
 
-        public static void Send(string str, LogLevel level)
+        public static bool Send(string str, LogLevel level)
         {
             var date = DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy ";
             var text = string.Empty;
@@ -33,6 +33,7 @@ namespace AramBuddy.MainCore.Utility
             }
             Console.WriteLine(text + str);
             Console.ResetColor();
+            return true;
         }
 
         public static void Send(string str, Exception ex, LogLevel level)
