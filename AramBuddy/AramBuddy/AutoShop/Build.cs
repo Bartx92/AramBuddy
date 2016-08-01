@@ -27,27 +27,32 @@ namespace AramBuddy.AutoShop
         {
             var ChampionName = Player.Instance.ChampionName;
 
-            if (ADC.Contains(ChampionName))
+            if(ChampionName.Equals("MonkeyKing", StringComparison.CurrentCultureIgnoreCase))
+            {
+                ChampionName = "Wukong";
+            }
+
+            if (ADC.Any(s => s.Equals(ChampionName, StringComparison.CurrentCultureIgnoreCase)))
             {
                 return "ADC";
             }
 
-            if (AD.Contains(ChampionName))
+            if (AD.Any(s => s.Equals(ChampionName, StringComparison.CurrentCultureIgnoreCase)))
             {
                 return "AD";
             }
 
-            if (AP.Contains(ChampionName))
+            if (AP.Any(s => s.Equals(ChampionName, StringComparison.CurrentCultureIgnoreCase)))
             {
                 return "AP";
             }
 
-            if (ManaAP.Contains(ChampionName))
+            if (ManaAP.Any(s => s.Equals(ChampionName, StringComparison.CurrentCultureIgnoreCase)))
             {
                 return "ManaAP";
             }
 
-            if (Tank.Contains(ChampionName))
+            if (Tank.Any(s => s.Equals(ChampionName, StringComparison.CurrentCultureIgnoreCase)))
             {
                 return "Tank";
             }

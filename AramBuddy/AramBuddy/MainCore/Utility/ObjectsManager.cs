@@ -189,6 +189,22 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
+        ///     Returns a Melee Ally Fighting an Enemy.
+        /// </summary>
+        public static AIHeroClient MeleeAllyFighting
+        {
+            get
+            {
+                AIHeroClient ally = null;
+                if (NearestEnemy != null)
+                {
+                    ally = EntityManager.Heroes.Allies.OrderBy(a => a.Distance(NearestEnemy)).FirstOrDefault(a => a.IsValidTarget() && a.IsAttackingPlayer && !a.IsMe && a.IsMelee && a.HealthPercent > 15);
+                }
+                return ally;
+            }
+        }
+
+        /// <summary>
         ///     Returns Best Allies To Follow.
         /// </summary>
         public static IEnumerable<AIHeroClient> BestAlliesToFollow

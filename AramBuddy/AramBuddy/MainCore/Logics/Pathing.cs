@@ -30,7 +30,7 @@ namespace AramBuddy.MainCore.Logics
             if ((Player.Instance.HealthPercent < 75 || (Player.Instance.ManaPercent < 15 && Player.Instance.Mana > 0)) && ObjectsManager.HealthRelic != null)
             {
                 var rect = new Geometry.Polygon.Rectangle(Player.Instance.ServerPosition, ObjectsManager.HealthRelic.Position, 400);
-                if ((rect.Points.Any(p => p.UnderEnemyTurret() && Misc.SafeToDive)  || rect.Points.Any(p => !p.UnderEnemyTurret())) && !EntityManager.Heroes.Enemies.Any(e => rect.IsInside(e) && e.IsValidTarget() && !e.IsDead))
+                if ((rect.Points.Any(p => p.UnderEnemyTurret() && Misc.SafeToDive)  || rect.Points.Any(p => !p.UnderEnemyTurret())) && !EntityManager.Heroes.Enemies.Any(e => rect.IsInside(e.PrediectPosition()) && e.IsValidTarget() && !e.IsDead))
                 {
                     Program.Moveto = "HealthRelic";
                     Position = ObjectsManager.HealthRelic.Position.Random();
@@ -53,7 +53,7 @@ namespace AramBuddy.MainCore.Logics
             }
 
             // Stays Under tower if the bot health under 15%.
-            if ((ModesManager.Flee || (Player.Instance.HealthPercent < 10 && Player.Instance.CountAlliesInRange(1300) < 3)) && EntityManager.Heroes.Enemies.Count(e => !e.IsDead) > 0)
+            if ((ModesManager.Flee || (Player.Instance.HealthPercent < 10 && Player.Instance.CountAlliesInRange(2000) < 3)) && EntityManager.Heroes.Enemies.Count(e => !e.IsDead) > 0)
             {
                 if (ObjectsManager.SafeAllyTurret != null)
                 {
@@ -92,12 +92,20 @@ namespace AramBuddy.MainCore.Logics
         /// </summary>
         public static void MeleeLogic()
         {
+            // if there is a TeamFight follow NearestEnemy.
+            if (Misc.TeamFight && Player.Instance.HealthPercent > 15 && ObjectsManager.NearestEnemy != null)
+            {
+                Program.Moveto = "NearestEnemy";
+                Position = ObjectsManager.NearestEnemy.PrediectPosition().Random();
+                return;
+            }
+
             // if SafestAllyToFollow not exsist picks other to follow.
             if (ObjectsManager.SafestAllyToFollow != null)
             {
                 // if SafestAllyToFollow exsist follow BestAllyToFollow.
                 Program.Moveto = "SafestAllyToFollow";
-                Position = ObjectsManager.SafestAllyToFollow.ServerPosition.Random();
+                Position = ObjectsManager.SafestAllyToFollow.PrediectPosition().Random();
                 return;
             }
 
@@ -105,7 +113,7 @@ namespace AramBuddy.MainCore.Logics
             if (ObjectsManager.Minion != null)
             {
                 Program.Moveto = "Minion";
-                Position = ObjectsManager.Minion.ServerPosition.Random();
+                Position = ObjectsManager.Minion.PrediectPosition().Random();
                 return;
             }
 
@@ -113,7 +121,7 @@ namespace AramBuddy.MainCore.Logics
             if (ObjectsManager.FarthestAllyToFollow != null)
             {
                 Program.Moveto = "FarthestAllyToFollow";
-                Position = ObjectsManager.FarthestAllyToFollow.ServerPosition.Random();
+                Position = ObjectsManager.FarthestAllyToFollow.PrediectPosition().Random();
                 return;
             }
 
@@ -158,7 +166,7 @@ namespace AramBuddy.MainCore.Logics
             if (ObjectsManager.SafestAllyToFollow2 != null)
             {
                 Program.Moveto = "SafestAllyToFollow2";
-                Position = ObjectsManager.SafestAllyToFollow2.ServerPosition.Random();
+                Position = ObjectsManager.SafestAllyToFollow2.PrediectPosition().Random();
                 return;
             }
 
@@ -166,7 +174,7 @@ namespace AramBuddy.MainCore.Logics
             if (ObjectsManager.Minion != null)
             {
                 Program.Moveto = "Minion";
-                Position = ObjectsManager.Minion.ServerPosition.Random();
+                Position = ObjectsManager.Minion.PrediectPosition().Random();
                 return;
             }
 

@@ -83,8 +83,16 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return EntityManager.Heroes.Allies.Count(a => a.IsAttackingPlayer && a.IsValidTarget()) >= 2;
+                return EntityManager.Heroes.AllHeroes.Count(a => a.IsAttackingPlayer && a.IsValidTarget()) >= 3;
             }
+        }
+
+        /// <summary>
+        ///     Returns The predicted position for the target.
+        /// </summary>
+        public static Vector3 PrediectPosition(this Obj_AI_Base target)
+        {
+            return Prediction.Position.PredictUnitPosition(target, 100 + Game.Ping).To3D();
         }
 
         /// <summary>

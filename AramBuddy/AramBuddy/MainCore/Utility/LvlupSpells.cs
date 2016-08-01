@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using EloBuddy;
 
 namespace AramBuddy.MainCore.Utility
@@ -12,15 +14,15 @@ namespace AramBuddy.MainCore.Utility
         {
             int[] LevelSet = { };
 
-            if (MaxQChampions.Contains(Player.Instance.ChampionName))
+            if (MaxQChampions.Any(s => s.Equals(Player.Instance.ChampionName, StringComparison.CurrentCultureIgnoreCase)))
             {
                 LevelSet = MaxQSequence;
             }
-            if (MaxWChampions.Contains(Player.Instance.ChampionName))
+            if (MaxWChampions.Any(s => s.Equals(Player.Instance.ChampionName, StringComparison.CurrentCultureIgnoreCase)))
             {
                 LevelSet = MaxWSequence;
             }
-            if (MaxEChampions.Contains(Player.Instance.ChampionName))
+            if (MaxEChampions.Any(s => s.Equals(Player.Instance.ChampionName, StringComparison.CurrentCultureIgnoreCase)))
             {
                 LevelSet = MaxESequence;
             }
@@ -104,7 +106,7 @@ namespace AramBuddy.MainCore.Utility
                                                                      "Malzahar", "MasterYi", "MissFortune", "Morgana", "Nami", "Nautilus", "Nidalee", "Nocturne", "Olaf", "Orianna", "Pantheon", "Poppy",
                                                                      "Quinn", "Rammus", "RekSai", "Renekton", "Rengar", "Riven", "Rumble", "Ryze", "Sejuani", "Shen", "Singed", "Sion", "Sivir", "Skarner",
                                                                      "Sona", "Soraka", "Swain", "Syndra", "TahmKench", "Taliyah", "Taric", "Teemo", "Thresh", "Tristana", "Trundle", "Tryndamere",
-                                                                     "TwistedFate", "Udyr", "Urgot", "Varus", "Veigar", "Vi", "Vladimir", "VelKoz", "Warwick", "Wukong", "Xerath", "XinZhao", "Yasuo",
+                                                                     "TwistedFate", "Udyr", "Urgot", "Varus", "Veigar", "Vi", "Vladimir", "VelKoz", "Warwick", "MonkeyKing", "Xerath", "XinZhao", "Yasuo",
                                                                      "Yorick", "Zac", "Zed", "Ziggs", "Zilean", "Zyra"
                                                                  };
 

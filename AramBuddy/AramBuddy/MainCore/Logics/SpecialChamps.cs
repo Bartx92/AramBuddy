@@ -45,13 +45,12 @@ namespace AramBuddy.MainCore.Logics
 
         private static void Spellbook_OnCastSpell(Spellbook sender, SpellbookCastSpellEventArgs args)
         {
+            if(!IsCastingImportantSpell) return;
+
             if (sender.Owner.IsMe && Importantspells.Any(h => h.champ == Player.Instance.Hero && h.slot != args.Slot))
             {
-                if (IsCastingImportantSpell)
-                {
-                    args.Process = false;
-                    Logger.Send("Blocked spell - Case Player Channeling important spell " + Player.Instance.Hero, Logger.LogLevel.Info);
-                }
+                args.Process = false;
+                Logger.Send("Blocked " + args.Slot + " - Case Player Channeling important spell " + Player.Instance.Hero, Logger.LogLevel.Info);
             }
         }
 
@@ -76,7 +75,7 @@ namespace AramBuddy.MainCore.Logics
 
         private static void Obj_AI_Base_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (IsCastingImportantSpell || !sender.IsMe || Importantspells.Any(h => h.champ == Player.Instance.Hero && h.slot != args.Slot)) return;
+            if (IsCastingImportantSpell || !sender.IsMe || Importantspells.Any(h => h.champ != Player.Instance.Hero || h.slot != args.Slot)) return;
             IsCastingImportantSpell = true;
             Logger.Send("Player Is Channeling important spell " + Player.Instance.Hero, Logger.LogLevel.Info);
         }
