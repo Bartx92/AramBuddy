@@ -45,7 +45,7 @@ namespace AramBuddy
             CheckVersion.Init();
 
             // Initialize the AutoShop.
-            Setup.Init();
+            Setup.Init();   
 
             Timer = Game.Time;
             Game.OnTick += Game_OnTick;

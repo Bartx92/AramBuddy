@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AramBuddy.MainCore.Utility;
 using EloBuddy;
 using EloBuddy.SDK;
 
@@ -46,14 +47,20 @@ namespace AramBuddy.MainCore.Logics
         {
             if (sender.Owner.IsMe && Importantspells.Any(h => h.champ == Player.Instance.Hero && h.slot != args.Slot))
             {
-                args.Process = false;
+                if (IsCastingImportantSpell)
+                {
+                    args.Process = false;
+                    Logger.Send("Blocked spell - Case Player Channeling important spell " + Player.Instance.Hero, Logger.LogLevel.Info);
+                }
             }
         }
 
         private static void Player_OnIssueOrder(Obj_AI_Base sender, PlayerIssueOrderEventArgs args)
         {
-            if(!sender.IsMe) return;
-            args.Process = !IsCastingImportantSpell;
+            if(!sender.IsMe || !IsCastingImportantSpell) return;
+
+            args.Process = false;
+            Logger.Send("Blocked Command - Case Player Channeling important spell " + Player.Instance.Hero, Logger.LogLevel.Info);
         }
 
         private static void Game_OnTick(EventArgs args)
@@ -63,13 +70,15 @@ namespace AramBuddy.MainCore.Logics
             if (!Player.Instance.Spellbook.IsChanneling && !Player.Instance.Spellbook.IsCharging && !Player.Instance.Spellbook.IsCastingSpell && IsCastingImportantSpell)
             {
                 IsCastingImportantSpell = false;
+                Logger.Send("No Longer Channeling important spell " + Player.Instance.Hero, Logger.LogLevel.Info);
             }
         }
 
         private static void Obj_AI_Base_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (IsCastingImportantSpell || !sender.IsMe) return;
-            IsCastingImportantSpell = Importantspells.Any(h => h.champ == Player.Instance.Hero && h.slot == args.Slot);
+            if (IsCastingImportantSpell || !sender.IsMe || Importantspells.Any(h => h.champ == Player.Instance.Hero && h.slot != args.Slot)) return;
+            IsCastingImportantSpell = true;
+            Logger.Send("Player Is Channeling important spell " + Player.Instance.Hero, Logger.LogLevel.Info);
         }
     }
 }

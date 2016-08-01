@@ -77,6 +77,17 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
+        ///     Returns true if your team is teamfighting.
+        /// </summary>
+        public static bool TeamFight
+        {
+            get
+            {
+                return EntityManager.Heroes.Allies.Count(a => a.IsAttackingPlayer && a.IsValidTarget()) >= 2;
+            }
+        }
+
+        /// <summary>
         ///     Returns Minions Count.
         /// </summary>
         public static float CountMinions(this Obj_AI_Base target, bool EnemyMinions = false, int range = 800)

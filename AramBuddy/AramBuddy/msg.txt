@@ -1,1 +1,1 @@
-The bot will no longer dive for healthrelics !
+Fixed The Bot Stopping to Move / Cast Randomly !
