@@ -1,1 +1,1 @@
-Fixed bard Health Shrines and Chimes detection !
+The bot will no longer dive for healthrelics !

@@ -69,6 +69,14 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
+        ///     Returns true if Vector3 is UnderEnemyTurret.
+        /// </summary>
+        public static bool UnderEnemyTurret(this Vector2 pos)
+        {
+            return EntityManager.Turrets.Enemies.Any(t => !t.IsDead && t.IsValidTarget() && t.IsInRange(pos, t.GetAutoAttackRange() + (Player.Instance.BoundingRadius * 2)));
+        }
+
+        /// <summary>
         ///     Returns Minions Count.
         /// </summary>
         public static float CountMinions(this Obj_AI_Base target, bool EnemyMinions = false, int range = 800)
