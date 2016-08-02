@@ -69,61 +69,31 @@ namespace AramBuddy.AutoShop
         {
             try
             {
-                GetResponse(
-                    WebRequest.Create("https://raw.githubusercontent.com/plsfixrito/AramBuddy/master/DefaultBuilds/" + BuildName() + ".json"),
-                    response =>
-                        {
-                            var data = new StreamReader(response.GetResponseStream()).ReadToEnd().ToString();
-                            if (data.Contains("data"))
-                            {
-                                File.WriteAllText(Setup.BuildPath + "\\" + BuildName() + ".json", data);
-                                Setup.Builds.Add(BuildName(), File.ReadAllText(Setup.BuildPath + "\\" + BuildName() + ".json"));
+                var filename = BuildName() + ".json";
+                var WebClient = new WebClient();
 
-                                Logger.Send(BuildName() + " Build Created for " + Player.Instance.ChampionName + " - " + BuildName(), Logger.LogLevel.Info);
-                            }
-                            else
-                            {
-                                Logger.Send("Wrong Response, No Champion Build Created", Logger.LogLevel.Warn);
-                                Console.WriteLine(data);
-                            }
-                        });
+                WebClient.DownloadStringTaskAsync("https://raw.githubusercontent.com/plsfixrito/AramBuddy/master/DefaultBuilds/" + filename);
+                WebClient.DownloadStringCompleted += delegate(object sender, DownloadStringCompletedEventArgs args)
+                {
+                    if (args.Result.Contains("data"))
+                    {
+                        File.WriteAllText(Setup.BuildPath + "\\" + filename, args.Result);
+                        Setup.Builds.Add(BuildName(), File.ReadAllText(Setup.BuildPath + "\\" + filename));
+                        Logger.Send(BuildName() + " Build Created for " + Player.Instance.ChampionName + " - " + BuildName(), Logger.LogLevel.Info);
+                        Setup.DefaultBuild();
+                    }
+                    else
+                    {
+                        Logger.Send("Wrong Response, No Champion Build Created", Logger.LogLevel.Warn);
+                        Console.WriteLine(args.Result);
+                    }
+                };
             }
             catch (Exception ex)
             {
                 // if faild to create build terminate the AutoShop
                 Logger.Send("Failed to create default build for " + Player.Instance.ChampionName, ex, Logger.LogLevel.Error);
                 Logger.Send("No build is currently being used!", Logger.LogLevel.Error);
-            }
-        }
-
-        /// <summary>
-        /// Sends and get response from web
-        /// </summary>
-        private static void GetResponse(WebRequest Request, Action<HttpWebResponse> ResponseAction)
-        {
-            try
-            {
-                Action wrapperAction = () =>
-                    {
-                        Request.BeginGetResponse(
-                            iar =>
-                                {
-                                    var Response = (HttpWebResponse)((HttpWebRequest)iar.AsyncState).EndGetResponse(iar);
-                                    ResponseAction(Response);
-                                },
-                            Request);
-                    };
-                wrapperAction.BeginInvoke(
-                    iar =>
-                        {
-                            var Action = (Action)iar.AsyncState;
-                            Action.EndInvoke(iar);
-                        },
-                    wrapperAction);
-            }
-            catch (Exception ex)
-            {
-                Logger.Send("Failed to create default build, No Response.", ex, Logger.LogLevel.Error);
             }
         }
 

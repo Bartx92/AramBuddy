@@ -52,6 +52,7 @@ namespace AramBuddy.AutoShop
         {
             try
             {
+                bool useDefaultBuild = false;
                 // When the game starts
                 AramBuddy.Events.OnGameStart += Events_OnGameStart;
 
@@ -67,15 +68,6 @@ namespace AramBuddy.AutoShop
                                     Buy.BuyNextItem(CurrentChampionBuild);
                                 },
                             new Random().Next(450 - Game.Ping, 900 + Game.Ping));
-                    };
-
-                AramBuddy.Events.OnGameEnd += delegate
-                    {
-                        // Remove temp-file OnGameEnd
-                        if (File.Exists(TempFile))
-                        {
-                            File.Delete(TempFile);
-                        }
                     };
 
                 // Create the build path directory
@@ -107,6 +99,7 @@ namespace AramBuddy.AutoShop
                     // and Use Default build
                     if (Builds.Keys.Any(b => b.Equals(Build.BuildName())))
                     {
+                        DefaultBuild();
                         Logger.Send("Using default build path!", Logger.LogLevel.Warn);
                     }
                     else
@@ -114,8 +107,11 @@ namespace AramBuddy.AutoShop
                         // Creates Default Build for the AutoShop
                         Logger.Send("Creating default build path!", Logger.LogLevel.Warn);
                         Build.Create();
+                        useDefaultBuild = true;
                     }
                 }
+
+                if(useDefaultBuild) return;
 
                 // Check if the parse of the build for the champion completed successfully and output it to public
                 // variable CurrentChampionBuild
@@ -131,32 +127,43 @@ namespace AramBuddy.AutoShop
                         Buy.BuyNextItem(CurrentChampionBuild);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                // An exception occured somewhere else. Notify the user of the error, and print the exception to the console
+                Logger.Send("Exception occurred on initialization of AutoShop:", ex, Logger.LogLevel.Error);
+
+                // Warn the user about the exception
+                Logger.Send("Exception occurred during AutoShop initialization. AutoShop will most likely NOT work properly!", Logger.LogLevel.Warn);
+            }
+        }
+
+        /// <summary>
+        ///     Method that sets up event listeners
+        /// </summary>
+        /// 
+        public static void DefaultBuild()
+        {
+            try
+            {
+                // Use Default build
+                if (Builds.Keys.Any(b => b.Equals(Build.BuildName())) && Builds.FirstOrDefault(b => b.Key.Equals(Build.BuildName())).Value.TryParseData(out CurrentChampionBuild))
+                {
+                    Logger.Send(Build.BuildName() + " build Loaded!", Logger.LogLevel.Info);
+
+                    // and set up event listeners
+                    SetUpEventListeners();
+                    if (Player.Instance.IsInShopRange())
+                    {
+                        Buy.BuyNextItem(CurrentChampionBuild);
+                    }
+                }
                 else
                 {
-                    Core.DelayAction(
-                        () =>
-                            {
-                                // Use Default build
-                                if (Builds.Keys.Any(b => b.Equals(Build.BuildName())) && Builds.FirstOrDefault(b => b.Key.Equals(Build.BuildName())).Value.TryParseData(out CurrentChampionBuild))
-                                {
-                                    Logger.Send(Build.BuildName() + " build Loaded!", Logger.LogLevel.Info);
+                    // An error occured during parsing. Catch the error and print it in the console
+                    Logger.Send("The selected AutoShop JSON could not be parsed.", Logger.LogLevel.Error);
 
-                                    // and set up event listeners
-                                    SetUpEventListeners();
-                                    if (Player.Instance.IsInShopRange())
-                                    {
-                                        Buy.BuyNextItem(CurrentChampionBuild);
-                                    }
-                                }
-                                else
-                                {
-                                    // An error occured during parsing. Catch the error and print it in the console
-                                    Logger.Send("The selected AutoShop JSON could not be parsed.", Logger.LogLevel.Error);
-
-                                    Logger.Send("No build is currently used!", Logger.LogLevel.Warn);
-                                }
-                            },
-                        9000);
+                    Logger.Send("No build is currently used!", Logger.LogLevel.Warn);
                 }
             }
             catch (Exception ex)
