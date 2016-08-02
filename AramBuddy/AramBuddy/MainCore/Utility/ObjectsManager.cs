@@ -30,18 +30,18 @@ namespace AramBuddy.MainCore.Utility
 
             // Clears and adds new EnemyTraps.
             EnemyTraps.Clear();
-            foreach (var trap in ObjectManager.Get<Obj_AI_Minion>().Where(trap => trap.IsEnemy && !trap.IsDead))
+            foreach (var trap in ObjectManager.Get<Obj_AI_Minion>().Where(trap => trap.IsEnemy && !trap.IsDead && trap.IsValid))
             {
                 if (TrapsNames.Contains(trap.Name))
                 {
                     var ttrap = new traps { Trap = trap, IsSpecial = false };
                     EnemyTraps.Add(ttrap);
-                }
+                }/*
                 if (SpecialTrapsNames.Contains(trap.Name))
                 {
                     var ttrap = new traps { Trap = trap, IsSpecial = true };
                     EnemyTraps.Add(ttrap);
-                }
+                }*/
             }
 
             Game.OnTick += delegate
@@ -73,13 +73,13 @@ namespace AramBuddy.MainCore.Utility
                     var trap = new traps { Trap = caster, IsSpecial = false };
                     EnemyTraps.Add(trap);
                     Logger.Send("Create " + sender.Name, Logger.LogLevel.Info);
-                }
+                }/*
                 if (SpecialTrapsNames.Contains(caster.Name) && caster.IsEnemy)
                 {
                     var trap = new traps { Trap = caster, IsSpecial = true };
                     EnemyTraps.Add(trap);
                     Logger.Send("Create " + sender.Name, Logger.LogLevel.Info);
-                }
+                }*/
             }
             if (sender.Name.ToLower().Contains("healthrelic"))
             {
@@ -98,16 +98,16 @@ namespace AramBuddy.MainCore.Utility
             {
                 var trap = new traps { Trap = caster, IsSpecial = false };
                 var Specialtrap = new traps { Trap = caster, IsSpecial = true };
-                if (EnemyTraps.Contains(trap) && caster.IsEnemy)
+                if (EnemyTraps.Contains(trap) && trap.Trap.IsEnemy)
                 {
                     EnemyTraps.Remove(trap);
                     Logger.Send("Delete " + sender.Name, Logger.LogLevel.Info);
-                    if (EnemyTraps.Contains(Specialtrap) && caster.IsEnemy)
-                    {
-                        EnemyTraps.Remove(Specialtrap);
-                        Logger.Send("Delete " + sender.Name, Logger.LogLevel.Info);
-                    }
-                }
+                }/*
+                if (EnemyTraps.Contains(Specialtrap) && caster.IsEnemy)
+                {
+                    EnemyTraps.Remove(Specialtrap);
+                    Logger.Send("Delete " + sender.Name, Logger.LogLevel.Info);
+                }*/
             }
             if (sender.Name.ToLower().Contains("healthrelic"))
             {
