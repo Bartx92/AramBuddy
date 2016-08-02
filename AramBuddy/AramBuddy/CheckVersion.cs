@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Net;
 using AramBuddy.MainCore.Utility;
 using EloBuddy;
+using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Rendering;
 using SharpDX;
 using Color = System.Drawing.Color;
@@ -22,11 +23,16 @@ namespace AramBuddy
 
         private static readonly Version CurrentVersion = typeof(CheckVersion).Assembly.GetName().Version;
 
+        public static bool Outdated;
+
+        public static bool Sent;
+
         public static void Init()
         {
             try
             {
-                text = new Text("YOUR ARAMBUDDY IS OUTDATED", new Font("Euphemia", 45F, FontStyle.Bold)) { Color = Color.White };
+                var size = Drawing.Width <= 400 || Drawing.Height <= 400 ? 10F : 40F;
+                text = new Text("YOUR ARAMBUDDY IS OUTDATED", new Font("Euphemia", size, FontStyle.Bold)) { Color = Color.White };
                 var WebClient = new WebClient();
                 WebClient.DownloadStringCompleted += delegate(object sender, DownloadStringCompletedEventArgs args) { UpdateMsg = args.Result; };
                 WebClient.DownloadStringTaskAsync(UpdateMsgPath);
@@ -41,11 +47,9 @@ namespace AramBuddy
                                     text.Position = new Vector2(Camera.ScreenPosition.X, Camera.ScreenPosition.Y + 75);
                                     text.Draw();
                                 };
-
+                            Outdated = true;
                             Logger.Send("There is a new Update Available for AramBuddy!", Logger.LogLevel.Warn);
-                            Chat.Print("<b>AramBuddy: There is a new Update Available for AramBuddy !</b>");
                             Logger.Send(UpdateMsg, Logger.LogLevel.Info);
-                            Chat.Print("<b>AramBuddy: " + UpdateMsg + "</b>");
                         }
                         else
                         {
@@ -53,6 +57,19 @@ namespace AramBuddy
                         }
                     };
                 WebClient2.DownloadStringTaskAsync(WebVersionPath);
+
+                Loading.OnLoadingComplete += delegate
+                {
+                    Game.OnTick += delegate
+                    {
+                        if (UpdateMsg != string.Empty && !Sent && Outdated)
+                        {
+                            Chat.Print("<b>AramBuddy: There is a new Update Available for AramBuddy !</b>");
+                            Chat.Print("<b>AramBuddy: " + UpdateMsg + "</b>");
+                            Sent = true;
+                        }
+                    };
+                };
             }
             catch (Exception ex)
             {

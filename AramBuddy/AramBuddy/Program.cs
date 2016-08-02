@@ -30,6 +30,7 @@ namespace AramBuddy
 
         private static void Main(string[] args)
         {
+            CheckVersion.Init();
             Loading.OnLoadingComplete += Loading_OnLoadingComplete;
         }
 
@@ -41,8 +42,6 @@ namespace AramBuddy
                 Chat.Print(Game.MapId + " Is Not Supported By AramBuddy !");
                 return;
             }
-
-            CheckVersion.Init();
 
             // Initialize the AutoShop.
             Setup.Init();
