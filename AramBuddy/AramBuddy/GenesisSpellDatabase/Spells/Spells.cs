@@ -1397,6 +1397,7 @@ namespace GenesisSpellLibrary.Spells
             this.W = new Spell.Active(SpellSlot.W);
             this.E = new Spell.Active(SpellSlot.E);
             this.R = new Spell.Active(SpellSlot.R);
+            this.QisDangerDash = true;
             this.WisSaver = true;
         }
     }
@@ -2632,6 +2633,7 @@ namespace GenesisSpellLibrary.Spells
             this.R = new Spell.Active(SpellSlot.R, 1200);
             this.QisCC = true;
             this.WisSaver = true;
+            this.EisDangerDash = true;
         }
     }
 
