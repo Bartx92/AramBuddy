@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using AramBuddy.MainCore.Utility;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Events;
@@ -15,6 +16,14 @@ namespace AramBuddy.MainCore.Logics
         {
             if (spellBase == null || target == null || !Enabled)
                 return;
+
+            if (spellBase.IsDangerDash() && target.CountAlliesInRange(1000) >= target.CountEnemiesInRange(1000) && (target.ServerPosition.UnderEnemyTurret() && Misc.SafeToDive || !target.ServerPosition.UnderEnemyTurret()))
+            {
+                spellBase.Cast(target);
+                return;
+            }
+
+            if(spellBase.IsDangerDash()) return;
 
             if (spellBase.IsDash())
             {

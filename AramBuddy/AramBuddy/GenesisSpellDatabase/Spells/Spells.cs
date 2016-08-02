@@ -96,6 +96,7 @@ namespace GenesisSpellLibrary.Spells
             this.R = new Spell.Targeted(SpellSlot.R, 700);
             this.WisCC = true;
             this.RisDash = true;
+            this.RisDangerDash = true;
         }
     }
 
@@ -117,6 +118,7 @@ namespace GenesisSpellLibrary.Spells
             this.R = new Spell.Active(SpellSlot.R);
             this.QisCC = true;
             this.WisDash = true;
+            this.WisDangerDash = true;
             this.WisCC = true;
             this.EisSaver = true;
             this.LogicDictionary = new Dictionary<string, Func<AIHeroClient, Obj_AI_Base, bool>>();
@@ -456,6 +458,7 @@ namespace GenesisSpellLibrary.Spells
             this.R = new Spell.Targeted(SpellSlot.R, 825);
             this.WisSaver = true;
             this.EisCC = true;
+            this.RisDangerDash = true;
         }
     }
 
@@ -638,6 +641,7 @@ namespace GenesisSpellLibrary.Spells
             this.R = new Spell.Skillshot(SpellSlot.R, 1300, SkillShotType.Linear, 250, 1200, 80) { AllowedCollisionCount = 0 };
             this.EisSaver = true;
             this.RisCC = true;
+            this.QisDangerDash = true;
         }
     }
 
@@ -902,6 +906,7 @@ namespace GenesisSpellLibrary.Spells
             this.W = new Spell.Active(SpellSlot.W);
             this.E = new Spell.Active(SpellSlot.E, 187);
             this.R = new Spell.Active(SpellSlot.R);
+            this.QisDangerDash = true;
             this.EisCC = true;
             this.RisSaver = true;
         }
@@ -1058,6 +1063,7 @@ namespace GenesisSpellLibrary.Spells
             this.W = new Spell.Active(SpellSlot.W, 375);
             this.E = new Spell.Targeted(SpellSlot.E, 700);
             this.R = new Spell.Active(SpellSlot.R, 550);
+            this.EisDangerDash = true;
         }
     }
 
@@ -1371,6 +1377,7 @@ namespace GenesisSpellLibrary.Spells
             this.E = new Spell.Skillshot(SpellSlot.E, 1075, SkillShotType.Circular, 1000, 1500, 225);
             this.R = new Spell.Active(SpellSlot.R, 475);
             this.QisCC = true;
+            this.WisDangerDash = true;
         }
     }
 
@@ -1635,6 +1642,7 @@ namespace GenesisSpellLibrary.Spells
             this.E = new Spell.Skillshot(SpellSlot.E, 600, SkillShotType.Cone, 250, 2000, 70) { AllowedCollisionCount = int.MaxValue };
             this.R = new Spell.Skillshot(SpellSlot.R, 2000, SkillShotType.Circular);
             this.WisCC = true;
+            this.WisDangerDash = true;
         }
     }
 
@@ -1656,6 +1664,7 @@ namespace GenesisSpellLibrary.Spells
             this.R = new Spell.Chargeable(SpellSlot.R, 500, 1200, 4000, 250, int.MaxValue, 90) { AllowedCollisionCount = int.MaxValue };
             this.EisCC = true;
             this.RisCC = true;
+            this.EisDangerDash = true;
         }
     }
 
@@ -1676,6 +1685,7 @@ namespace GenesisSpellLibrary.Spells
             this.E = new Spell.Targeted(SpellSlot.E, 675);
             this.R = null;
             this.EisCC = true;
+            this.EisDangerDash = true;
         }
     }
 
@@ -2138,6 +2148,7 @@ namespace GenesisSpellLibrary.Spells
             this.W = new Spell.Skillshot(SpellSlot.W, 600, SkillShotType.Cone, 1, 2300, 75) { AllowedCollisionCount = int.MaxValue };
             this.E = new Spell.Targeted(SpellSlot.E, 700);
             this.R = new Spell.Active(SpellSlot.R);
+            this.EisDangerDash = true;
             this.WisCC = true;
         }
     }
@@ -2558,6 +2569,7 @@ namespace GenesisSpellLibrary.Spells
             this.E = new Spell.Targeted(SpellSlot.E, 325);
             this.R = new Spell.Active(SpellSlot.R, 350);
             this.RisCC = true;
+            this.EisDangerDash = true;
         }
     }
 
@@ -2598,6 +2610,7 @@ namespace GenesisSpellLibrary.Spells
             this.E = new Spell.Targeted(SpellSlot.E, 650);
             this.R = new Spell.Active(SpellSlot.R, 500);
             this.RisCC = true;
+            this.EisDangerDash = true;
         }
     }
 
@@ -2681,6 +2694,7 @@ namespace GenesisSpellLibrary.Spells
             this.W = new Spell.Skillshot(SpellSlot.W, 700, SkillShotType.Circular);
             this.E = new Spell.Active(SpellSlot.E, 325);
             this.R = new Spell.Targeted(SpellSlot.R, 700);
+            this.RisDangerDash = true;
         }
     }
 

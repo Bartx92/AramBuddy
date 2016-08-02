@@ -23,6 +23,8 @@ namespace GenesisSpellLibrary.Spells
 
         public bool QisDash = false;
 
+        public bool QisDangerDash = false;
+
         public bool QisToggle = false;
 
         public bool QisSaver = false;
@@ -30,6 +32,8 @@ namespace GenesisSpellLibrary.Spells
         public bool WisCC = false;
 
         public bool WisDash = false;
+
+        public bool WisDangerDash = false;
 
         public bool WisToggle = false;
 
@@ -39,6 +43,8 @@ namespace GenesisSpellLibrary.Spells
 
         public bool EisDash = false;
 
+        public bool EisDangerDash= false;
+
         public bool EisToggle = false;
 
         public bool EisSaver = false;
@@ -46,6 +52,8 @@ namespace GenesisSpellLibrary.Spells
         public bool RisCC = false;
 
         public bool RisDash = false;
+
+        public bool RisDangerDash = false;
 
         public bool RisToggle = false;
 

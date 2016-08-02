@@ -63,6 +63,23 @@ namespace GenesisSpellLibrary
             }
         }
 
+        public static bool IsDangerDash(this Spell.SpellBase spell)
+        {
+            switch (spell.Slot)
+            {
+                case SpellSlot.Q:
+                    return SpellsDictionary.FirstOrDefault().Value.QisDangerDash;
+                case SpellSlot.W:
+                    return SpellsDictionary.FirstOrDefault().Value.WisDangerDash;
+                case SpellSlot.E:
+                    return SpellsDictionary.FirstOrDefault().Value.EisDangerDash;
+                case SpellSlot.R:
+                    return SpellsDictionary.FirstOrDefault().Value.RisDangerDash;
+                default:
+                    return false;
+            }
+        }
+
         public static bool IsDash(this Spell.SpellBase spell)
         {
             switch (spell.Slot)
