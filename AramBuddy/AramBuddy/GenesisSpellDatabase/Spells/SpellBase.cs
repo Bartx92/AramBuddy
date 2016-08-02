@@ -19,6 +19,8 @@ namespace GenesisSpellLibrary.Spells
 
         public Dictionary<string, Func<AIHeroClient, Obj_AI_Base, bool>> LogicDictionary;
 
+        public bool QDontWaste = false;
+
         public bool QisCC = false;
 
         public bool QisDash = false;
@@ -31,6 +33,8 @@ namespace GenesisSpellLibrary.Spells
 
         public bool WisCC = false;
 
+        public bool WDontWaste = false;
+
         public bool WisDash = false;
 
         public bool WisDangerDash = false;
@@ -39,15 +43,19 @@ namespace GenesisSpellLibrary.Spells
 
         public bool WisSaver = false;
 
+        public bool EDontWaste = false;
+
         public bool EisCC = false;
 
         public bool EisDash = false;
 
-        public bool EisDangerDash= false;
+        public bool EisDangerDash = false;
 
         public bool EisToggle = false;
 
         public bool EisSaver = false;
+
+        public bool RDontWaste = false;
 
         public bool RisCC = false;
 

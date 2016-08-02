@@ -39,8 +39,9 @@ namespace AramBuddy.MainCore.Logics
             // Moves to HealthRelic if the bot needs heal.
             if ((Player.Instance.HealthPercent < 75 || (Player.Instance.ManaPercent < 15 && Player.Instance.Mana > 0)) && ObjectsManager.HealthRelic != null)
             {
-                var rect = new Geometry.Polygon.Rectangle(Player.Instance.ServerPosition, ObjectsManager.HealthRelic.Position, 500);
-                if ((rect.Points.Any(p => p.UnderEnemyTurret() && Misc.SafeToDive) || rect.Points.Any(p => !p.UnderEnemyTurret())) && !EntityManager.Heroes.Enemies.Any(e => rect.IsInside(e.PrediectPosition()) && e.IsValidTarget() && !e.IsDead))
+                var rect = new Geometry.Polygon.Rectangle(Player.Instance.PrediectPosition(), ObjectsManager.HealthRelic.Position, 500);
+                if ((rect.Points.Any(p => p.UnderEnemyTurret() && Misc.SafeToDive) || rect.Points.Any(p => !p.UnderEnemyTurret()))
+                    && !EntityManager.Heroes.Enemies.Any(e => rect.IsInside(e.PrediectPosition()) && e.IsValidTarget() && !e.IsDead))
                 {
                     Program.Moveto = "HealthRelic";
                     Position = ObjectsManager.HealthRelic.Position.Random();
@@ -68,7 +69,7 @@ namespace AramBuddy.MainCore.Logics
                 if (ObjectsManager.SafeAllyTurret != null)
                 {
                     Program.Moveto = "SafeAllyTurret";
-                    Position = ObjectsManager.SafeAllyTurret.ServerPosition.Random();
+                    Position = ObjectsManager.SafeAllyTurret.PrediectPosition().Random();
                     return;
                 }
                 if (ObjectsManager.AllySpawn != null)
@@ -103,7 +104,8 @@ namespace AramBuddy.MainCore.Logics
         public static void MeleeLogic()
         {
             // if there is a TeamFight follow NearestEnemy.
-            if (Core.GameTickCount - LastTeamFight < 750 && Player.Instance.HealthPercent > 15 && ObjectsManager.NearestEnemy != null && (ObjectsManager.NearestEnemy.PrediectPosition().UnderEnemyTurret() && Misc.SafeToDive || !ObjectsManager.NearestEnemy.PrediectPosition().UnderEnemyTurret()))
+            if (Core.GameTickCount - LastTeamFight < 750 && Player.Instance.HealthPercent > 15 && ObjectsManager.NearestEnemy != null
+                && (ObjectsManager.NearestEnemy.PrediectPosition().UnderEnemyTurret() && Misc.SafeToDive || !ObjectsManager.NearestEnemy.PrediectPosition().UnderEnemyTurret()))
             {
                 Program.Moveto = "NearestEnemy";
                 Position = ObjectsManager.NearestEnemy.PrediectPosition().Random();
@@ -139,7 +141,7 @@ namespace AramBuddy.MainCore.Logics
             if (ObjectsManager.SecondTurret != null)
             {
                 Program.Moveto = "SecondTurret";
-                Position = ObjectsManager.SecondTurret.ServerPosition.Extend(ObjectsManager.AllySpawn, 400).To3D().Random();
+                Position = ObjectsManager.SecondTurret.PrediectPosition().Extend(ObjectsManager.AllySpawn, 400).To3D().Random();
                 return;
             }
 
@@ -147,7 +149,7 @@ namespace AramBuddy.MainCore.Logics
             if (ObjectsManager.SafeAllyTurret != null)
             {
                 Program.Moveto = "SafeAllyTurret";
-                Position = ObjectsManager.SafeAllyTurret.ServerPosition.Random();
+                Position = ObjectsManager.SafeAllyTurret.PrediectPosition().Random();
                 return;
             }
 
@@ -155,7 +157,7 @@ namespace AramBuddy.MainCore.Logics
             if (ObjectsManager.ClosesetAllyTurret != null)
             {
                 Program.Moveto = "ClosesetAllyTurret";
-                Position = ObjectsManager.ClosesetAllyTurret.ServerPosition.Random();
+                Position = ObjectsManager.ClosesetAllyTurret.PrediectPosition().Random();
                 return;
             }
 
@@ -192,7 +194,7 @@ namespace AramBuddy.MainCore.Logics
             if (ObjectsManager.SecondTurret != null)
             {
                 Program.Moveto = "SecondTurret";
-                Position = ObjectsManager.SecondTurret.ServerPosition.Extend(ObjectsManager.AllySpawn, 400).To3D().Random();
+                Position = ObjectsManager.SecondTurret.PrediectPosition().Extend(ObjectsManager.AllySpawn, 400).To3D().Random();
                 return;
             }
 
@@ -200,7 +202,7 @@ namespace AramBuddy.MainCore.Logics
             if (ObjectsManager.SafeAllyTurret != null)
             {
                 Program.Moveto = "SafeAllyTurret";
-                Position = ObjectsManager.SafeAllyTurret.ServerPosition.Random();
+                Position = ObjectsManager.SafeAllyTurret.PrediectPosition().Random();
                 return;
             }
 
@@ -208,7 +210,7 @@ namespace AramBuddy.MainCore.Logics
             if (ObjectsManager.ClosesetAllyTurret != null)
             {
                 Program.Moveto = "ClosesetAllyTurret";
-                Position = ObjectsManager.ClosesetAllyTurret.ServerPosition.Random();
+                Position = ObjectsManager.ClosesetAllyTurret.PrediectPosition().Random();
                 return;
             }
 

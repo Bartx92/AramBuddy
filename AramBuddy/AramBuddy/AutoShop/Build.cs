@@ -27,7 +27,7 @@ namespace AramBuddy.AutoShop
         {
             var ChampionName = Player.Instance.ChampionName;
 
-            if(ChampionName.Equals("MonkeyKing", StringComparison.CurrentCultureIgnoreCase))
+            if (ChampionName.Equals("MonkeyKing", StringComparison.CurrentCultureIgnoreCase))
             {
                 ChampionName = "Wukong";
             }

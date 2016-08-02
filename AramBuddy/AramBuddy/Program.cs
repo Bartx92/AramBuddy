@@ -45,7 +45,7 @@ namespace AramBuddy
             CheckVersion.Init();
 
             // Initialize the AutoShop.
-            Setup.Init();   
+            Setup.Init();
 
             Timer = Game.Time;
             Game.OnTick += Game_OnTick;
@@ -110,8 +110,8 @@ namespace AramBuddy
                 Drawing.Width * 0.01f,
                 Drawing.Height * 0.025f,
                 System.Drawing.Color.White,
-                "AllyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.ServerPosition) + " | EnemyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.ServerPosition, true) + " | MoveTo: " + Moveto
-                + " | ActiveMode: " + Orbwalker.ActiveModesFlags + " | Alone: " + Brain.Alone() + " | AttackObject: " + ModesManager.AttackObject + " | LastTurretAttack: "
+                "AllyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.PrediectPosition()) + " | EnemyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.PrediectPosition(), true) + " | MoveTo: "
+                + Moveto + " | ActiveMode: " + Orbwalker.ActiveModesFlags + " | Alone: " + Brain.Alone() + " | AttackObject: " + ModesManager.AttackObject + " | LastTurretAttack: "
                 + (Core.GameTickCount - Brain.LastTurretAttack) + " | SafeToDive: " + Misc.SafeToDive + " | LastTeamFight: " + (int)(Core.GameTickCount - Pathing.LastTeamFight));
 
             Drawing.DrawText(

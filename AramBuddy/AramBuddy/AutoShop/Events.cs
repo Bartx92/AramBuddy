@@ -3,7 +3,6 @@
 using System;
 using AramBuddy.MainCore.Utility;
 using EloBuddy;
-using EloBuddy.SDK;
 
 #endregion
 

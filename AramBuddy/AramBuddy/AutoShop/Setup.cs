@@ -60,23 +60,23 @@ namespace AramBuddy.AutoShop
                     {
                         Core.DelayAction(
                             () =>
-                            {
-                                Buy.TempValue -= price;
+                                {
+                                    Buy.TempValue -= price;
 
-                                // Try to buy more than one item if we can afford it
-                                Buy.BuyNextItem(CurrentChampionBuild);
-                            },
+                                    // Try to buy more than one item if we can afford it
+                                    Buy.BuyNextItem(CurrentChampionBuild);
+                                },
                             new Random().Next(450 - Game.Ping, 900 + Game.Ping));
                     };
 
                 AramBuddy.Events.OnGameEnd += delegate
-                {
-                    // Remove temp-file OnGameEnd
-                    if (File.Exists(TempFile))
                     {
-                        File.Delete(TempFile);
-                    }
-                };
+                        // Remove temp-file OnGameEnd
+                        if (File.Exists(TempFile))
+                        {
+                            File.Delete(TempFile);
+                        }
+                    };
 
                 // Create the build path directory
                 Directory.CreateDirectory(BuildPath);

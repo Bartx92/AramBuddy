@@ -45,10 +45,16 @@ namespace AramBuddy.MainCore.Utility
             }
 
             Game.OnTick += delegate
-            {
-                BardChimes.AddRange(ObjectManager.Get<GameObject>().Where(o => o.Name.ToLower().Contains("bardchimeminion") && o.IsAlly && o.IsValid && !o.IsDead).Where(hr => hr != null && !BardChimes.Contains(hr) && Logger.Send("Added " + hr.Name, Logger.LogLevel.Info)));
-                HealthRelics.AddRange(ObjectManager.Get<GameObject>().Where(o => o.Name.ToLower().Contains("bardhealthshrine") && o.IsAlly && o.IsValid && !o.IsDead).Where(hr => hr != null && !HealthRelics.Contains(hr) && Logger.Send("Added " + hr.Name, Logger.LogLevel.Info)));
-            };
+                {
+                    BardChimes.AddRange(
+                        ObjectManager.Get<GameObject>()
+                            .Where(o => o.Name.ToLower().Contains("bardchimeminion") && o.IsAlly && o.IsValid && !o.IsDead)
+                            .Where(hr => hr != null && !BardChimes.Contains(hr) && Logger.Send("Added " + hr.Name, Logger.LogLevel.Info)));
+                    HealthRelics.AddRange(
+                        ObjectManager.Get<GameObject>()
+                            .Where(o => o.Name.ToLower().Contains("bardhealthshrine") && o.IsAlly && o.IsValid && !o.IsDead)
+                            .Where(hr => hr != null && !HealthRelics.Contains(hr) && Logger.Send("Added " + hr.Name, Logger.LogLevel.Info)));
+                };
 
             GameObject.OnCreate += GameObject_OnCreate;
             GameObject.OnDelete += GameObject_OnDelete;
@@ -127,8 +133,12 @@ namespace AramBuddy.MainCore.Utility
         /// <summary>
         ///     Special Traps Names.
         /// </summary>
-        public static List<string> SpecialTrapsNames = new List<string> { "Fizz_Base_R_OrbitFish.troy", "Gragas_Base_Q_Enemy", "Lux_Base_E_tar_aoe_red.troy", "Soraka_Base_E_rune.troy", "Ziggs_Base_W_aoe_red.troy", "Viktor_Catalyst_red.troy", "Viktor_base_W_AUG_red.troy", "Barrel" };
-        
+        public static List<string> SpecialTrapsNames = new List<string>
+                                                           {
+                                                               "Fizz_Base_R_OrbitFish.troy", "Gragas_Base_Q_Enemy", "Lux_Base_E_tar_aoe_red.troy", "Soraka_Base_E_rune.troy", "Ziggs_Base_W_aoe_red.troy",
+                                                               "Viktor_Catalyst_red.troy", "Viktor_base_W_AUG_red.troy", "Barrel"
+                                                           };
+
         /// <summary>
         ///     BardChimes list.
         /// </summary>
@@ -162,7 +172,12 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return ObjectManager.Get<Obj_AI_Base>().FirstOrDefault(l => l.IsValid && !l.IsDead && Player.Instance.Hero != Champion.Thresh && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 500 || l.CountEnemiesInRange(1000) < 1) && l.IsAlly && l.Name.Equals("ThreshLantern"));
+                return
+                    ObjectManager.Get<Obj_AI_Base>()
+                        .FirstOrDefault(
+                            l =>
+                            l.IsValid && !l.IsDead && Player.Instance.Hero != Champion.Thresh
+                            && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 500 || l.CountEnemiesInRange(1000) < 1) && l.IsAlly && l.Name.Equals("ThreshLantern"));
             }
         }
 
@@ -173,7 +188,12 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return BardChimes.OrderBy(c => c.Distance(Player.Instance)).FirstOrDefault(l => l.IsValid && !l.IsDead && Player.Instance.Hero == Champion.Bard && (!l.Position.UnderEnemyTurret() || l.Position.UnderEnemyTurret() && Misc.SafeToDive) && l.IsAlly && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 500 || l.CountEnemiesInRange(1000) < 1));
+                return
+                    BardChimes.OrderBy(c => c.Distance(Player.Instance))
+                        .FirstOrDefault(
+                            l =>
+                            l.IsValid && !l.IsDead && Player.Instance.Hero == Champion.Bard && (!l.Position.UnderEnemyTurret() || l.Position.UnderEnemyTurret() && Misc.SafeToDive) && l.IsAlly
+                            && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 500 || l.CountEnemiesInRange(1000) < 1));
             }
         }
 
@@ -198,7 +218,8 @@ namespace AramBuddy.MainCore.Utility
                 AIHeroClient ally = null;
                 if (NearestEnemy != null)
                 {
-                    ally = EntityManager.Heroes.Allies.OrderBy(a => a.Distance(NearestEnemy)).FirstOrDefault(a => a.IsValidTarget() && a.IsAttackPlayer() && !a.IsMe && a.IsMelee && a.HealthPercent > 15);
+                    ally =
+                        EntityManager.Heroes.Allies.OrderBy(a => a.Distance(NearestEnemy)).FirstOrDefault(a => a.IsValidTarget() && a.IsAttackPlayer() && !a.IsMe && a.IsMelee && a.HealthPercent > 15);
                 }
                 return ally;
             }
@@ -212,7 +233,7 @@ namespace AramBuddy.MainCore.Utility
             get
             {
                 return
-                    EntityManager.Heroes.Allies.OrderByDescending(a => Misc.TeamTotal(a.ServerPosition))
+                    EntityManager.Heroes.Allies.OrderByDescending(a => Misc.TeamTotal(a.PrediectPosition()))
                         .ThenByDescending(a => a.Distance(AllyNexues))
                         .Where(
                             a =>
@@ -241,7 +262,7 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return BestAlliesToFollow.OrderBy(a => a.Distance(Player.Instance)).FirstOrDefault(a => Misc.TeamTotal(a.ServerPosition) - Misc.TeamTotal(a.ServerPosition, true) > 0);
+                return BestAlliesToFollow.OrderBy(a => a.Distance(Player.Instance)).FirstOrDefault(a => Misc.TeamTotal(a.PrediectPosition()) - Misc.TeamTotal(a.PrediectPosition(), true) > 0);
             }
         }
 
@@ -253,7 +274,7 @@ namespace AramBuddy.MainCore.Utility
             get
             {
                 return
-                    BestAlliesToFollow.OrderByDescending(a => Misc.TeamTotal(a.ServerPosition) - Misc.TeamTotal(a.ServerPosition, true))
+                    BestAlliesToFollow.OrderByDescending(a => Misc.TeamTotal(a.PrediectPosition()) - Misc.TeamTotal(a.PrediectPosition(), true))
                         .FirstOrDefault(a => a.CountAlliesInRange(1000) > a.CountEnemiesInRange(1000));
             }
         }
@@ -270,7 +291,8 @@ namespace AramBuddy.MainCore.Utility
                         .FirstOrDefault(
                             m =>
                             m.CountAlliesInRange(1300) - m.CountEnemiesInRange(1250) >= 0 && ((m.IsUnderEnemyturret() && Misc.SafeToDive) || !m.IsUnderEnemyturret()) && m.IsValidTarget(2500)
-                            && m.IsValid && m.IsHPBarRendered && !m.IsDead && !m.IsZombie && m.HealthPercent > 25 && Misc.TeamTotal(m.ServerPosition) - Misc.TeamTotal(m.ServerPosition, true) >= 0);
+                            && m.IsValid && m.IsHPBarRendered && !m.IsDead && !m.IsZombie && m.HealthPercent > 25
+                            && Misc.TeamTotal(m.PrediectPosition()) - Misc.TeamTotal(m.PrediectPosition(), true) >= 0);
             }
         }
 

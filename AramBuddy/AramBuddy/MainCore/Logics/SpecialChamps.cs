@@ -19,20 +19,20 @@ namespace AramBuddy.MainCore.Logics
 
         public static List<ImportantSpells> Importantspells = new List<ImportantSpells>
         {
-            new ImportantSpells {champ = Champion.Jhin, slot = SpellSlot.R},
-            new ImportantSpells {champ = Champion.Xerath, slot = SpellSlot.R},
-            new ImportantSpells {champ = Champion.Katarina, slot = SpellSlot.R},
-            new ImportantSpells {champ = Champion.Velkoz, slot = SpellSlot.R},
-            new ImportantSpells {champ = Champion.Pantheon, slot = SpellSlot.R},
-            new ImportantSpells {champ = Champion.Pantheon, slot = SpellSlot.E},
-            new ImportantSpells {champ = Champion.Janna, slot = SpellSlot.R},
-            new ImportantSpells {champ = Champion.RekSai, slot = SpellSlot.R},
-            new ImportantSpells {champ = Champion.Nunu, slot = SpellSlot.R},
-            new ImportantSpells {champ = Champion.MissFortune, slot = SpellSlot.R},
-            new ImportantSpells {champ = Champion.Malzahar, slot = SpellSlot.R},
-            new ImportantSpells {champ = Champion.FiddleSticks, slot = SpellSlot.R},
-            new ImportantSpells {champ = Champion.Caitlyn, slot = SpellSlot.R},
-            new ImportantSpells {champ = Champion.Galio, slot = SpellSlot.R}
+            new ImportantSpells { champ = Champion.Jhin, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.Xerath, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.Katarina, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.Velkoz, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.Pantheon, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.Pantheon, slot = SpellSlot.E },
+            new ImportantSpells { champ = Champion.Janna, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.RekSai, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.Nunu, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.MissFortune, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.Malzahar, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.FiddleSticks, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.Caitlyn, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.Galio, slot = SpellSlot.R }
         };
 
         public static void Init()
@@ -45,7 +45,8 @@ namespace AramBuddy.MainCore.Logics
 
         private static void Spellbook_OnCastSpell(Spellbook sender, SpellbookCastSpellEventArgs args)
         {
-            if(!IsCastingImportantSpell) return;
+            if (!IsCastingImportantSpell)
+                return;
 
             if (sender.Owner.IsMe && Importantspells.Any(h => h.champ == Player.Instance.Hero && h.slot != args.Slot))
             {
@@ -56,7 +57,8 @@ namespace AramBuddy.MainCore.Logics
 
         private static void Player_OnIssueOrder(Obj_AI_Base sender, PlayerIssueOrderEventArgs args)
         {
-            if(!sender.IsMe || !IsCastingImportantSpell) return;
+            if (!sender.IsMe || !IsCastingImportantSpell)
+                return;
 
             args.Process = false;
             Logger.Send("Blocked Command - Case Player Channeling important spell " + Player.Instance.Hero, Logger.LogLevel.Info);
@@ -75,7 +77,8 @@ namespace AramBuddy.MainCore.Logics
 
         private static void Obj_AI_Base_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (IsCastingImportantSpell || !sender.IsMe || Importantspells.Any(h => h.champ != Player.Instance.Hero || h.slot != args.Slot)) return;
+            if (IsCastingImportantSpell || !sender.IsMe || Importantspells.Any(h => h.champ != Player.Instance.Hero || h.slot != args.Slot))
+                return;
             IsCastingImportantSpell = true;
             Logger.Send("Player Is Channeling important spell " + Player.Instance.Hero, Logger.LogLevel.Info);
         }

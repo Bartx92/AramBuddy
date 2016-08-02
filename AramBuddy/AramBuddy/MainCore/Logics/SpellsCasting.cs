@@ -17,17 +17,21 @@ namespace AramBuddy.MainCore.Logics
             if (spellBase == null || target == null || !Enabled)
                 return;
 
-            if (spellBase.IsDangerDash() && target.CountAlliesInRange(1000) >= target.CountEnemiesInRange(1000) && (target.ServerPosition.UnderEnemyTurret() && Misc.SafeToDive || !target.ServerPosition.UnderEnemyTurret()))
+            if(spellBase.DontWaste() && ModesManager.LaneClear) return;
+
+            if (spellBase.IsDangerDash() && target.CountAlliesInRange(1000) >= target.CountEnemiesInRange(1000)
+                && (target.PrediectPosition().UnderEnemyTurret() && Misc.SafeToDive || !target.PrediectPosition().UnderEnemyTurret()))
             {
                 spellBase.Cast(target);
                 return;
             }
 
-            if(spellBase.IsDangerDash()) return;
+            if (spellBase.IsDangerDash())
+                return;
 
             if (spellBase.IsDash())
             {
-                spellBase.Cast(target.ServerPosition.Extend(Player.Instance, 200).To3D());
+                spellBase.Cast(target.PrediectPosition().Extend(Player.Instance, 200).To3D());
                 return;
             }
 

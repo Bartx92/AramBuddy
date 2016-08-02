@@ -46,6 +46,23 @@ namespace GenesisSpellLibrary
             }
         }
 
+        public static bool DontWaste(this Spell.SpellBase spell)
+        {
+            switch (spell.Slot)
+            {
+                case SpellSlot.Q:
+                    return SpellsDictionary.FirstOrDefault().Value.QDontWaste;
+                case SpellSlot.W:
+                    return SpellsDictionary.FirstOrDefault().Value.WDontWaste;
+                case SpellSlot.E:
+                    return SpellsDictionary.FirstOrDefault().Value.EDontWaste;
+                case SpellSlot.R:
+                    return SpellsDictionary.FirstOrDefault().Value.RDontWaste;
+                default:
+                    return false;
+            }
+        }
+
         public static bool IsCC(this Spell.SpellBase spell)
         {
             switch (spell.Slot)

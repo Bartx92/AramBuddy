@@ -26,7 +26,7 @@ namespace AramBuddy
         {
             try
             {
-                text = new Text("YOUR ARAMBUDDY IS OUTDATED", new Font("Euphemia", 45F, FontStyle.Bold)) { Color = Color.White};
+                text = new Text("YOUR ARAMBUDDY IS OUTDATED", new Font("Euphemia", 45F, FontStyle.Bold)) { Color = Color.White };
                 var WebClient = new WebClient();
                 WebClient.DownloadStringCompleted += delegate(object sender, DownloadStringCompletedEventArgs args) { UpdateMsg = args.Result; };
                 WebClient.DownloadStringTaskAsync(UpdateMsgPath);
@@ -37,10 +37,10 @@ namespace AramBuddy
                         if (!args.Result.Contains(CurrentVersion.ToString()))
                         {
                             Drawing.OnEndScene += delegate
-                            {
-                                text.Position = new Vector2(Camera.ScreenPosition.X, Camera.ScreenPosition.Y + 75);
-                                text.Draw();
-                            };
+                                {
+                                    text.Position = new Vector2(Camera.ScreenPosition.X, Camera.ScreenPosition.Y + 75);
+                                    text.Draw();
+                                };
 
                             Logger.Send("There is a new Update Available for AramBuddy!", Logger.LogLevel.Warn);
                             Chat.Print("<b>AramBuddy: There is a new Update Available for AramBuddy !</b>");
