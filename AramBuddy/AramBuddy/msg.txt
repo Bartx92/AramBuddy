@@ -1,1 +1,1 @@
-Added some important spells to not waste in laneclear !
+Added Teleporting Logic !

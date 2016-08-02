@@ -233,6 +233,28 @@ namespace GenesisSpellLibrary.Spells
         }
     }
 
+    public class AurelionSol : SpellBase
+    {
+        public sealed override Spell.SpellBase Q { get; set; }
+
+        public sealed override Spell.SpellBase W { get; set; }
+
+        public sealed override Spell.SpellBase E { get; set; }
+
+        public sealed override Spell.SpellBase R { get; set; }
+
+        public AurelionSol()
+        {
+            this.Q = new Spell.Skillshot(SpellSlot.Q, 600, SkillShotType.Circular, 250, 850, 160);
+            this.W = new Spell.Active(SpellSlot.W, 600);
+            this.E = new Spell.Skillshot(SpellSlot.E, 3000, SkillShotType.Circular);
+            this.R = new Spell.Skillshot(SpellSlot.R, 1475, SkillShotType.Linear, 250, 1750, 180);
+            this.QisCC = true;
+            this.EisTP = true;
+            this.RisCC = true;
+        }
+    }
+
     public class Azir : SpellBase
     {
         public sealed override Spell.SpellBase Q { get; set; }
@@ -1850,8 +1872,9 @@ namespace GenesisSpellLibrary.Spells
             //Q2 = new Spell.Skillshot(SpellSlot.Q, 900, SkillShotType.Linear, 250, 1700, 100);
             this.W = new Spell.Targeted(SpellSlot.W, 600);
             this.E = new Spell.Targeted(SpellSlot.E, 600);
-            this.R = new Spell.Active(SpellSlot.R);
+            this.R = new Spell.Skillshot(SpellSlot.R, 1500, SkillShotType.Circular);
             this.WisCC = true;
+            this.RisTP = true;
         }
     }
 
@@ -2130,13 +2153,14 @@ namespace GenesisSpellLibrary.Spells
 
         public TahmKench()
         {
-            this.Q = new Spell.Targeted(SpellSlot.Q, 600);
-            this.W = new Spell.Skillshot(SpellSlot.W, 700, SkillShotType.Circular);
+            this.Q = new Spell.Skillshot(SpellSlot.Q, 800, SkillShotType.Linear, 250, 1000, 80);
+            this.W = new Spell.Targeted(SpellSlot.W, 250);
             this.E = new Spell.Active(SpellSlot.E, 325);
-            this.R = new Spell.Targeted(SpellSlot.R, 700);
+            this.R = new Spell.Skillshot(SpellSlot.R, 4500, SkillShotType.Circular);
             this.QisCC = true;
             this.WisSaver = true;
             this.EisSaver = true;
+            this.RisTP = true;
         }
     }
 
@@ -2155,8 +2179,10 @@ namespace GenesisSpellLibrary.Spells
             this.Q = new Spell.Skillshot(SpellSlot.Q, 900, SkillShotType.Linear, 250, 2000, 60) { AllowedCollisionCount = 0 };
             this.W = new Spell.Skillshot(SpellSlot.W, 800, SkillShotType.Circular, 250, int.MaxValue, 180);
             this.E = new Spell.Skillshot(SpellSlot.E, 700, SkillShotType.Cone);
+            this.R = new Spell.Skillshot(SpellSlot.R, 3000, SkillShotType.Linear);
             this.WisCC = true;
             this.WDontWaste = true;
+            this.RisTP = true;
         }
     }
 
@@ -2326,7 +2352,8 @@ namespace GenesisSpellLibrary.Spells
             this.Q = new Spell.Skillshot(SpellSlot.Q, 1450, SkillShotType.Linear, 0, 1000, 40) { AllowedCollisionCount = int.MaxValue };
             this.W = new Spell.Active(SpellSlot.W);
             this.E = new Spell.Active(SpellSlot.E);
-            this.R = new Spell.Active(SpellSlot.R, 5500);
+            this.R = new Spell.Skillshot(SpellSlot.R, 5500, SkillShotType.Circular);
+            this.RisTP = true;
         }
     }
 

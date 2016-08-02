@@ -63,6 +63,23 @@ namespace GenesisSpellLibrary
             }
         }
 
+        public static bool IsTP(this Spell.SpellBase spell)
+        {
+            switch (spell.Slot)
+            {
+                case SpellSlot.Q:
+                    return SpellsDictionary.FirstOrDefault().Value.QisTP;
+                case SpellSlot.W:
+                    return SpellsDictionary.FirstOrDefault().Value.WisTP;
+                case SpellSlot.E:
+                    return SpellsDictionary.FirstOrDefault().Value.EisTP;
+                case SpellSlot.R:
+                    return SpellsDictionary.FirstOrDefault().Value.RisTP;
+                default:
+                    return false;
+            }
+        }
+
         public static bool IsCC(this Spell.SpellBase spell)
         {
             switch (spell.Slot)

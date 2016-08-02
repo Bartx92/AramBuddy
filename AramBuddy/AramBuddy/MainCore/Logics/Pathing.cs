@@ -23,6 +23,11 @@ namespace AramBuddy.MainCore.Logics
         /// </summary>
         public static void BestPosition()
         {
+            if (ObjectsManager.ClosestAlly != null && ObjectsManager.ClosestAlly.Distance(Player.Instance) > 3000)
+            {
+                Teleport.Cast();
+            }
+
             if (Misc.TeamFight)
             {
                 LastTeamFight = Core.GameTickCount;
@@ -39,13 +44,16 @@ namespace AramBuddy.MainCore.Logics
             // Moves to HealthRelic if the bot needs heal.
             if ((Player.Instance.HealthPercent < 75 || (Player.Instance.ManaPercent < 15 && Player.Instance.Mana > 0)) && ObjectsManager.HealthRelic != null)
             {
-                var rect = new Geometry.Polygon.Rectangle(Player.Instance.PrediectPosition(), ObjectsManager.HealthRelic.Position, 500);
-                if ((rect.Points.Any(p => p.UnderEnemyTurret() && Misc.SafeToDive) || rect.Points.Any(p => !p.UnderEnemyTurret()))
-                    && !EntityManager.Heroes.Enemies.Any(e => rect.IsInside(e.PrediectPosition()) && e.IsValidTarget() && !e.IsDead))
+                var rect = new Geometry.Polygon.Rectangle(Player.Instance.ServerPosition, ObjectsManager.HealthRelic.Position, 500);
+                if (ObjectsManager.EnemyTurret != null)
                 {
-                    Program.Moveto = "HealthRelic";
-                    Position = ObjectsManager.HealthRelic.Position.Random();
-                    return;
+                    var Circle = new Geometry.Polygon.Circle(ObjectsManager.EnemyTurret.ServerPosition, ObjectsManager.EnemyTurret.GetAutoAttackRange());
+                    if ((!Circle.Points.Any(p => rect.IsInside(p)) || Circle.Points.Any(p => rect.IsInside(p)) && Misc.SafeToDive) && !EntityManager.Heroes.Enemies.Any(e => rect.IsInside(e.PrediectPosition()) && e.IsValidTarget() && !e.IsDead))
+                    {
+                        Program.Moveto = "HealthRelic";
+                        Position = ObjectsManager.HealthRelic.Position.Random();
+                        return;
+                    }
                 }
             }
 
@@ -104,7 +112,7 @@ namespace AramBuddy.MainCore.Logics
         public static void MeleeLogic()
         {
             // if there is a TeamFight follow NearestEnemy.
-            if (Core.GameTickCount - LastTeamFight < 750 && Player.Instance.HealthPercent > 15 && ObjectsManager.NearestEnemy != null
+            if (Core.GameTickCount - LastTeamFight < 750 && Player.Instance.HealthPercent > 20 && ObjectsManager.NearestEnemy != null && Misc.TeamTotal(ObjectsManager.NearestEnemy.PrediectPosition()) >= Misc.TeamTotal(ObjectsManager.NearestEnemy.PrediectPosition(), true)
                 && (ObjectsManager.NearestEnemy.PrediectPosition().UnderEnemyTurret() && Misc.SafeToDive || !ObjectsManager.NearestEnemy.PrediectPosition().UnderEnemyTurret()))
             {
                 Program.Moveto = "NearestEnemy";

@@ -29,6 +29,8 @@ namespace AramBuddy.MainCore.Logics
 
         public static void OnTick()
         {
+            UpdateSpells();
+
             Orbwalker.DisableAttacking = Flee || None;
 
             if (Flee)
@@ -80,6 +82,22 @@ namespace AramBuddy.MainCore.Logics
                 ModesBase();
             }
         }
+        
+        public static void UpdateSpells()
+        {
+            if (Player.Instance.Hero == Champion.AurelionSol)
+            {
+                Spell.E.Range = (uint)(2000 + Spell.E.Level * 1000);
+            }
+            if (Player.Instance.Hero == Champion.TahmKench)
+            {
+                Spell.R.Range = (uint)(3500 + Spell.R.Level * 1000);
+            }
+            if (Player.Instance.Hero == Champion.Ryze)
+            {
+                Spell.R.Range = (uint)(1500 * Spell.R.Level);
+            }
+        }
 
         /// <summary>
         ///     Casts Spells On Target.
@@ -124,7 +142,8 @@ namespace AramBuddy.MainCore.Logics
             {
                 SummonerSpells.Cleanse.Cast();
             }
-            foreach (var spell in Spelllist.Where(s => s != null && s.IsReady() && !s.IsSaver()))
+
+            foreach (var spell in Spelllist.Where(s => s != null && s.IsReady() && !s.IsSaver() && !s.IsTP()))
             {
                 if (Combo || (Harass && (Player.Instance.ManaPercent > 60 || Player.Instance.ManaPercent.Equals(0))))
                 {

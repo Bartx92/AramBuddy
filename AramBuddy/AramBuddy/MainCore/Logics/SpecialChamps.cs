@@ -19,6 +19,11 @@ namespace AramBuddy.MainCore.Logics
 
         public static List<ImportantSpells> Importantspells = new List<ImportantSpells>
         {
+            new ImportantSpells { champ = Champion.Taliyah, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.TahmKench, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.TwistedFate, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.Ryze, slot = SpellSlot.R },
+            new ImportantSpells { champ = Champion.AurelionSol, slot = SpellSlot.E },
             new ImportantSpells { champ = Champion.Jhin, slot = SpellSlot.R },
             new ImportantSpells { champ = Champion.Xerath, slot = SpellSlot.R },
             new ImportantSpells { champ = Champion.Katarina, slot = SpellSlot.R },

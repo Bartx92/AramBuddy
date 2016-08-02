@@ -256,6 +256,17 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
+        ///     Returns Closets Ally.
+        /// </summary>
+        public static AIHeroClient ClosestAlly
+        {
+            get
+            {
+                return EntityManager.Heroes.Allies.OrderBy(a => a.Distance(Player.Instance)).FirstOrDefault(a => a.Distance(AllySpawn) > 5000 && a.IsValidTarget() && !a.IsMe);
+            }
+        }
+
+        /// <summary>
         ///     Returns Best Safest Ally To Follow For Melee.
         /// </summary>
         public static AIHeroClient SafestAllyToFollow
