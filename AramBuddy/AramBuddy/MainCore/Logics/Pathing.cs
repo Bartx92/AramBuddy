@@ -39,8 +39,8 @@ namespace AramBuddy.MainCore.Logics
             // Moves to HealthRelic if the bot needs heal.
             if ((Player.Instance.HealthPercent < 75 || (Player.Instance.ManaPercent < 15 && Player.Instance.Mana > 0)) && ObjectsManager.HealthRelic != null)
             {
-                var rect = new Geometry.Polygon.Rectangle(Player.Instance.ServerPosition, ObjectsManager.HealthRelic.Position, 400);
-                if ((rect.Points.Any(p => p.UnderEnemyTurret() && Misc.SafeToDive)  || rect.Points.Any(p => !p.UnderEnemyTurret())) && !EntityManager.Heroes.Enemies.Any(e => rect.IsInside(e.PrediectPosition()) && e.IsValidTarget() && !e.IsDead))
+                var rect = new Geometry.Polygon.Rectangle(Player.Instance.ServerPosition, ObjectsManager.HealthRelic.Position, 500);
+                if ((rect.Points.Any(p => p.UnderEnemyTurret() && Misc.SafeToDive) || rect.Points.Any(p => !p.UnderEnemyTurret())) && !EntityManager.Heroes.Enemies.Any(e => rect.IsInside(e.PrediectPosition()) && e.IsValidTarget() && !e.IsDead))
                 {
                     Program.Moveto = "HealthRelic";
                     Position = ObjectsManager.HealthRelic.Position.Random();
