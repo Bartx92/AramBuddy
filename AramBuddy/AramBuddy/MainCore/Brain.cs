@@ -46,7 +46,7 @@ namespace AramBuddy.MainCore
             ModesManager.OnTick();
 
             // Moves to the Bot selected Position.
-            if (Pathing.Position != Vector3.Zero && Pathing.Position != null)
+            if (Pathing.Position != Vector3.Zero && Pathing.Position.IsValid() && !Pathing.Position.IsZero)
             {
                 Pathing.MoveTo(Pathing.Position);
             }
