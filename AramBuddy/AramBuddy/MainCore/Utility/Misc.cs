@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
@@ -7,7 +8,7 @@ using SharpDX;
 
 namespace AramBuddy.MainCore.Utility
 {
-    internal static class Misc
+    public static class Misc
     {
         /// <summary>
         ///     Returns true if target Is CC'D.
@@ -83,9 +84,38 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return EntityManager.Heroes.AllHeroes.Count(a => a.IsAttackingPlayer && a.IsValidTarget()) >= 3;
+                return EntityManager.Heroes.AllHeroes.Count(a => a.IsAttackPlayer() && a.IsValidTarget()) >= 2;
             }
         }
+
+        /// <summary>
+        ///     Class for getting if the figths info.
+        /// </summary>
+        public class LastAttack
+        {
+            public AIHeroClient Attacker;
+            public AIHeroClient Target;
+            public float LastAttackSent;
+            public LastAttack(AIHeroClient from, AIHeroClient target)
+            {
+                this.Attacker = from;
+                this.Target = target;
+                this.LastAttackSent = 0f;
+            }
+        }
+
+        /// <summary>
+        ///     Returns True if the target is attacking a player.
+        /// </summary>
+        public static bool IsAttackPlayer(this AIHeroClient target)
+        {
+            return AutoAttacks.FirstOrDefault(a => a.Attacker.NetworkId.Equals(target.NetworkId) && 500 > Core.GameTickCount - a.LastAttackSent) != null;
+        }
+
+        /// <summary>
+        ///     Save all Attacks into list.
+        /// </summary>
+        public static List<LastAttack> AutoAttacks = new List<LastAttack>();
 
         /// <summary>
         ///     Returns The predicted position for the target.

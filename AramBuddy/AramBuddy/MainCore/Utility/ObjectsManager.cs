@@ -198,7 +198,7 @@ namespace AramBuddy.MainCore.Utility
                 AIHeroClient ally = null;
                 if (NearestEnemy != null)
                 {
-                    ally = EntityManager.Heroes.Allies.OrderBy(a => a.Distance(NearestEnemy)).FirstOrDefault(a => a.IsValidTarget() && a.IsAttackingPlayer && !a.IsMe && a.IsMelee && a.HealthPercent > 15);
+                    ally = EntityManager.Heroes.Allies.OrderBy(a => a.Distance(NearestEnemy)).FirstOrDefault(a => a.IsValidTarget() && a.IsAttackPlayer() && !a.IsMe && a.IsMelee && a.HealthPercent > 15);
                 }
                 return ally;
             }
@@ -218,7 +218,7 @@ namespace AramBuddy.MainCore.Utility
                             a =>
                             a.IsValidTarget() && ((a.IsUnderEnemyturret() && Misc.SafeToDive) || !a.IsUnderEnemyturret()) && a.CountAlliesInRange(1300) > 1 && a.HealthPercent > 10
                             && !a.IsInShopRange() && !a.IsDead && !a.IsZombie && !a.IsMe
-                            && (a.Spellbook.IsCharging || a.Spellbook.IsChanneling || a.Spellbook.IsAutoAttacking || a.IsAttackingPlayer || a.Spellbook.IsCastingSpell
+                            && (a.Spellbook.IsCharging || a.Spellbook.IsChanneling || a.Spellbook.IsAutoAttacking || a.IsAttackPlayer() || a.Spellbook.IsCastingSpell
                                 || a.Path.LastOrDefault().Distance(a) > 50 || EntityManager.Heroes.Enemies.Any(e => e.IsValidTarget() && e.IsInRange(a, Player.Instance.GetAutoAttackRange()))));
             }
         }

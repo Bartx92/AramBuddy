@@ -90,6 +90,14 @@ namespace AramBuddy.MainCore
             {
                 LastTurretAttack = Core.GameTickCount;
             }
+
+            var from = sender as AIHeroClient;
+            var target = args.Target as AIHeroClient;
+            if (from != null && target != null)
+            {
+                var lastAttack = new Misc.LastAttack(from, target) { Attacker = from, LastAttackSent = Core.GameTickCount, Target = target };
+                Misc.AutoAttacks.Add(lastAttack);
+            }
         }
 
         /// <summary>

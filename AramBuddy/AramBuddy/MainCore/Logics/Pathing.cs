@@ -9,6 +9,11 @@ namespace AramBuddy.MainCore.Logics
     internal class Pathing
     {
         /// <summary>
+        ///     Returns LastTeamFight Time.
+        /// </summary>
+        public static float LastTeamFight;
+
+        /// <summary>
         ///     Bot movements position.
         /// </summary>
         public static Vector3 Position;
@@ -18,6 +23,11 @@ namespace AramBuddy.MainCore.Logics
         /// </summary>
         public static void BestPosition()
         {
+            if (Misc.TeamFight)
+            {
+                LastTeamFight = Core.GameTickCount;
+            }
+
             // Hunting Bard chimes kappa.
             if (Player.Instance.Hero == Champion.Bard && ObjectsManager.BardChime != null && ObjectsManager.BardChime.Distance(Player.Instance) <= 500)
             {
@@ -93,7 +103,7 @@ namespace AramBuddy.MainCore.Logics
         public static void MeleeLogic()
         {
             // if there is a TeamFight follow NearestEnemy.
-            if (Misc.TeamFight && Player.Instance.HealthPercent > 15 && ObjectsManager.NearestEnemy != null)
+            if (Core.GameTickCount - LastTeamFight < 750 && Player.Instance.HealthPercent > 15 && ObjectsManager.NearestEnemy != null && (ObjectsManager.NearestEnemy.PrediectPosition().UnderEnemyTurret() && Misc.SafeToDive || !ObjectsManager.NearestEnemy.PrediectPosition().UnderEnemyTurret()))
             {
                 Program.Moveto = "NearestEnemy";
                 Position = ObjectsManager.NearestEnemy.PrediectPosition().Random();
