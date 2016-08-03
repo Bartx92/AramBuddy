@@ -12,6 +12,9 @@ namespace AramBuddy.MainCore.Logics
 {
     internal class ModesManager
     {
+        /// <summary>
+        ///     Modes enum.
+        /// </summary>
         public enum Modes
         {
             Flee,
@@ -21,10 +24,19 @@ namespace AramBuddy.MainCore.Logics
             None
         }
 
+        /// <summary>
+        ///     Bot current active mode.
+        /// </summary>
         public static Modes CurrentMode;
 
+        /// <summary>
+        ///     Gets the spells from the database.
+        /// </summary>
         protected static SpellBase Spell => SpellManager.CurrentSpells;
 
+        /// <summary>
+        ///     List contains my hero spells.
+        /// </summary>
         public static List<Spell.SpellBase> Spelllist = new List<Spell.SpellBase> { Spell.Q, Spell.W, Spell.E, Spell.R };
 
         public static void OnTick()
@@ -77,12 +89,15 @@ namespace AramBuddy.MainCore.Logics
                     break;
             }
 
-            if (!Program.MenuIni["DisableSpells"].Cast<CheckBox>().CurrentValue)
+            if (!Program.MenuIni["DisableSpells"].Cast<CheckBox>().CurrentValue && !Program.CustomChamp)
             {
                 ModesBase();
             }
         }
         
+        /// <summary>
+        ///     Update Spell values that needs to be updated.
+        /// </summary>
         public static void UpdateSpells()
         {
             if (Player.Instance.Hero == Champion.AurelionSol)
@@ -100,20 +115,23 @@ namespace AramBuddy.MainCore.Logics
         }
 
         /// <summary>
-        ///     Casts Spells On Target.
+        ///     Casts Spells.
         /// </summary>
         public static void ModesBase()
         {
-            if (Player.Instance.CountEnemiesInRange(1250) > 0 && Player.Instance.HealthPercent <= 25)
+            // Casting the summoner spells
+            if (Player.Instance.CountEnemiesInRange(1250) > 0 && Player.Instance.HealthPercent <= 25 && (Combo || Harass || Flee))
             {
                 if (SummonerSpells.Heal.IsReady() && Program.SpellsMenu["Heal"].Cast<CheckBox>().CurrentValue && SummonerSpells.Heal.Slot != SpellSlot.Unknown)
                 {
+                    Logger.Send("Cast Heal HealthPercent " + (int)Player.Instance.HealthPercent, Logger.LogLevel.Info);
                     SummonerSpells.Heal.Cast();
                 }
                 else
                 {
                     if (SummonerSpells.Barrier.IsReady() && Program.SpellsMenu["Barrier"].Cast<CheckBox>().CurrentValue && SummonerSpells.Barrier.Slot != SpellSlot.Unknown)
                     {
+                        Logger.Send("Cast Barrier HealthPercent " + (int)Player.Instance.HealthPercent, Logger.LogLevel.Info);
                         SummonerSpells.Barrier.Cast();
                     }
                 }
@@ -121,6 +139,7 @@ namespace AramBuddy.MainCore.Logics
 
             if (Player.Instance.ManaPercent < 50 && SummonerSpells.Clarity.IsReady() && Program.SpellsMenu["Clarity"].Cast<CheckBox>().CurrentValue && SummonerSpells.Clarity.Slot != SpellSlot.Unknown)
             {
+                Logger.Send("Cast Clarity ManaPercent " + (int)Player.Instance.ManaPercent, Logger.LogLevel.Info);
                 SummonerSpells.Clarity.Cast();
             }
 
@@ -129,17 +148,20 @@ namespace AramBuddy.MainCore.Logics
                 if (SummonerSpells.Ghost.IsReady() && Program.SpellsMenu["Ghost"].Cast<CheckBox>().CurrentValue && SummonerSpells.Ghost.Slot != SpellSlot.Unknown
                     && Player.Instance.CountEnemiesInRange(800) > 0)
                 {
+                    Logger.Send("Cast Ghost FleeMode CountEnemiesInRange " + Player.Instance.CountEnemiesInRange(800), Logger.LogLevel.Info);
                     SummonerSpells.Ghost.Cast();
                 }
                 if (SummonerSpells.Flash.IsReady() && Program.SpellsMenu["Flash"].Cast<CheckBox>().CurrentValue && SummonerSpells.Flash.Slot != SpellSlot.Unknown && Player.Instance.HealthPercent < 20
                     && ObjectsManager.AllySpawn != null)
                 {
+                    Logger.Send("Cast Flash FleeMode HealthPercent " + (int)Player.Instance.HealthPercent, Logger.LogLevel.Info);
                     SummonerSpells.Flash.Cast(Player.Instance.PrediectPosition().Extend(ObjectsManager.AllySpawn, SummonerSpells.Flash.Range).To3D());
                 }
             }
             if (SummonerSpells.Cleanse.IsReady() && Program.SpellsMenu["Cleanse"].Cast<CheckBox>().CurrentValue && SummonerSpells.Cleanse.Slot != SpellSlot.Unknown && Player.Instance.IsCC()
                 && Player.Instance.CountEnemiesInRange(1250) > 0 && Player.Instance.HealthPercent <= 80)
             {
+                Logger.Send("Cast Cleanse FleeMode Player CC'ed HealthPercent " + (int)Player.Instance.HealthPercent + " CountEnemiesInRange " + Player.Instance.CountEnemiesInRange(1250), Logger.LogLevel.Info);
                 SummonerSpells.Cleanse.Cast();
             }
 

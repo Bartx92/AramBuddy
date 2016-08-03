@@ -71,7 +71,7 @@ namespace AramBuddy.MainCore.Logics
                 return;
             }
 
-            // Stays Under tower if the bot health under 15%.
+            // Stays Under tower if the bot health under 10%.
             if ((ModesManager.Flee || (Player.Instance.HealthPercent < 10 && Player.Instance.CountAlliesInRange(2000) < 3)) && EntityManager.Heroes.Enemies.Count(e => !e.IsDead) > 0)
             {
                 if (ObjectsManager.SafeAllyTurret != null)
@@ -112,7 +112,7 @@ namespace AramBuddy.MainCore.Logics
         public static void MeleeLogic()
         {
             // if there is a TeamFight follow NearestEnemy.
-            if (Core.GameTickCount - LastTeamFight < 750 && Player.Instance.HealthPercent > 20 && ObjectsManager.NearestEnemy != null && Misc.TeamTotal(ObjectsManager.NearestEnemy.PrediectPosition()) >= Misc.TeamTotal(ObjectsManager.NearestEnemy.PrediectPosition(), true)
+            if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 20 && ObjectsManager.NearestEnemy != null && Misc.TeamTotal(ObjectsManager.NearestEnemy.PrediectPosition()) >= Misc.TeamTotal(ObjectsManager.NearestEnemy.PrediectPosition(), true)
                 && (ObjectsManager.NearestEnemy.PrediectPosition().UnderEnemyTurret() && Misc.SafeToDive || !ObjectsManager.NearestEnemy.PrediectPosition().UnderEnemyTurret()))
             {
                 Program.Moveto = "NearestEnemy";

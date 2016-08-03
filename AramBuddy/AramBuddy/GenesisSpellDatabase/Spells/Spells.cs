@@ -880,6 +880,7 @@ namespace GenesisSpellLibrary.Spells
             this.W = new Spell.Active(SpellSlot.W);
             this.E = new Spell.Targeted(SpellSlot.E, 425);
             this.R = new Spell.Skillshot(SpellSlot.R, 900, SkillShotType.Linear, 250, 1600, 120) { AllowedCollisionCount = int.MaxValue };
+            this.QisDangerDash = true;
             this.EisCC = true;
             this.EDontWaste = true;
         }

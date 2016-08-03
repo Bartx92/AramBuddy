@@ -65,6 +65,8 @@
     <Compile Include="AutoShop\Sequences\Buy.cs" />
     <Compile Include="AutoShop\Sequences\Parse.cs" />
     <Compile Include="AutoShop\Setup.cs" />
+    <Compile Include="Champions\Ashe\Ashe.cs" />
+    <Compile Include="Champions\Base.cs" />
     <Compile Include="CheckVersion.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="GenesisSpellDatabase\SpellLibrary.cs" />

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
+using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 using SharpDX;
 
@@ -90,6 +92,79 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
+        ///     Returns true if you can deal damage to the target and kill him.
+        /// </summary>
+        public static bool IsKillable(this Obj_AI_Base target, float range)
+        {
+            return !target.HasBuff("kindredrnodeathbuff") && !target.Buffs.Any(b => b.Name.ToLower().Contains("fioraw")) && !target.HasBuff("JudicatorIntervention")
+                   && !target.HasBuff("ChronoShift") && !target.HasBuff("UndyingRage") && !target.IsInvulnerable && !target.IsZombie && !target.HasBuff("bansheesveil") && !target.IsDead
+                   && !target.IsPhysicalImmune && target.Health > 0 && !target.HasBuffOfType(BuffType.Invulnerability) && !target.HasBuffOfType(BuffType.PhysicalImmunity) && target.IsValidTarget(range);
+        }
+
+        /// <summary>
+        ///     Casts spell with selected hitchance.
+        /// </summary>
+        public static void Cast(this Spell.Skillshot spell, Obj_AI_Base target, HitChance hitChance)
+        {
+            if (target != null && spell.IsReady() && target.IsKillable(spell.Range))
+            {
+                var pred = spell.GetPrediction(target);
+                if (pred.HitChance >= hitChance || target.IsCC())
+                {
+                    spell.Cast(pred.CastPosition);
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Creates a checkbox.
+        /// </summary>
+        public static CheckBox CreateCheckBox(this Menu m, string id, string name, bool defaultvalue = true)
+        {
+            return m.Add(id, new CheckBox(name, defaultvalue));
+        }
+
+        /// <summary>
+        ///     Creates a slider.
+        /// </summary>
+        public static Slider CreateSlider(this Menu m, string id, string name, int defaultvalue = 0, int MinValue = 0, int MaxValue = 0)
+        {
+            return m.Add(id, new Slider(name, defaultvalue, MinValue, MaxValue));
+        }
+
+        /// <summary>
+        ///     Returns CheckBox Value.
+        /// </summary>
+        public static bool CheckBoxValue(this Menu m, string id)
+        {
+            return m[id].Cast<CheckBox>().CurrentValue;
+        }
+
+        /// <summary>
+        ///     Returns Slider Value.
+        /// </summary>
+        public static int SliderValue(this Menu m, string id)
+        {
+            return m[id].Cast<Slider>().CurrentValue;
+        }
+
+        /// <summary>
+        ///     Returns true if the value is >= the slider.
+        /// </summary>
+        public static bool CompareSlider(this Menu m, string id, float value)
+        {
+            return value >= m[id].Cast<Slider>().CurrentValue;
+        }
+
+        /// <summary>
+        ///     Returns true if the spell will kill the target.
+        /// </summary>
+        public static bool WillKill(this Spell.SpellBase spell, Obj_AI_Base target)
+        {
+            return Player.Instance.GetSpellDamage(target, spell.Slot) >= target.Health;
+        }
+
+        /// <summary>
         ///     Class for getting if the figths info.
         /// </summary>
         public class LastAttack
@@ -111,7 +186,7 @@ namespace AramBuddy.MainCore.Utility
         /// </summary>
         public static bool IsAttackPlayer(this AIHeroClient target)
         {
-            return AutoAttacks.FirstOrDefault(a => a.Attacker.NetworkId.Equals(target.NetworkId) && 500 > Core.GameTickCount - a.LastAttackSent) != null;
+            return AutoAttacks.FirstOrDefault(a => a.Attacker.NetworkId.Equals(target.NetworkId) && 250 + a.Attacker.AttackCastDelay + a.Attacker.AttackCastDelay > Core.GameTickCount - a.LastAttackSent) != null;
         }
 
         /// <summary>

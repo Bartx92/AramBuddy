@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AramBuddy.AutoShop;
+using AramBuddy.Champions;
 using AramBuddy.MainCore;
 using AramBuddy.MainCore.Logics;
 using AramBuddy.MainCore.Utility;
@@ -16,6 +17,8 @@ namespace AramBuddy
 {
     internal class Program
     {
+        public static bool CustomChamp;
+
         public static bool Loaded;
 
         public static float Timer;
@@ -45,6 +48,16 @@ namespace AramBuddy
 
             // Initialize the AutoShop.
             Setup.Init();
+
+            Chat.OnInput += delegate (ChatInputEventArgs msg)
+            {
+                if (msg.Input.Equals("Load " + Player.Instance.Hero, StringComparison.CurrentCultureIgnoreCase) && !CustomChamp)
+                {
+                    var Instance = (Base)Activator.CreateInstance(null, "AramBuddy.Champions." + Player.Instance.Hero + "." + Player.Instance.Hero).Unwrap();
+                    CustomChamp = true;
+                    msg.Process = false;
+                }
+            };
 
             Timer = Game.Time;
             Game.OnTick += Game_OnTick;
@@ -96,7 +109,7 @@ namespace AramBuddy
             */
             // Initialize Bot Functions.
             Brain.Init();
-
+            
             Drawing.OnEndScene += Drawing_OnEndScene;
             Chat.Print("AramBuddy Loaded !");
         }
