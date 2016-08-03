@@ -34,12 +34,12 @@ namespace AramBuddy.Champions.Ashe
             AutoMenu.CreateCheckBox("W", "Use W");
             foreach (var spell in SpellList)
             {
-                ComboMenu.CreateCheckBox(spell.Slot.ToString(), "Use " + spell.Slot);
-                HarassMenu.CreateCheckBox(spell.Slot.ToString(), "Use " + spell.Slot);
+                ComboMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
+                HarassMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
                 HarassMenu.CreateSlider(spell.Slot + "mana", spell.Slot + " Mana Manager", 60);
-                LaneClearMenu.CreateCheckBox(spell.Slot.ToString(), "Use " + spell.Slot);
+                LaneClearMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
                 LaneClearMenu.CreateSlider(spell.Slot + "mana", spell.Slot + " Mana Manager", 60);
-                KillStealMenu.CreateCheckBox(spell.Slot.ToString(), "Use " + spell.Slot);
+                KillStealMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
             }
         }
 
@@ -50,7 +50,7 @@ namespace AramBuddy.Champions.Ashe
 
         public override void Combo()
         {
-            foreach (var spell in SpellList.Where(s => s.IsReady() && ComboMenu.CheckBoxValue(s.Slot.ToString())))
+            foreach (var spell in SpellList.Where(s => s.IsReady() && ComboMenu.CheckBoxValue(s.Slot)))
             {
                 var target = TargetSelector.GetTarget(W.Range, DamageType.Physical);
                 if (target == null || !target.IsKillable(spell.Range)) return;
@@ -69,7 +69,7 @@ namespace AramBuddy.Champions.Ashe
 
         public override void Harass()
         {
-            foreach (var spell in SpellList.Where(s => s.IsReady() && HarassMenu.CheckBoxValue(s.Slot.ToString()) && HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)))
+            foreach (var spell in SpellList.Where(s => s.IsReady() && HarassMenu.CheckBoxValue(s.Slot) && HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)))
             {
                 var target = TargetSelector.GetTarget(W.Range, DamageType.Physical);
                 if (target == null || !target.IsKillable(spell.Range)) return;
@@ -90,7 +90,7 @@ namespace AramBuddy.Champions.Ashe
         {
             foreach (var target in EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m != null && m.IsValidTarget()))
             {
-                foreach (var spell in SpellList.Where(s => s.IsReady() && s != R && LaneClearMenu.CheckBoxValue(s.Slot.ToString()) && LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)))
+                foreach (var spell in SpellList.Where(s => s.IsReady() && s != R && LaneClearMenu.CheckBoxValue(s.Slot) && LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)))
                 {
                     if (spell.Slot == SpellSlot.Q)
                     {
@@ -119,7 +119,7 @@ namespace AramBuddy.Champions.Ashe
         {
             foreach (var target in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsValidTarget()))
             {
-                foreach (var spell in SpellList.Where(s => s.WillKill(target) && s.IsReady() && target.IsKillable(s.Range) && KillStealMenu.CheckBoxValue(s.Slot.ToString())))
+                foreach (var spell in SpellList.Where(s => s.WillKill(target) && s.IsReady() && target.IsKillable(s.Range) && KillStealMenu.CheckBoxValue(s.Slot)))
                 {
                     if (spell.Slot == SpellSlot.Q)
                     {

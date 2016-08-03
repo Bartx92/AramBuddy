@@ -125,6 +125,14 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
+        ///     Creates a checkbox.
+        /// </summary>
+        public static CheckBox CreateCheckBox(this Menu m, SpellSlot slot, string name, bool defaultvalue = true)
+        {
+            return m.Add(slot.ToString(), new CheckBox(name, defaultvalue));
+        }
+
+        /// <summary>
         ///     Creates a slider.
         /// </summary>
         public static Slider CreateSlider(this Menu m, string id, string name, int defaultvalue = 0, int MinValue = 0, int MaxValue = 0)
@@ -138,6 +146,14 @@ namespace AramBuddy.MainCore.Utility
         public static bool CheckBoxValue(this Menu m, string id)
         {
             return m[id].Cast<CheckBox>().CurrentValue;
+        }
+
+        /// <summary>
+        ///     Returns CheckBox Value.
+        /// </summary>
+        public static bool CheckBoxValue(this Menu m, SpellSlot slot)
+        {
+            return m[slot.ToString()].Cast<CheckBox>().CurrentValue;
         }
 
         /// <summary>
