@@ -2,6 +2,7 @@
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
+using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Menu;
 using static AramBuddy.MainCore.Utility.Misc;
 
@@ -17,7 +18,7 @@ namespace AramBuddy.Champions.Ashe
         static Ashe()
         {
             MenuIni = MainMenu.AddMenu(MenuName, MenuName);
-            AutoMenu = MenuIni.AddSubMenu("Flee");
+            AutoMenu = MenuIni.AddSubMenu("Auto");
             ComboMenu = MenuIni.AddSubMenu("Combo");
             HarassMenu = MenuIni.AddSubMenu("Harass");
             LaneClearMenu = MenuIni.AddSubMenu("LaneClear");
@@ -31,7 +32,9 @@ namespace AramBuddy.Champions.Ashe
             SpellList.Add(W);
             SpellList.Add(R);
 
-            AutoMenu.CreateCheckBox("W", "Use W");
+            AutoMenu.CreateCheckBox("W", "Flee W");
+            AutoMenu.CreateCheckBox("GapR", "Anti-GapCloser R");
+            AutoMenu.CreateCheckBox("IntR", "Interrupter R");
             foreach (var spell in SpellList)
             {
                 ComboMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
@@ -41,6 +44,28 @@ namespace AramBuddy.Champions.Ashe
                 LaneClearMenu.CreateSlider(spell.Slot + "mana", spell.Slot + " Mana Manager", 60);
                 KillStealMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
             }
+            
+            Gapcloser.OnGapcloser += Gapcloser_OnGapcloser;
+            Interrupter.OnInterruptableSpell += Interrupter_OnInterruptableSpell;
+            Dash.OnDash += Dash_OnDash;
+        }
+
+        private static void Dash_OnDash(Obj_AI_Base sender, Dash.DashEventArgs e)
+        {
+            if(sender == null || !sender.IsEnemy || !sender.IsKillable(1000) || !R.IsReady() || !AutoMenu.CheckBoxValue("GapR")) return;
+            R.Cast(sender);
+        }
+
+        private static void Interrupter_OnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs e)
+        {
+            if (sender == null || !sender.IsEnemy || !sender.IsKillable(1000) || !R.IsReady() || !AutoMenu.CheckBoxValue("IntR")) return;
+            R.Cast(sender);
+        }
+
+        private static void Gapcloser_OnGapcloser(AIHeroClient sender, Gapcloser.GapcloserEventArgs e)
+        {
+            if (sender == null || !sender.IsEnemy || !sender.IsKillable(1000) || !R.IsReady() || !AutoMenu.CheckBoxValue("GapR")) return;
+            R.Cast(sender);
         }
 
         public override void Active()

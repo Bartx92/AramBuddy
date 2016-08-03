@@ -67,6 +67,7 @@
     <Compile Include="AutoShop\Setup.cs" />
     <Compile Include="Champions\Ashe\Ashe.cs" />
     <Compile Include="Champions\Base.cs" />
+    <Compile Include="Champions\Temp.cs" />
     <Compile Include="CheckVersion.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="GenesisSpellDatabase\SpellLibrary.cs" />
@@ -91,7 +92,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Champions\Azir\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
