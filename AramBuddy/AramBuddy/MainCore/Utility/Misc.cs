@@ -186,7 +186,7 @@ namespace AramBuddy.MainCore.Utility
         /// </summary>
         public static bool IsAttackPlayer(this AIHeroClient target)
         {
-            return AutoAttacks.FirstOrDefault(a => a.Attacker.NetworkId.Equals(target.NetworkId) && 250 + a.Attacker.AttackCastDelay + a.Attacker.AttackCastDelay > Core.GameTickCount - a.LastAttackSent) != null;
+            return AutoAttacks.FirstOrDefault(a => a.Attacker.NetworkId.Equals(target.NetworkId) && 250 + (a.Attacker.AttackCastDelay * 1000) + (a.Attacker.AttackDelay * 1000) > Core.GameTickCount - a.LastAttackSent) != null;
         }
 
         /// <summary>
