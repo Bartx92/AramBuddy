@@ -19,7 +19,7 @@ namespace AramBuddy.KappaEvade
             SpellsDetector.Init();
             Collision.Init();
             SpellsDetector.OnSkillShotDetected += SpellsDetector_OnSkillShotDetected;
-            Drawing.OnDraw += Drawing_OnDraw;
+            //Drawing.OnDraw += Drawing_OnDraw;
             GameObject.OnDelete += GameObject_OnDelete;
             Game.OnTick += Game_OnTick;
             //GameObject.OnCreate += GameObject_OnCreate;

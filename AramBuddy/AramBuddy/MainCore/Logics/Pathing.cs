@@ -182,6 +182,25 @@ namespace AramBuddy.MainCore.Logics
         /// </summary>
         public static void RangedLogic()
         {
+            if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 20 && ObjectsManager.NearestEnemy != null && Misc.TeamTotal(ObjectsManager.NearestEnemy.PrediectPosition()) >= Misc.TeamTotal(ObjectsManager.NearestEnemy.PrediectPosition(), true)
+                && (ObjectsManager.NearestEnemy.PrediectPosition().UnderEnemyTurret() && Misc.SafeToDive || !ObjectsManager.NearestEnemy.PrediectPosition().UnderEnemyTurret()))
+            {
+                // if there is a TeamFight move from NearestEnemy to nearestally.
+                if (ObjectsManager.NearestAlly != null)
+                {
+                    Program.Moveto = "NearestEnemyToNearestAlly";
+                    Position = ObjectsManager.NearestEnemy.PrediectPosition().Random().Extend(ObjectsManager.NearestAlly.PrediectPosition().Random(), Player.Instance.GetAutoAttackRange() - 100).To3D();
+                    return;
+                }
+                // if there is a TeamFight move from NearestEnemy to AllySpawn.
+                if (ObjectsManager.AllySpawn != null)
+                {
+                    Program.Moveto = "NearestEnemyToAllySpawn";
+                    Position = ObjectsManager.NearestEnemy.PrediectPosition().Random().Extend(ObjectsManager.AllySpawn.Position.Random(), Player.Instance.GetAutoAttackRange() - 100).To3D();
+                    return;
+                }
+            }
+
             // if SafestAllyToFollow2 exsists moves to SafestAllyToFollow2.
             if (ObjectsManager.SafestAllyToFollow2 != null)
             {

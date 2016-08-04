@@ -5,7 +5,7 @@ using EloBuddy;
 
 namespace AramBuddy.Champions.Syndra
 {
-    class BallsManager
+    internal class BallsManager
     {
         internal static List<Obj_AI_Minion> BallsList = new List<Obj_AI_Minion>();
 

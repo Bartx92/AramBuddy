@@ -57,6 +57,17 @@ namespace AramBuddy.Champions.Gangplank
 
         public override void Combo()
         {
+            if (R.IsReady() && ComboMenu.CheckBoxValue(R.Slot))
+            {
+                foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsKillable(4500)))
+                {
+                    if (ComboMenu.CompareSlider("RAOE", enemy.CountEnemiesInRange(R.Width)))
+                    {
+                        R.Cast(enemy);
+                    }
+                }
+            }
+
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
             if (target == null || !target.IsKillable(Q.Range)) return;
 
@@ -76,17 +87,6 @@ namespace AramBuddy.Champions.Gangplank
             if (E.IsReady() && Q.IsReady() && target.IsValidTarget(E.Range) && ComboMenu.CheckBoxValue(E.Slot))
             {
                 E.Cast(target, HitChance.Low);
-            }
-
-            if (R.IsReady() && ComboMenu.CheckBoxValue(R.Slot))
-            {
-                foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e.IsKillable(4500)))
-                {
-                    if (ComboMenu.CompareSlider("RAOE", enemy.CountEnemiesInRange(R.Width)))
-                    {
-                        R.Cast(enemy);
-                    }
-                }
             }
         }
 
@@ -145,9 +145,9 @@ namespace AramBuddy.Champions.Gangplank
 
         public override void KillSteal()
         {
-            foreach (var target in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsKillable(Q.Range)))
+            foreach (var target in EntityManager.Heroes.Enemies.Where(e => e != null))
             {
-                if (Q.IsReady() && KillStealMenu.CheckBoxValue(Q.Slot))
+                if (Q.IsReady() && target.IsKillable(Q.Range) && KillStealMenu.CheckBoxValue(Q.Slot))
                 {
                     foreach (var barrel in BarrelsManager.BarrelsList.OrderByDescending(b => b.CountEnemiesInRange(E.Width)).Where(b => b.IsInRange(target, E.Width) && b.Health <= 1 && E.WillKill(target)))
                     {
@@ -165,7 +165,7 @@ namespace AramBuddy.Champions.Gangplank
                     E.Cast(target, HitChance.Low);
                 }
 
-                if (R.IsReady() && KillStealMenu.CheckBoxValue(R.Slot) && R.WillKill(target))
+                if (R.IsReady() && KillStealMenu.CheckBoxValue(R.Slot) && R.WillKill(target, 2))
                 {
                     R.Cast(target);
                 }

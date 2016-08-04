@@ -4,7 +4,7 @@ using EloBuddy;
 
 namespace AramBuddy.Champions.Orianna
 {
-    class BallManager
+    internal class BallManager
     {
         internal static Obj_AI_Base OriannaBall;
 

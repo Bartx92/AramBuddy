@@ -41,10 +41,10 @@ namespace AramBuddy.KappaEvade
             if (caster == null || missile == null || !missile.IsValid || missile.IsAutoAttack() || !caster.IsEnemy)
                 return;
 
-            Chat.Print("OnCreate Detected " + missile.SData.Name + " " + missile.SData.MissileSpeed + " " + missile.SData.CastRange);
+            //Chat.Print("OnCreate Detected " + missile.SData.Name + " " + missile.SData.MissileSpeed + " " + missile.SData.CastRange);
             if (Database.SkillShotSpells.SkillShotsSpellsList.Any(s => s.hero == caster.Hero && missile.SData.Name.ToLower() == s.MissileName.ToLower()))
             {
-                Chat.Print("OnCreate Added " + missile.SData.Name);
+                //Chat.Print("OnCreate Added " + missile.SData.Name);
                 var spell = Database.SkillShotSpells.SkillShotsSpellsList.FirstOrDefault(s => s.hero == caster.Hero && missile.SData.Name.ToLower() == s.MissileName.ToLower());
                 if(!spell.DetectByMissile) return;
                 OnSkillShotDetected?.Invoke(caster, null, spell, missile.StartPosition, missile.EndPosition, spell.Range, spell.Width, missile);
@@ -60,7 +60,7 @@ namespace AramBuddy.KappaEvade
 
             if (Database.SkillShotSpells.SkillShotsSpellsList.Any(s => s.hero == caster.Hero && s.slot == args.Slot && args.SData.Name.ToLower() == s.SpellName.ToLower()))
             {
-                Chat.Print("OnProcessSpellCast Detected " + args.SData.Name);
+                //Chat.Print("OnProcessSpellCast Detected " + args.SData.Name);
                 var spell = Database.SkillShotSpells.SkillShotsSpellsList.FirstOrDefault(s => s.hero == caster.Hero && s.slot == args.Slot && args.SData.Name.ToLower() == s.SpellName.ToLower());
                 if (spell.DetectByMissile) return;
                 OnSkillShotDetected?.Invoke(sender, args, spell, args.Start, args.End, spell.Range, spell.Width, null);

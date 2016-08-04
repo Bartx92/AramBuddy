@@ -191,9 +191,9 @@ namespace AramBuddy.MainCore.Utility
         /// <summary>
         ///     Returns true if the spell will kill the target.
         /// </summary>
-        public static bool WillKill(this Spell.SpellBase spell, Obj_AI_Base target)
+        public static bool WillKill(this Spell.SpellBase spell, Obj_AI_Base target, int MultiplyDmgBy = 1)
         {
-            return Player.Instance.GetSpellDamage(target, spell.Slot) >= target.Health;
+            return Player.Instance.GetSpellDamage(target, spell.Slot) * MultiplyDmgBy >= target.Health;
         }
 
         /// <summary>
