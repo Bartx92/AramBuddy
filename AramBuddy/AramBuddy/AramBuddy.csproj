@@ -71,6 +71,7 @@
     <Compile Include="Champions\Gangplank\BarrelsManager.cs" />
     <Compile Include="Champions\Gangplank\Gangplank.cs" />
     <Compile Include="Champions\Garen\Garen.cs" />
+    <Compile Include="Champions\Lux\Lux.cs" />
     <Compile Include="Champions\Orianna\BallManager.cs" />
     <Compile Include="Champions\Orianna\Orianna.cs" />
     <Compile Include="Champions\Syndra\BallsManager.cs" />

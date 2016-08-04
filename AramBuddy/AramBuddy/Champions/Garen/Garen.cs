@@ -13,6 +13,11 @@ namespace AramBuddy.Champions.Garen
 {
     internal class Garen : Base
     {
+        private static Spell.Active Q { get; }
+        private static Spell.Active W { get; }
+        private static Spell.Active E { get; }
+        private static Spell.Targeted R { get; }
+
         static Garen()
         {
             MenuIni = MainMenu.AddMenu(MenuName, MenuName);
@@ -21,6 +26,7 @@ namespace AramBuddy.Champions.Garen
             HarassMenu = MenuIni.AddSubMenu("Harass");
             LaneClearMenu = MenuIni.AddSubMenu("LaneClear");
             KillStealMenu = MenuIni.AddSubMenu("KillSteal");
+            KappaEvade.KappaEvade.Init();
 
             Q = new Spell.Active(SpellSlot.Q);
             W = new Spell.Active(SpellSlot.W);
@@ -60,11 +66,6 @@ namespace AramBuddy.Champions.Garen
                 W.Cast();
             }
         }
-
-        private static Spell.Active Q { get; }
-        private static Spell.Active W { get; }
-        private static Spell.Active E { get; }
-        private static Spell.Targeted R { get; }
 
         private static void SpellsDetector_OnTargetedSpellDetected(Obj_AI_Base sender, Obj_AI_Base target, GameObjectProcessSpellCastEventArgs args, Database.TargetedSpells.TSpell spell)
         {
