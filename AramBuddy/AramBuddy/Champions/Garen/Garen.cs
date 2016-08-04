@@ -41,9 +41,7 @@ namespace AramBuddy.Champions.Garen
             {
                 ComboMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
                 HarassMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
-                HarassMenu.CreateSlider(spell.Slot + "mana", spell.Slot + " Mana Manager", 60);
                 LaneClearMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
-                LaneClearMenu.CreateSlider(spell.Slot + "mana", spell.Slot + " Mana Manager", 60);
                 KillStealMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
             }
 
@@ -151,8 +149,7 @@ namespace AramBuddy.Champions.Garen
                 var spell in
                     SpellList.Where(
                         s =>
-                            s.IsReady() && HarassMenu.CheckBoxValue(s.Slot) &&
-                            HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)))
+                            s.IsReady() && HarassMenu.CheckBoxValue(s.Slot)))
             {
                 var target = TargetSelector.GetTarget(R.Range, DamageType.Physical);
                 if (target == null || !target.IsKillable(spell.Range)) return;
@@ -180,8 +177,7 @@ namespace AramBuddy.Champions.Garen
                             target =>
                                 SpellList.Where(
                                     s =>
-                                        s.IsReady() && s != R && LaneClearMenu.CheckBoxValue(s.Slot) &&
-                                        LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent))))
+                                        s.IsReady() && s != R && LaneClearMenu.CheckBoxValue(s.Slot))))
             {
                 if (spell.Slot == SpellSlot.R)
                 {
@@ -198,7 +194,7 @@ namespace AramBuddy.Champions.Garen
 
         public override void Flee()
         {
-            if (Q.IsReady() && (AutoMenu.CheckBoxValue("Q") && user.ManaPercent >= 65 || Player.HasBuffOfType(BuffType.Slow)))
+            if (Q.IsReady() && (AutoMenu.CheckBoxValue("Q") || Player.HasBuffOfType(BuffType.Slow)))
             {
                 Q.Cast();
             }
