@@ -121,7 +121,7 @@ namespace AramBuddy
                 Drawing.Width * 0.01f,
                 Drawing.Height * 0.025f,
                 System.Drawing.Color.White,
-                "AllyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.PrediectPosition()) + " | EnemyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.PrediectPosition(), true) + " | MoveTo: "
+                "AllyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.PredictPosition()) + " | EnemyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.PredictPosition(), true) + " | MoveTo: "
                 + Moveto + " | ActiveMode: " + Orbwalker.ActiveModesFlags + " | Alone: " + Brain.Alone() + " | AttackObject: " + ModesManager.AttackObject + " | LastTurretAttack: "
                 + (Core.GameTickCount - Brain.LastTurretAttack) + " | SafeToDive: " + Misc.SafeToDive + " | LastTeamFight: " + (int)(Core.GameTickCount - Pathing.LastTeamFight));
 

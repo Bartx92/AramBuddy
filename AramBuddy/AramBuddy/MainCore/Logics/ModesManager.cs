@@ -155,7 +155,7 @@ namespace AramBuddy.MainCore.Logics
                     && ObjectsManager.AllySpawn != null)
                 {
                     Logger.Send("Cast Flash FleeMode HealthPercent " + (int)Player.Instance.HealthPercent, Logger.LogLevel.Info);
-                    SummonerSpells.Flash.Cast(Player.Instance.PrediectPosition().Extend(ObjectsManager.AllySpawn, SummonerSpells.Flash.Range).To3D());
+                    SummonerSpells.Flash.Cast(Player.Instance.PredictPosition().Extend(ObjectsManager.AllySpawn, SummonerSpells.Flash.Range).To3D());
                 }
             }
             if (SummonerSpells.Cleanse.IsReady() && Program.SpellsMenu["Cleanse"].Cast<CheckBox>().CurrentValue && SummonerSpells.Cleanse.Slot != SpellSlot.Unknown && Player.Instance.IsCC()
@@ -197,9 +197,9 @@ namespace AramBuddy.MainCore.Logics
         {
             get
             {
-                return Misc.TeamTotal(Player.Instance.PrediectPosition()) > Misc.TeamTotal(Player.Instance.PrediectPosition(), true)
+                return Misc.TeamTotal(Player.Instance.PredictPosition()) > Misc.TeamTotal(Player.Instance.PredictPosition(), true)
                        && Player.Instance.CountAlliesInRange(1000) >= Player.Instance.CountEnemiesInRange(1000) && Player.Instance.CountEnemiesInRange(1000) > 0
-                       && ((Player.Instance.PrediectPosition().UnderEnemyTurret() && Misc.SafeToDive) || !Player.Instance.IsUnderEnemyturret());
+                       && ((Player.Instance.PredictPosition().UnderEnemyTurret() && Misc.SafeToDive) || !Player.Instance.IsUnderEnemyturret());
             }
         }
 
@@ -210,8 +210,8 @@ namespace AramBuddy.MainCore.Logics
         {
             get
             {
-                return (Misc.TeamTotal(Player.Instance.PrediectPosition()) < Misc.TeamTotal(Player.Instance.PrediectPosition(), true) || Player.Instance.IsUnderHisturret())
-                       && Player.Instance.CountEnemiesInRange(800) > 0 && ((Player.Instance.PrediectPosition().UnderEnemyTurret() && Misc.SafeToDive) || !Player.Instance.IsUnderEnemyturret()) && !Flee;
+                return (Misc.TeamTotal(Player.Instance.PredictPosition()) < Misc.TeamTotal(Player.Instance.PredictPosition(), true) || Player.Instance.IsUnderHisturret())
+                       && Player.Instance.CountEnemiesInRange(800) > 0 && ((Player.Instance.PredictPosition().UnderEnemyTurret() && Misc.SafeToDive) || !Player.Instance.IsUnderEnemyturret()) && !Flee;
             }
         }
 
@@ -235,7 +235,7 @@ namespace AramBuddy.MainCore.Logics
             get
             {
                 return !Player.Instance.IsUnderHisturret()
-                       && ((Misc.TeamTotal(Player.Instance.PrediectPosition()) < Misc.TeamTotal(Player.Instance.PrediectPosition(), true) && Player.Instance.CountAlliesInRange(800) < 2)
+                       && ((Misc.TeamTotal(Player.Instance.PredictPosition()) < Misc.TeamTotal(Player.Instance.PredictPosition(), true) && Player.Instance.CountAlliesInRange(800) < 2)
                            || (Player.Instance.IsUnderEnemyturret() && !Misc.SafeToDive) || (Player.Instance.CountEnemiesInRange(800) > Player.Instance.CountAlliesInRange(800))
                            || (Player.Instance.HealthPercent < 15 && (Player.Instance.IsUnderEnemyturret() || Player.Instance.CountEnemiesInRange(1000) > 1)));
             }

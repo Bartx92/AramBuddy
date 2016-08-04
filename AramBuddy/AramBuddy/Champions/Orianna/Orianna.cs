@@ -56,7 +56,7 @@ namespace AramBuddy.Champions.Orianna
 
         private static void Interrupter_OnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs e)
         {
-            if (sender == null || !sender.IsEnemy || !R.IsReady() || !AutoMenu.CheckBoxValue("IntR") || BallManager.OriannaBall == null || !sender.PrediectPosition().IsInRange(BallManager.OriannaBall, R.Range)) return;
+            if (sender == null || !sender.IsEnemy || !R.IsReady() || !AutoMenu.CheckBoxValue("IntR") || BallManager.OriannaBall == null || !sender.PredictPosition().IsInRange(BallManager.OriannaBall, R.Range)) return;
             R.Cast(sender);
         }
 
@@ -75,7 +75,7 @@ namespace AramBuddy.Champions.Orianna
             {
                 Q.Cast(target, HitChance.Low);
             }
-            if (W.IsReady() && BallManager.OriannaBall != null && target.PrediectPosition().IsInRange(BallManager.OriannaBall, W.Range) && ComboMenu.CheckBoxValue(W.Slot))
+            if (W.IsReady() && BallManager.OriannaBall != null && target.PredictPosition().IsInRange(BallManager.OriannaBall, W.Range) && ComboMenu.CheckBoxValue(W.Slot))
             {
                 W.Cast();
             }
@@ -92,7 +92,7 @@ namespace AramBuddy.Champions.Orianna
             {
                 Q.Cast(target, HitChance.Low);
             }
-            if (W.IsReady() && BallManager.OriannaBall != null && target.PrediectPosition().IsInRange(BallManager.OriannaBall, W.Range) && HarassMenu.CheckBoxValue(W.Slot) && HarassMenu.CompareSlider(W.Slot + "mana", user.ManaPercent))
+            if (W.IsReady() && BallManager.OriannaBall != null && target.PredictPosition().IsInRange(BallManager.OriannaBall, W.Range) && HarassMenu.CheckBoxValue(W.Slot) && HarassMenu.CompareSlider(W.Slot + "mana", user.ManaPercent))
             {
                 W.Cast();
             }
@@ -106,7 +106,7 @@ namespace AramBuddy.Champions.Orianna
                 {
                     Q.Cast(target, HitChance.Low);
                 }
-                if (W.IsReady() && BallManager.OriannaBall != null && target.PrediectPosition().IsInRange(BallManager.OriannaBall, W.Range) && LaneClearMenu.CheckBoxValue(W.Slot) && LaneClearMenu.CompareSlider(W.Slot + "mana", user.ManaPercent))
+                if (W.IsReady() && BallManager.OriannaBall != null && target.PredictPosition().IsInRange(BallManager.OriannaBall, W.Range) && LaneClearMenu.CheckBoxValue(W.Slot) && LaneClearMenu.CompareSlider(W.Slot + "mana", user.ManaPercent))
                 {
                     W.Cast();
                 }
@@ -117,7 +117,7 @@ namespace AramBuddy.Champions.Orianna
         {
             if(!AutoMenu.CheckBoxValue("W") || BallManager.OriannaBall == null || !W.IsReady()) return;
 
-            if (EntityManager.Heroes.Enemies.Any(e => e != null && e.PrediectPosition().Distance(user) < 400) && user.HealthPercent < 25 && user.ManaPercent > 10)
+            if (EntityManager.Heroes.Enemies.Any(e => e != null && e.PredictPosition().Distance(user) < 400) && user.HealthPercent < 25 && user.ManaPercent > 10)
             {
                 if (BallManager.OriannaBall.IsInRange(user, W.Range))
                 {
@@ -134,7 +134,7 @@ namespace AramBuddy.Champions.Orianna
                 {
                     Q.Cast(target, HitChance.Low);
                 }
-                if (W.IsReady() && W.WillKill(target) && BallManager.OriannaBall != null && target.PrediectPosition().IsInRange(BallManager.OriannaBall, W.Range) && KillStealMenu.CheckBoxValue(W.Slot))
+                if (W.IsReady() && W.WillKill(target) && BallManager.OriannaBall != null && target.PredictPosition().IsInRange(BallManager.OriannaBall, W.Range) && KillStealMenu.CheckBoxValue(W.Slot))
                 {
                     W.Cast();
                 }
@@ -145,7 +145,7 @@ namespace AramBuddy.Champions.Orianna
         {
             if (BallManager.OriannaBall != null && R.IsReady())
             {
-                if (EntityManager.Heroes.Enemies.Count(e => e != null && e.IsKillable(1100) && e.PrediectPosition().IsInRange(BallManager.OriannaBall, R.Range)) >= hits)
+                if (EntityManager.Heroes.Enemies.Count(e => e != null && e.IsKillable(1100) && e.PredictPosition().IsInRange(BallManager.OriannaBall, R.Range)) >= hits)
                 {
                     R.Cast();
                 }

@@ -14,7 +14,7 @@ namespace AramBuddy.MainCore.Logics
             {
                 if (spell is Spell.Skillshot && ObjectsManager.ClosestAlly != null && ObjectsManager.ClosestAlly.IsValidTarget(spell.Range) && ObjectsManager.AllySpawn != null && Player.Instance.Distance(ObjectsManager.AllySpawn) < 5000 && ObjectsManager.ClosestAlly.Distance(Player.Instance) > spell.Range - 500 && ObjectsManager.ClosestAlly.Distance(ObjectsManager.AllySpawn) > Player.Instance.Distance(ObjectsManager.AllySpawn))
                 {
-                    spell.Cast(ObjectsManager.ClosestAlly.PrediectPosition().Random());
+                    spell.Cast(ObjectsManager.ClosestAlly.PredictPosition().Random());
                 }
             }
         }

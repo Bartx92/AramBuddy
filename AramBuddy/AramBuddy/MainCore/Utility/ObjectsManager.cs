@@ -233,7 +233,7 @@ namespace AramBuddy.MainCore.Utility
             get
             {
                 return
-                    EntityManager.Heroes.Allies.OrderByDescending(a => Misc.TeamTotal(a.PrediectPosition()))
+                    EntityManager.Heroes.Allies.OrderByDescending(a => Misc.TeamTotal(a.PredictPosition()))
                         .ThenByDescending(a => a.Distance(AllyNexues))
                         .Where(
                             a =>
@@ -273,7 +273,7 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return BestAlliesToFollow.OrderBy(a => a.Distance(Player.Instance)).FirstOrDefault(a => Misc.TeamTotal(a.PrediectPosition()) - Misc.TeamTotal(a.PrediectPosition(), true) > 0);
+                return BestAlliesToFollow.OrderBy(a => a.Distance(Player.Instance)).FirstOrDefault(a => Misc.TeamTotal(a.PredictPosition()) - Misc.TeamTotal(a.PredictPosition(), true) > 0);
             }
         }
 
@@ -285,7 +285,7 @@ namespace AramBuddy.MainCore.Utility
             get
             {
                 return
-                    BestAlliesToFollow.OrderByDescending(a => Misc.TeamTotal(a.PrediectPosition()) - Misc.TeamTotal(a.PrediectPosition(), true))
+                    BestAlliesToFollow.OrderByDescending(a => Misc.TeamTotal(a.PredictPosition()) - Misc.TeamTotal(a.PredictPosition(), true))
                         .FirstOrDefault(a => a.CountAlliesInRange(1000) > a.CountEnemiesInRange(1000));
             }
         }
@@ -303,7 +303,7 @@ namespace AramBuddy.MainCore.Utility
                             m =>
                             m.CountAlliesInRange(1300) - m.CountEnemiesInRange(1250) >= 0 && ((m.IsUnderEnemyturret() && Misc.SafeToDive) || !m.IsUnderEnemyturret()) && m.IsValidTarget(2500)
                             && m.IsValid && m.IsHPBarRendered && !m.IsDead && !m.IsZombie && m.HealthPercent > 25
-                            && Misc.TeamTotal(m.PrediectPosition()) - Misc.TeamTotal(m.PrediectPosition(), true) >= 0);
+                            && Misc.TeamTotal(m.PredictPosition()) - Misc.TeamTotal(m.PredictPosition(), true) >= 0);
             }
         }
 
