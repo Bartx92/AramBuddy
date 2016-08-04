@@ -160,7 +160,7 @@ namespace AramBuddy.Champions.Lux
                     R.CastLineAoE(target, HitChance.Medium, ComboMenu.SliderValue("RAOE"));
                     if (R.WillKill(target))
                     {
-                        R.Cast();
+                        R.Cast(target, HitChance.Medium);
                     }
                 }
                 else
