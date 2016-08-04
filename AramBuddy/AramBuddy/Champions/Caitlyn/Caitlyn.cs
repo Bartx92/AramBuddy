@@ -199,9 +199,9 @@ namespace AramBuddy.Champions.Caitlyn
                                 s.WillKill(target) && s.IsReady() && target.IsKillable(s.Range) &&
                                 KillStealMenu.CheckBoxValue(s.Slot)))
                 {
-                    if (spell.Slot == SpellSlot.Q)
+                    if (spell.Slot == SpellSlot.R)
                     {
-                        spell.Cast();
+                        spell.Cast(target);
                     }
                     else
                     {
