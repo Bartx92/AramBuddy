@@ -194,7 +194,7 @@ namespace AramBuddy.Champions.Garen
 
         public override void Flee()
         {
-            if (Q.IsReady() && (AutoMenu.CheckBoxValue("Q") || Player.HasBuffOfType(BuffType.Slow)))
+            if (Q.IsReady() && AutoMenu.CheckBoxValue("Q"))
             {
                 Q.Cast();
             }
