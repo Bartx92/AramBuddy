@@ -163,6 +163,10 @@ namespace AramBuddy.Champions.Lux
                         R.Cast(target, HitChance.Medium);
                     }
                 }
+                if (spell.Slot == SpellSlot.E)
+                {
+                    //
+                }
                 else
                 {
                     var skillshot = spell as Spell.Skillshot;
@@ -185,10 +189,18 @@ namespace AramBuddy.Champions.Lux
                 var target = TargetSelector.GetTarget(W.Range, DamageType.Physical);
                 if (target == null || !target.IsKillable(spell.Range)) return;
 
-                var skillshot = spell as Spell.Skillshot;
+                if (spell.Slot == SpellSlot.E)
                 {
-                    skillshot.Cast(target, HitChance.Medium);
+                    //
                 }
+                else
+                {
+                    var skillshot = spell as Spell.Skillshot;
+                    {
+                        skillshot.Cast(target, HitChance.Medium);
+                    }
+                }
+                
             }
         }
 
@@ -200,7 +212,7 @@ namespace AramBuddy.Champions.Lux
                 foreach (var skillshot in SpellList.Where(
                     s =>
                         s.IsReady() && s != R && LaneClearMenu.CheckBoxValue(s.Slot) &&
-                        LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent))
+                        LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s.Slot != SpellSlot.E)
                     .Select(spell => spell as Spell.Skillshot))
                 {
                     skillshot.Cast(target, HitChance.Medium);
@@ -236,7 +248,7 @@ namespace AramBuddy.Champions.Lux
             {
                 foreach (var skillshot in SpellList.Where(
                     s =>
-                        s.WillKill(target) && s.IsReady() && target.IsKillable(s.Range) &&
+                        s.WillKill(target) && s.IsReady() && target.IsKillable(s.Range) && s.Slot != SpellSlot.E &&
                         KillStealMenu.CheckBoxValue(s.Slot)).Select(spell => spell as Spell.Skillshot))
                 {
                     skillshot.Cast(target, HitChance.Medium);
