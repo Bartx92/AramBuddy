@@ -34,20 +34,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EloBuddy">
-      <HintPath>..\..\..\..\..\Desktop\New folder\EloBuddy\System\EloBuddy.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\EloBuddy\System\EloBuddy.dll</HintPath>
     </Reference>
     <Reference Include="EloBuddy.SDK">
-      <HintPath>..\..\..\..\..\Desktop\New folder\EloBuddy\System\EloBuddy.SDK.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\EloBuddy\System\EloBuddy.SDK.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SharpDX">
-      <HintPath>..\..\..\..\..\Desktop\New folder\EloBuddy\System\SharpDX.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\EloBuddy\System\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9">
-      <HintPath>..\..\..\..\..\Desktop\New folder\EloBuddy\System\SharpDX.Direct3D9.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\EloBuddy\System\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -67,6 +67,7 @@
     <Compile Include="AutoShop\Setup.cs" />
     <Compile Include="Champions\Ashe\Ashe.cs" />
     <Compile Include="Champions\Base.cs" />
+    <Compile Include="Champions\Caitlyn\Caitlyn.cs" />
     <Compile Include="Champions\Temp.cs" />
     <Compile Include="CheckVersion.cs" />
     <Compile Include="Events.cs" />
