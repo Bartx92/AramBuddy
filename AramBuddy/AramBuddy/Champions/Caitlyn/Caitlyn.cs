@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using AramBuddy.MainCore.Utility;
 using EloBuddy;
 using EloBuddy.SDK;
@@ -10,13 +9,8 @@ using SharpDX;
 
 namespace AramBuddy.Champions.Caitlyn
 {
-    class Caitlyn : Base
+    internal class Caitlyn : Base
     {
-        private static Spell.Skillshot Q { get; }
-        private static Spell.Skillshot W { get; }
-        private static Spell.Skillshot E { get; }
-        private static Spell.Targeted R { get; }
-
         static Caitlyn()
         {
             MenuIni = MainMenu.AddMenu(MenuName, MenuName);
@@ -55,6 +49,11 @@ namespace AramBuddy.Champions.Caitlyn
             Dash.OnDash += Dash_OnDash;
         }
 
+        private static Spell.Skillshot Q { get; }
+        private static Spell.Skillshot W { get; }
+        private static Spell.Skillshot E { get; }
+        private static Spell.Targeted R { get; }
+
         private static void Dash_OnDash(Obj_AI_Base sender, Dash.DashEventArgs e)
         {
             if (sender == null || !sender.IsEnemy || !sender.IsKillable(1000)) return;
@@ -63,16 +62,19 @@ namespace AramBuddy.Champions.Caitlyn
                 {
                     W.Cast(e.EndPos);
                 }
-                if (!Player.HasBuff("caitlynheadshot") && !Player.HasBuff("caitlynheadshotrangecheck") && AutoMenu.CheckBoxValue("DashE") && E.IsReady() && e.EndPos.IsInRange(Player.Instance, E.Range))
+                if (!Player.HasBuff("caitlynheadshot") && !Player.HasBuff("caitlynheadshotrangecheck") &&
+                    AutoMenu.CheckBoxValue("DashE") && E.IsReady() && e.EndPos.IsInRange(Player.Instance, E.Range))
                 {
                     E.Cast(sender as AIHeroClient, HitChance.Medium);
                 }
             }
         }
 
-        private static void Interrupter_OnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs e)
+        private static void Interrupter_OnInterruptableSpell(Obj_AI_Base sender,
+            Interrupter.InterruptableSpellEventArgs e)
         {
-            if (sender == null || !sender.IsEnemy || !sender.IsKillable(W.Range) || !W.IsReady() || !AutoMenu.CheckBoxValue("IntW")) return;
+            if (sender == null || !sender.IsEnemy || !sender.IsKillable(W.Range) || !W.IsReady() ||
+                !AutoMenu.CheckBoxValue("IntW")) return;
             W.Cast(sender);
         }
 
@@ -81,18 +83,16 @@ namespace AramBuddy.Champions.Caitlyn
             if (sender == null || !sender.IsEnemy || !sender.IsKillable(1000)) return;
             if (AutoMenu.CheckBoxValue("GapE") && E.IsReady() && e.End.IsInRange(Player.Instance, E.Range))
             {
-                E.Cast((Vector3)Player.Instance.ServerPosition.Extend(e.End, E.Range));
+                E.Cast((Vector3) Player.Instance.ServerPosition.Extend(e.End, E.Range));
             }
             if (AutoMenu.CheckBoxValue("GapW") && W.IsReady() && e.End.IsInRange(Player.Instance, W.Range))
             {
                 W.Cast(e.End);
             }
-
         }
 
         public override void Active()
         {
-
         }
 
         public override void Combo()
@@ -128,7 +128,12 @@ namespace AramBuddy.Champions.Caitlyn
 
         public override void Harass()
         {
-            foreach (var spell in SpellList.Where(s => s.IsReady() && HarassMenu.CheckBoxValue(s.Slot) && HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)))
+            foreach (
+                var spell in
+                    SpellList.Where(
+                        s =>
+                            s.IsReady() && HarassMenu.CheckBoxValue(s.Slot) &&
+                            HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)))
             {
                 var target = TargetSelector.GetTarget(R.Range, DamageType.Physical);
                 if (target == null || !target.IsKillable(spell.Range)) return;
@@ -157,7 +162,17 @@ namespace AramBuddy.Champions.Caitlyn
 
         public override void LaneClear()
         {
-            foreach (var target in from target in EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m != null && m.IsValidTarget()) from spell in SpellList.Where(s => s.IsReady() && s != R && LaneClearMenu.CheckBoxValue(s.Slot) && LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)) where spell.Slot == SpellSlot.Q select target)
+            foreach (
+                var target in
+                    from target in
+                        EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m != null && m.IsValidTarget())
+                    from spell in
+                        SpellList.Where(
+                            s =>
+                                s.IsReady() && s != R && LaneClearMenu.CheckBoxValue(s.Slot) &&
+                                LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent))
+                    where spell.Slot == SpellSlot.Q
+                    select target)
             {
                 Q.Cast(target);
             }
@@ -177,7 +192,12 @@ namespace AramBuddy.Champions.Caitlyn
         {
             foreach (var target in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsValidTarget()))
             {
-                foreach (var spell in SpellList.Where(s => s.WillKill(target) && s.IsReady() && target.IsKillable(s.Range) && KillStealMenu.CheckBoxValue(s.Slot)))
+                foreach (
+                    var spell in
+                        SpellList.Where(
+                            s =>
+                                s.WillKill(target) && s.IsReady() && target.IsKillable(s.Range) &&
+                                KillStealMenu.CheckBoxValue(s.Slot)))
                 {
                     if (spell.Slot == SpellSlot.Q)
                     {
