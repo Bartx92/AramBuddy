@@ -12,9 +12,9 @@ namespace AramBuddy.MainCore.Logics
         /// <summary>
         ///     Casting Logic.
         /// </summary>
-        public static void Casting(Spell.SpellBase spellBase, Obj_AI_Base target, bool Enabled = true)
+        public static void Casting(Spell.SpellBase spellBase, Obj_AI_Base target, bool enabled = true)
         {
-            if (spellBase == null || target == null || !Enabled)
+            if (spellBase == null || target == null || !enabled)
                 return;
 
             if(spellBase.DontWaste() && ModesManager.LaneClear) return;
@@ -75,16 +75,16 @@ namespace AramBuddy.MainCore.Logics
 
             if (spellBase is Spell.Chargeable)
             {
-                var Chargeable = spellBase as Spell.Chargeable;
+                var chargeable = spellBase as Spell.Chargeable;
 
-                if (!Chargeable.IsCharging)
+                if (!chargeable.IsCharging)
                 {
-                    Chargeable.StartCharging();
+                    chargeable.StartCharging();
                     return;
                 }
-                if (Chargeable.IsInRange(target))
+                if (chargeable.IsInRange(target))
                 {
-                    Chargeable.Cast(target);
+                    chargeable.Cast(target);
                 }
             }
         }
@@ -138,7 +138,7 @@ namespace AramBuddy.MainCore.Logics
                 var target = (AIHeroClient)args.Target;
                 var hit = EntityManager.Heroes.Allies.FirstOrDefault(a => a.IsInRange(args.End, 100) && a.IsValidTarget(spell.Range));
 
-                if (!(caster is AIHeroClient || caster is Obj_AI_Turret) || !caster.IsEnemy || enemy == null || caster == null)
+                if (!(caster is AIHeroClient || caster is Obj_AI_Turret) || !caster.IsEnemy || enemy == null)
                 {
                     return;
                 }
@@ -184,7 +184,7 @@ namespace AramBuddy.MainCore.Logics
                 var caster = sender;
                 var target = (AIHeroClient)args.Target;
 
-                if (!(caster is AIHeroClient || caster is Obj_AI_Turret) || !caster.IsEnemy || target == null || caster == null || !target.IsAlly)
+                if (!(caster is AIHeroClient || caster is Obj_AI_Turret) || !caster.IsEnemy || target == null || !target.IsAlly)
                 {
                     return;
                 }

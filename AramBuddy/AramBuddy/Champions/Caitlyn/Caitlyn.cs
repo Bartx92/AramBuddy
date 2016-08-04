@@ -105,7 +105,7 @@ namespace AramBuddy.Champions.Caitlyn
                 if (spell.Slot == SpellSlot.R)
                 {
                     if (target.Health <=
-                        (Player.Instance.GetSpellDamage(target, SpellSlot.R) - target.TotalShieldHealth()) &&
+                        (Player.Instance.GetSpellDamage(target, SpellSlot.R)) &&
                         target.CountEnemiesInRange(300) == 0)
                     {
                         R.Cast(target);
