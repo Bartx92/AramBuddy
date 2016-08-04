@@ -82,6 +82,11 @@
     <Compile Include="GenesisSpellDatabase\SpellManager.cs" />
     <Compile Include="GenesisSpellDatabase\Spells\SpellBase.cs" />
     <Compile Include="GenesisSpellDatabase\Spells\Spells.cs" />
+    <Compile Include="KappaEvade\Collision.cs" />
+    <Compile Include="KappaEvade\Database.cs" />
+    <Compile Include="KappaEvade\debug.cs" />
+    <Compile Include="KappaEvade\KappaEvade.cs" />
+    <Compile Include="KappaEvade\SpellsDetector.cs" />
     <Compile Include="MainCore\Brain.cs" />
     <Compile Include="MainCore\Logics\CloneControler.cs" />
     <Compile Include="MainCore\Logics\SpecialChamps.cs" />
