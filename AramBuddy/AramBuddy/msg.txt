@@ -1,1 +1,1 @@
-temp fixed Crashing !
+Fixed an issue with the bot stops attacking !

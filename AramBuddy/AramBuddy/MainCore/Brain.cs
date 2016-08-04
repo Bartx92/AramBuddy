@@ -27,6 +27,9 @@ namespace AramBuddy.MainCore
             // Overrides Orbwalker Movements
             Orbwalker.OverrideOrbwalkPosition = OverrideOrbwalkPosition;
 
+            // Initialize AutoLvlup.
+            LvlupSpells.Init();
+
             Obj_AI_Base.OnBasicAttack += Obj_AI_Base_OnBasicAttack;
             Gapcloser.OnGapcloser += SpellsCasting.GapcloserOnOnGapcloser;
             Interrupter.OnInterruptableSpell += SpellsCasting.Interrupter_OnInterruptableSpell;

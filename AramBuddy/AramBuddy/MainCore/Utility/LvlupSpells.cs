@@ -7,10 +7,13 @@ namespace AramBuddy.MainCore.Utility
 {
     internal class LvlupSpells
     {
-        /// <summary>
-        ///     Levels up spells using Obj_AI_Base.OnLevelUp Event.
-        /// </summary>
-        public static void Obj_AI_BaseOnOnLevelUp(Obj_AI_Base sender, Obj_AI_BaseLevelUpEventArgs args)
+        internal static void Init()
+        {
+            LevelSpells();
+            Obj_AI_Base.OnLevelUp += Obj_AI_BaseOnOnLevelUp;
+        }
+
+        private static void LevelSpells()
         {
             int[] LevelSet = { };
 
@@ -59,6 +62,14 @@ namespace AramBuddy.MainCore.Utility
                     Player.LevelSpell(SpellSlot.R);
                 }
             }
+        }
+
+        /// <summary>
+        ///     Levels up spells using Obj_AI_Base.OnLevelUp Event.
+        /// </summary>
+        public static void Obj_AI_BaseOnOnLevelUp(Obj_AI_Base sender, Obj_AI_BaseLevelUpEventArgs args)
+        {
+            LevelSpells();
         }
 
         /// <summary>

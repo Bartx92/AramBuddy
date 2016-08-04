@@ -222,7 +222,7 @@ namespace AramBuddy.MainCore.Logics
         {
             get
             {
-                return Player.Instance.CountEnemiesInRange(1000) < 1 && !Flee && (Player.Instance.CountAlliesInRange(800) > 1 || Player.Instance.CountMinions() > 0)
+                return Player.Instance.CountEnemiesInRange(1000) <= 1 && !Combo && !Flee && (Player.Instance.CountAlliesInRange(800) > 1 || Player.Instance.CountMinions() > 0)
                        && (Player.Instance.CountMinions(true) > 0 || AttackObject);
             }
         }

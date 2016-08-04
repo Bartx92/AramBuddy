@@ -62,7 +62,6 @@ namespace AramBuddy
             Timer = Game.Time;
             Game.OnTick += Game_OnTick;
             Events.OnGameEnd += Events_OnGameEnd;
-            Obj_AI_Base.OnLevelUp += LvlupSpells.Obj_AI_BaseOnOnLevelUp;
         }
 
         private static void Events_OnGameEnd(EventArgs args)

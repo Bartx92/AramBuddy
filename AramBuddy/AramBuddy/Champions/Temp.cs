@@ -1,11 +1,10 @@
-﻿using AramBuddy.Champions;
-using EloBuddy;
+﻿using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Menu;
 using static AramBuddy.MainCore.Utility.Misc;
 
-namespace AramBuddy.ChampionS
+namespace AramBuddy.Champions
 {
     class Temp : Base
     {

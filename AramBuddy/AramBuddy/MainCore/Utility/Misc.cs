@@ -117,6 +117,22 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
+        ///     Casts AoE spell with selected hitchance.
+        /// </summary>
+        public static void CastLineAoE(this Spell.Skillshot spell, Obj_AI_Base target, HitChance hitChance, int hits = 2)
+        {
+            if (target != null && spell.IsReady() && target.IsKillable(spell.Range))
+            {
+                var pred = spell.GetPrediction(target);
+                var rect = new Geometry.Polygon.Rectangle(Player.Instance.ServerPosition, Player.Instance.ServerPosition.Extend(pred.CastPosition, spell.Range).To3D(), spell.Width);
+                if (EntityManager.Heroes.Enemies.Count(e => e != null && e.IsKillable(spell.Range) && spell.GetPrediction(e).HitChance >= hitChance && rect.IsInside(spell.GetPrediction(e).CastPosition)) >= hits)
+                {
+                    spell.Cast(pred.CastPosition);
+                }
+            }
+        }
+
+        /// <summary>
         ///     Creates a checkbox.
         /// </summary>
         public static CheckBox CreateCheckBox(this Menu m, string id, string name, bool defaultvalue = true)
@@ -135,7 +151,7 @@ namespace AramBuddy.MainCore.Utility
         /// <summary>
         ///     Creates a slider.
         /// </summary>
-        public static Slider CreateSlider(this Menu m, string id, string name, int defaultvalue = 0, int MinValue = 0, int MaxValue = 0)
+        public static Slider CreateSlider(this Menu m, string id, string name, int defaultvalue = 0, int MinValue = 0, int MaxValue = 100)
         {
             return m.Add(id, new Slider(name, defaultvalue, MinValue, MaxValue));
         }
