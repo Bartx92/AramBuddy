@@ -50,10 +50,18 @@ namespace AramBuddy.Champions.Garen
             Gapcloser.OnGapcloser += Gapcloser_OnGapcloser;
             Interrupter.OnInterruptableSpell += Interrupter_OnInterruptableSpell;
             Orbwalker.OnPostAttack += Orbwalker_OnPostAttack;
-            SpellsDetector.OnSkillShotDetected += SpellsDetector_OnSkillShotDetected;
             SpellsDetector.OnTargetedSpellDetected += SpellsDetector_OnTargetedSpellDetected;
+            Game.OnTick += Garen_SkillshotDetector;
         }
 
+        private static void Garen_SkillshotDetector(EventArgs args)
+        {
+            if (!AutoMenu.CheckBoxValue("SDmgW") && W.IsReady()) return;
+            foreach (var spell in KappaEvade.Collision.NewSpells.Where(spell => user.IsInDanger(spell)))
+            {
+                W.Cast();
+            }
+        }
 
         private static Spell.Active Q { get; }
         private static Spell.Active W { get; }
@@ -63,14 +71,6 @@ namespace AramBuddy.Champions.Garen
         private static void SpellsDetector_OnTargetedSpellDetected(Obj_AI_Base sender, Obj_AI_Base target, GameObjectProcessSpellCastEventArgs args, Database.TargetedSpells.TSpell spell)
         {
             if (target.IsMe && spell.DangerLevel >= 3 && AutoMenu.CheckBoxValue("TDmgW") && W.IsReady())
-            {
-                W.Cast();
-            }
-        }
-
-        private static void SpellsDetector_OnSkillShotDetected(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args, Database.SkillShotSpells.SSpell spell, Vector3 start, Vector3 end, float range, float width, MissileClient missile)
-        {
-            if (end.IsValid() && end.Distance(Player.Instance) + width <= Player.Instance.BoundingRadius && AutoMenu.CheckBoxValue("SDmgW") && W.IsReady())
             {
                 W.Cast();
             }
