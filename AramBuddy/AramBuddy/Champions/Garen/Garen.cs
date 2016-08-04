@@ -56,7 +56,7 @@ namespace AramBuddy.Champions.Garen
 
         private static void Garen_SkillshotDetector(EventArgs args)
         {
-            if (!AutoMenu.CheckBoxValue("SDmgW") && W.IsReady()) return;
+            if (!AutoMenu.CheckBoxValue("SDmgW") || !W.IsReady()) return;
             foreach (var spell in KappaEvade.Collision.NewSpells.Where(spell => user.IsInDanger(spell)))
             {
                 W.Cast();
