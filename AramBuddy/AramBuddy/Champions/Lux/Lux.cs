@@ -45,7 +45,9 @@ namespace AramBuddy.Champions.Lux
             SpellList.Add(R);
 
             AutoMenu.CreateCheckBox("Q", "Flee Q");
-            AutoMenu.CreateCheckBox("E", "Flee E");
+            AutoMenu.CreateCheckBox("FleeQ", "Flee Q");
+            AutoMenu.CreateCheckBox("FleeW", "Flee W");
+            AutoMenu.CreateCheckBox("FleeE", "Flee E");
             AutoMenu.CreateCheckBox("W", "W incoming Dmg self");
             AutoMenu.CreateCheckBox("Wallies", "W incoming Dmg allies");
             AutoMenu.CreateCheckBox("GapQ", "Anti-GapCloser Q");
@@ -210,14 +212,21 @@ namespace AramBuddy.Champions.Lux
         {
             var target = TargetSelector.GetTarget(W.Range, DamageType.Physical);
             if (target == null || !target.IsKillable(W.Range)) return;
-            if (W.IsReady() && AutoMenu.CheckBoxValue("W") && user.ManaPercent >= 65)
+            if (W.IsReady() && AutoMenu.CheckBoxValue("FleeW") && user.ManaPercent >= 65)
             {
-                W.Cast(target, HitChance.Medium);
+                W.Cast(target);
             }
-            if (!Q.IsReady() || !AutoMenu.CheckBoxValue("Q") || !(user.ManaPercent >= 65)) return;
+            if (Q.IsReady() && AutoMenu.CheckBoxValue("FleeQ") && user.ManaPercent >= 65)
             foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsValidTarget(Q.Range)))
             {
-                Q.Cast(enemy);
+                Q.Cast(enemy, HitChance.Medium);
+            }
+            if (!E.IsReady() || !AutoMenu.CheckBoxValue("FleeQ") || !(user.ManaPercent >= 65)) return;
+            {
+                foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsValidTarget(E.Range)))
+                {
+                    E.Cast(enemy, HitChance.Medium);
+                }
             }
         }
 
