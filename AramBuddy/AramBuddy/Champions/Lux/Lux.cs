@@ -22,7 +22,7 @@ namespace AramBuddy.Champions.Lux
             KillStealMenu = MenuIni.AddSubMenu("KillSteal");
             KappaEvade.KappaEvade.Init();
 
-            Q = new Spell.Skillshot(SpellSlot.Q, 1300, SkillShotType.Linear, 250, 1200, 70)
+            Q = new Spell.Skillshot(SpellSlot.Q, 1175, SkillShotType.Linear, 250, 1200, 70)
             {
                 AllowedCollisionCount = 1
             };
@@ -30,11 +30,11 @@ namespace AramBuddy.Champions.Lux
             {
                 AllowedCollisionCount = int.MaxValue
             };
-            E = new Spell.Skillshot(SpellSlot.E, 1100, SkillShotType.Circular, 250, 1400, 335)
+            E = new Spell.Skillshot(SpellSlot.E, 1075, SkillShotType.Circular, 250, 1400, 335)
             {
                 AllowedCollisionCount = int.MaxValue
             };
-            R = new Spell.Skillshot(SpellSlot.R, 3300, SkillShotType.Circular, int.MaxValue, 500, 110)
+            R = new Spell.Skillshot(SpellSlot.R, 3000, SkillShotType.Linear, int.MaxValue, 1000, 110)
             {
                 AllowedCollisionCount = int.MaxValue
             };
@@ -155,7 +155,7 @@ namespace AramBuddy.Champions.Lux
 
                 if (spell.Slot == SpellSlot.R)
                 {
-                    R.CastIfItWillHit(ComboMenu.SliderValue("RAOE")); // still testing
+                    R.CastLineAoE(target, HitChance.Medium, ComboMenu.SliderValue("RAOE")); // still testing
 
                     if (R.WillKill(target))
                     {
