@@ -34,7 +34,7 @@ namespace AramBuddy.Champions.Lux
             {
                 AllowedCollisionCount = int.MaxValue
             };
-            R = new Spell.Skillshot(SpellSlot.R, 3340, SkillShotType.Linear, int.MaxValue, 1000, 110)
+            R = new Spell.Skillshot(SpellSlot.R, 3340, SkillShotType.Linear, int.MaxValue, 500, 110)
             {
                 AllowedCollisionCount = int.MaxValue
             };
@@ -93,7 +93,11 @@ namespace AramBuddy.Champions.Lux
                 W.Cast(Player.Instance);
             }
             if (!AutoMenu.CheckBoxValue("Wallies") || !W.IsReady()) return;
-            foreach (var ally in EntityManager.Heroes.Allies.Where(a => !a.IsDead && !a.IsZombie && a.Distance(Player.Instance) <= W.Range).Where(ally => target.NetworkId.Equals(ally.NetworkId)))
+            foreach (
+                var ally in
+                    EntityManager.Heroes.Allies.Where(
+                        a => !a.IsDead && !a.IsZombie && a.Distance(Player.Instance) <= W.Range)
+                        .Where(ally => target.NetworkId.Equals(ally.NetworkId)))
             {
                 W.Cast(ally);
             }
@@ -183,23 +187,15 @@ namespace AramBuddy.Champions.Lux
                     SpellList.Where(
                         s =>
                             s.IsReady() && HarassMenu.CheckBoxValue(s.Slot) &&
-                            HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)))
+                            HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s != W && s != R))
             {
                 var target = TargetSelector.GetTarget(E.Range, DamageType.Physical);
                 if (target == null || !target.IsKillable(spell.Range)) return;
 
-                if (spell.Slot == SpellSlot.W)
+                var skillshot = spell as Spell.Skillshot;
                 {
-                    //
+                    skillshot.Cast(target, HitChance.Medium);
                 }
-                else
-                {
-                    var skillshot = spell as Spell.Skillshot;
-                    {
-                        skillshot.Cast(target, HitChance.Medium);
-                    }
-                }
-                
             }
         }
 
@@ -211,7 +207,7 @@ namespace AramBuddy.Champions.Lux
                 foreach (var skillshot in SpellList.Where(
                     s =>
                         s.IsReady() && LaneClearMenu.CheckBoxValue(s.Slot) &&
-                        LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s.Slot != SpellSlot.W)
+                        LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s != W && s != R)
                     .Select(spell => spell as Spell.Skillshot))
                 {
                     skillshot.Cast(target, HitChance.Medium);
@@ -228,10 +224,10 @@ namespace AramBuddy.Champions.Lux
                 W.Cast(target);
             }
             if (Q.IsReady() && AutoMenu.CheckBoxValue("FleeQ") && user.ManaPercent >= 65)
-            foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsValidTarget(Q.Range)))
-            {
-                Q.Cast(enemy, HitChance.Medium);
-            }
+                foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsValidTarget(Q.Range)))
+                {
+                    Q.Cast(enemy, HitChance.Medium);
+                }
             if (!E.IsReady() || !AutoMenu.CheckBoxValue("FleeE") || !(user.ManaPercent >= 65)) return;
             {
                 foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsValidTarget(E.Range)))
