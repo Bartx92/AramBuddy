@@ -51,15 +51,42 @@ namespace AramBuddy.MainCore.Logics
                     var Circle = new Geometry.Polygon.Circle(ObjectsManager.EnemyTurret.ServerPosition, ObjectsManager.EnemyTurret.GetAutoAttackRange());
                     if ((!Circle.Points.Any(p => rect.IsInside(p)) || Circle.Points.Any(p => rect.IsInside(p)) && Misc.SafeToDive) && !EntityManager.Heroes.Enemies.Any(e => rect.IsInside(e.PredictPosition()) && e.IsValidTarget() && !e.IsDead))
                     {
-                        if (ObjectsManager.HealthRelic.Name.Contains("Bard") && !formana)
+                        if (ObjectsManager.HealthRelic.Name.Contains("Bard"))
                         {
-                            Program.Moveto = "BardShrine";
+                            if (!formana)
+                            {
+                                Program.Moveto = "BardShrine";
+                                Position = ObjectsManager.HealthRelic.Position.Random();
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            Program.Moveto = "HealthRelic";
                             Position = ObjectsManager.HealthRelic.Position.Random();
                             return;
                         }
-                        Program.Moveto = "HealthRelic";
-                        Position = ObjectsManager.HealthRelic.Position.Random();
-                        return;
+                    }
+                }
+                else
+                {
+                    if (!EntityManager.Heroes.Enemies.Any(e => rect.IsInside(e.PredictPosition()) && e.IsValidTarget() && !e.IsDead))
+                    {
+                        if (ObjectsManager.HealthRelic.Name.Contains("Bard"))
+                        {
+                            if (!formana)
+                            {
+                                Program.Moveto = "BardShrine";
+                                Position = ObjectsManager.HealthRelic.Position.Random();
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            Program.Moveto = "HealthRelic";
+                            Position = ObjectsManager.HealthRelic.Position.Random();
+                            return;
+                        }
                     }
                 }
             }
