@@ -112,7 +112,7 @@ namespace AramBuddy.MainCore.Logics
         public static void MeleeLogic()
         {
             // if there is a TeamFight follow NearestEnemy.
-            if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 20 && ObjectsManager.NearestEnemy != null && Misc.TeamTotal(ObjectsManager.NearestEnemy.PredictPosition()) >= Misc.TeamTotal(ObjectsManager.NearestEnemy.PredictPosition(), true)
+            if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 20 && !ModesManager.Flee && ObjectsManager.NearestEnemy != null && Misc.TeamTotal(ObjectsManager.NearestEnemy.PredictPosition()) >= Misc.TeamTotal(ObjectsManager.NearestEnemy.PredictPosition(), true)
                 && (ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret() && Misc.SafeToDive || !ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret()))
             {
                 Program.Moveto = "NearestEnemy";
@@ -182,7 +182,7 @@ namespace AramBuddy.MainCore.Logics
         /// </summary>
         public static void RangedLogic()
         {
-            if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 20 && ObjectsManager.NearestEnemy != null && Misc.TeamTotal(ObjectsManager.NearestEnemy.PrediectPosition()) >= Misc.TeamTotal(ObjectsManager.NearestEnemy.PrediectPosition(), true)
+            if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 20 && !ModesManager.Flee && ObjectsManager.NearestEnemy != null && Misc.TeamTotal(ObjectsManager.NearestEnemy.PrediectPosition()) >= Misc.TeamTotal(ObjectsManager.NearestEnemy.PrediectPosition(), true)
                 && (ObjectsManager.NearestEnemy.PrediectPosition().UnderEnemyTurret() && Misc.SafeToDive || !ObjectsManager.NearestEnemy.PrediectPosition().UnderEnemyTurret()))
             {
                 // if there is a TeamFight move from NearestEnemy to nearestally.
