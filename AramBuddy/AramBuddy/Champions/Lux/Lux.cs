@@ -40,11 +40,9 @@ namespace AramBuddy.Champions.Lux
             };
 
             SpellList.Add(Q);
-            SpellList.Add(W);
             SpellList.Add(E);
             SpellList.Add(R);
 
-            AutoMenu.CreateCheckBox("Q", "Flee Q");
             AutoMenu.CreateCheckBox("FleeQ", "Flee Q");
             AutoMenu.CreateCheckBox("FleeW", "Flee W");
             AutoMenu.CreateCheckBox("FleeE", "Flee E");
@@ -163,7 +161,7 @@ namespace AramBuddy.Champions.Lux
                         R.Cast(target, HitChance.Medium);
                     }
                 }
-                if (spell.Slot == SpellSlot.E)
+                if (spell.Slot == SpellSlot.W)
                 {
                     //
                 }
@@ -186,10 +184,10 @@ namespace AramBuddy.Champions.Lux
                             s.IsReady() && HarassMenu.CheckBoxValue(s.Slot) &&
                             HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)))
             {
-                var target = TargetSelector.GetTarget(W.Range, DamageType.Physical);
+                var target = TargetSelector.GetTarget(E.Range, DamageType.Physical);
                 if (target == null || !target.IsKillable(spell.Range)) return;
 
-                if (spell.Slot == SpellSlot.E)
+                if (spell.Slot == SpellSlot.W)
                 {
                     //
                 }
@@ -212,7 +210,7 @@ namespace AramBuddy.Champions.Lux
                 foreach (var skillshot in SpellList.Where(
                     s =>
                         s.IsReady() && s != R && LaneClearMenu.CheckBoxValue(s.Slot) &&
-                        LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s.Slot != SpellSlot.E)
+                        LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s.Slot != SpellSlot.W)
                     .Select(spell => spell as Spell.Skillshot))
                 {
                     skillshot.Cast(target, HitChance.Medium);
@@ -233,7 +231,7 @@ namespace AramBuddy.Champions.Lux
             {
                 Q.Cast(enemy, HitChance.Medium);
             }
-            if (!E.IsReady() || !AutoMenu.CheckBoxValue("FleeQ") || !(user.ManaPercent >= 65)) return;
+            if (!E.IsReady() || !AutoMenu.CheckBoxValue("FleeE") || !(user.ManaPercent >= 65)) return;
             {
                 foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsValidTarget(E.Range)))
                 {
@@ -248,7 +246,7 @@ namespace AramBuddy.Champions.Lux
             {
                 foreach (var skillshot in SpellList.Where(
                     s =>
-                        s.WillKill(target) && s.IsReady() && target.IsKillable(s.Range) && s.Slot != SpellSlot.E &&
+                        s.WillKill(target) && s.IsReady() && target.IsKillable(s.Range) && s.Slot != SpellSlot.W &&
                         KillStealMenu.CheckBoxValue(s.Slot)).Select(spell => spell as Spell.Skillshot))
                 {
                     skillshot.Cast(target, HitChance.Medium);

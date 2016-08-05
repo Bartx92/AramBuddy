@@ -21,7 +21,13 @@ namespace AramBuddy.Champions.Caitlyn
             KillStealMenu = MenuIni.AddSubMenu("KillSteal");
 
             Q = new Spell.Skillshot(SpellSlot.Q, 1240, SkillShotType.Linear, 250, 2000, 60);
+            {
+                Q.AllowedCollisionCount = int.MaxValue;
+            }
             W = new Spell.Skillshot(SpellSlot.W, 820, SkillShotType.Circular, 500, int.MaxValue, 80);
+            {
+                W.AllowedCollisionCount = int.MaxValue;
+            }
             E = new Spell.Skillshot(SpellSlot.E, 800, SkillShotType.Linear, 250, 1600, 80);
             R = new Spell.Targeted(SpellSlot.R, 2000);
 
