@@ -138,6 +138,10 @@ namespace AramBuddy.Champions.Orianna
                 {
                     W.Cast();
                 }
+                if (R.IsReady() && R.WillKill(target) && BallManager.OriannaBall != null && target.PredictPosition().IsInRange(BallManager.OriannaBall, R.Range) && KillStealMenu.CheckBoxValue(R.Slot))
+                {
+                    R.Cast();
+                }
             }
         }
 
