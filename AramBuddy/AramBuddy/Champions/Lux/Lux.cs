@@ -22,7 +22,7 @@ namespace AramBuddy.Champions.Lux
             KillStealMenu = MenuIni.AddSubMenu("KillSteal");
             KappaEvade.KappaEvade.Init();
 
-            Q = new Spell.Skillshot(SpellSlot.Q, 1300, SkillShotType.Linear, 250, 1200, 70)
+            Q = new Spell.Skillshot(SpellSlot.Q, 1175, SkillShotType.Linear, 250, 1200, 70)
             {
                 AllowedCollisionCount = 1
             };
@@ -34,7 +34,7 @@ namespace AramBuddy.Champions.Lux
             {
                 AllowedCollisionCount = int.MaxValue
             };
-            R = new Spell.Skillshot(SpellSlot.R, 3300, SkillShotType.Circular, 1000, int.MaxValue, 110)
+            R = new Spell.Skillshot(SpellSlot.R, 3340, SkillShotType.Linear, int.MaxValue, 500, 110)
             {
                 AllowedCollisionCount = int.MaxValue
             };
@@ -90,10 +90,14 @@ namespace AramBuddy.Champions.Lux
         {
             if (target.IsMe && spell.DangerLevel >= 3 && AutoMenu.CheckBoxValue("W") && W.IsReady())
             {
-                W.Cast();
+                W.Cast(Player.Instance);
             }
             if (!AutoMenu.CheckBoxValue("Wallies") || !W.IsReady()) return;
-            foreach (var ally in EntityManager.Heroes.Allies.Where(a => !a.IsDead && !a.IsZombie && a.Distance(Player.Instance) <= W.Range).Where(ally => target.NetworkId.Equals(ally.NetworkId)))
+            foreach (
+                var ally in
+                    EntityManager.Heroes.Allies.Where(
+                        a => !a.IsDead && !a.IsZombie && a.Distance(Player.Instance) <= W.Range)
+                        .Where(ally => target.NetworkId.Equals(ally.NetworkId)))
             {
                 W.Cast(ally);
             }
@@ -105,7 +109,7 @@ namespace AramBuddy.Champions.Lux
             {
                 foreach (var spell in Collision.NewSpells.Where(spell => user.IsInDanger(spell)))
                 {
-                    W.Cast();
+                    W.Cast(spell.Caster);
                 }
             }
             if (!AutoMenu.CheckBoxValue("Wallies") || !W.IsReady()) return;
@@ -133,12 +137,12 @@ namespace AramBuddy.Champions.Lux
 
         private static void Gapcloser_OnGapcloser(AIHeroClient sender, Gapcloser.GapcloserEventArgs e)
         {
-            if (sender == null || !sender.IsEnemy || !sender.IsKillable(1000)) return;
-            if (Q.IsReady() && AutoMenu.CheckBoxValue("GapQ"))
-                Q.Cast(sender, HitChance.Medium);
-            if (W.IsReady() && AutoMenu.CheckBoxValue("GapW"))
+            if (sender == null || !sender.IsEnemy) return;
+            if (Q.IsReady() && (e.End.IsInRange(Player.Instance, Q.Range)) && AutoMenu.CheckBoxValue("GapQ"))
+                Q.Cast(e.End);
+            if (W.IsReady() && (e.End.IsInRange(Player.Instance, Q.Range)) && AutoMenu.CheckBoxValue("GapW"))
                 W.Cast(sender);
-            if (E.IsReady() && AutoMenu.CheckBoxValue("GapE"))
+            if (E.IsReady() && (e.End.IsInRange(Player.Instance, Q.Range)) && AutoMenu.CheckBoxValue("GapE"))
                 E.Cast(sender, HitChance.Medium);
         }
 
@@ -155,7 +159,8 @@ namespace AramBuddy.Champions.Lux
 
                 if (spell.Slot == SpellSlot.R)
                 {
-                    R.CastLineAoE(target, HitChance.Medium, ComboMenu.SliderValue("RAOE"));
+                    R.CastLineAoE(target, HitChance.Medium, ComboMenu.SliderValue("RAOE")); // still testing
+
                     if (R.WillKill(target))
                     {
                         R.Cast(target, HitChance.Medium);
@@ -182,23 +187,15 @@ namespace AramBuddy.Champions.Lux
                     SpellList.Where(
                         s =>
                             s.IsReady() && HarassMenu.CheckBoxValue(s.Slot) &&
-                            HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)))
+                            HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s != W && s != R))
             {
                 var target = TargetSelector.GetTarget(E.Range, DamageType.Physical);
                 if (target == null || !target.IsKillable(spell.Range)) return;
 
-                if (spell.Slot == SpellSlot.W)
+                var skillshot = spell as Spell.Skillshot;
                 {
-                    //
+                    skillshot.Cast(target, HitChance.Medium);
                 }
-                else
-                {
-                    var skillshot = spell as Spell.Skillshot;
-                    {
-                        skillshot.Cast(target, HitChance.Medium);
-                    }
-                }
-                
             }
         }
 
@@ -209,8 +206,8 @@ namespace AramBuddy.Champions.Lux
             {
                 foreach (var skillshot in SpellList.Where(
                     s =>
-                        s.IsReady() && s != R && LaneClearMenu.CheckBoxValue(s.Slot) &&
-                        LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s.Slot != SpellSlot.W)
+                        s.IsReady() && LaneClearMenu.CheckBoxValue(s.Slot) &&
+                        LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s != W && s != R)
                     .Select(spell => spell as Spell.Skillshot))
                 {
                     skillshot.Cast(target, HitChance.Medium);
@@ -227,10 +224,10 @@ namespace AramBuddy.Champions.Lux
                 W.Cast(target);
             }
             if (Q.IsReady() && AutoMenu.CheckBoxValue("FleeQ") && user.ManaPercent >= 65)
-            foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsValidTarget(Q.Range)))
-            {
-                Q.Cast(enemy, HitChance.Medium);
-            }
+                foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsValidTarget(Q.Range)))
+                {
+                    Q.Cast(enemy, HitChance.Medium);
+                }
             if (!E.IsReady() || !AutoMenu.CheckBoxValue("FleeE") || !(user.ManaPercent >= 65)) return;
             {
                 foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsValidTarget(E.Range)))

@@ -110,18 +110,20 @@ namespace AramBuddy.Champions.Caitlyn
 
                 if (spell.Slot == SpellSlot.R)
                 {
-                    if (target.Health <=
-                        (Player.Instance.GetSpellDamage(target, SpellSlot.R)) &&
-                        target.CountEnemiesInRange(300) == 0)
-                    {
-                        R.Cast(target);
-                    }
+                    R.Cast(target);
                 }
                 if (spell.Slot == SpellSlot.E)
                 {
                     if (!Player.HasBuff("caitlynheadshot") && !Player.HasBuff("caitlynheadshotrangecheck"))
                     {
                         E.Cast(target, HitChance.Medium);
+                    }
+                }
+                if (spell.Slot == SpellSlot.Q)
+                {
+                    if (Player.Instance.GetAutoAttackDamage(target) < Player.Instance.GetSpellDamage(target, SpellSlot.Q))
+                    {
+                        Q.Cast(target, HitChance.Medium);
                     }
                 }
                 else
@@ -207,6 +209,7 @@ namespace AramBuddy.Champions.Caitlyn
                 {
                     if (spell.Slot == SpellSlot.R)
                     {
+                        if (target.CountEnemiesInRange(300) == 0)
                         spell.Cast(target);
                     }
                     else
