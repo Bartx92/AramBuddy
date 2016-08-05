@@ -34,7 +34,7 @@ namespace AramBuddy.Champions.Lux
             {
                 AllowedCollisionCount = int.MaxValue
             };
-            R = new Spell.Skillshot(SpellSlot.R, 3340, SkillShotType.Linear, int.MaxValue, 500, 110)
+            R = new Spell.Skillshot(SpellSlot.R, 3340, SkillShotType.Linear, int.MaxValue, 1000, 110)
             {
                 AllowedCollisionCount = int.MaxValue
             };
@@ -183,16 +183,24 @@ namespace AramBuddy.Champions.Lux
                     SpellList.Where(
                         s =>
                             s.IsReady() && HarassMenu.CheckBoxValue(s.Slot) &&
-                            HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s != W && s != R))
+                            HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)))
             {
                 var target = TargetSelector.GetTarget(E.Range, DamageType.Physical);
                 if (target == null || !target.IsKillable(spell.Range)) return;
 
+                if (spell.Slot == SpellSlot.W)
+                {
+                    //
+                }
+                else
+                {
                     var skillshot = spell as Spell.Skillshot;
                     {
                         skillshot.Cast(target, HitChance.Medium);
                     }
                 }
+                
+            }
         }
 
         public override void LaneClear()
@@ -203,7 +211,7 @@ namespace AramBuddy.Champions.Lux
                 foreach (var skillshot in SpellList.Where(
                     s =>
                         s.IsReady() && LaneClearMenu.CheckBoxValue(s.Slot) &&
-                        LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s != W && s != R)
+                        LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s.Slot != SpellSlot.W)
                     .Select(spell => spell as Spell.Skillshot))
                 {
                     skillshot.Cast(target, HitChance.Medium);

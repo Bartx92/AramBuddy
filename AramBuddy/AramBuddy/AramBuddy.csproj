@@ -70,8 +70,6 @@
     <Compile Include="Champions\Base.cs" />
     <Compile Include="Champions\Gangplank\Gangplank.cs" />
     <Compile Include="Champions\Garen\Garen.cs" />
-    <Compile Include="Champions\Lulu\Lulu.cs" />
-    <Compile Include="Champions\Lulu\PixManager.cs" />
     <Compile Include="Champions\Lux\Lux.cs" />
     <Compile Include="Champions\Orianna\Orianna.cs" />
     <Compile Include="Champions\Syndra\Syndra.cs" />
