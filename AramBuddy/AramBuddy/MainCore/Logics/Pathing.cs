@@ -44,12 +44,19 @@ namespace AramBuddy.MainCore.Logics
             // Moves to HealthRelic if the bot needs heal.
             if ((Player.Instance.HealthPercent < 75 || (Player.Instance.ManaPercent < 15 && Player.Instance.Mana > 0)) && ObjectsManager.HealthRelic != null)
             {
+                var formana = Player.Instance.ManaPercent < 15 && Player.Instance.Mana > 0;
                 var rect = new Geometry.Polygon.Rectangle(Player.Instance.ServerPosition, ObjectsManager.HealthRelic.Position, 500);
                 if (ObjectsManager.EnemyTurret != null)
                 {
                     var Circle = new Geometry.Polygon.Circle(ObjectsManager.EnemyTurret.ServerPosition, ObjectsManager.EnemyTurret.GetAutoAttackRange());
                     if ((!Circle.Points.Any(p => rect.IsInside(p)) || Circle.Points.Any(p => rect.IsInside(p)) && Misc.SafeToDive) && !EntityManager.Heroes.Enemies.Any(e => rect.IsInside(e.PredictPosition()) && e.IsValidTarget() && !e.IsDead))
                     {
+                        if (ObjectsManager.HealthRelic.Name.Contains("Bard") && !formana)
+                        {
+                            Program.Moveto = "BardShrine";
+                            Position = ObjectsManager.HealthRelic.Position.Random();
+                            return;
+                        }
                         Program.Moveto = "HealthRelic";
                         Position = ObjectsManager.HealthRelic.Position.Random();
                         return;

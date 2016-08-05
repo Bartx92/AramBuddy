@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
@@ -10,6 +11,8 @@ namespace AramBuddy.Champions.Syndra
 {
     class Syndra : Base
     {
+        internal static List<Obj_AI_Minion> BallsList = new List<Obj_AI_Minion>();
+
         private static Spell.Skillshot Q { get; }
         private static Spell.Skillshot W { get; }
         private static Spell.Skillshot E { get; }
@@ -64,6 +67,14 @@ namespace AramBuddy.Champions.Syndra
 
         public override void Active()
         {
+            foreach (var ball in ObjectManager.Get<Obj_AI_Minion>().Where(o => o != null && !o.IsDead && o.IsAlly && o.Health > 0 && o.BaseSkinName.Equals("SyndraSphere")))
+            {
+                if (!BallsList.Contains(ball))
+                {
+                    BallsList.Add(ball);
+                }
+            }
+            BallsList.RemoveAll(b => b == null || b.IsDead || !b.IsValid || b.Health <= 0);
         }
 
         public override void Combo()
@@ -228,7 +239,7 @@ namespace AramBuddy.Champions.Syndra
         private static Obj_AI_Minion SelectBall(Obj_AI_Base target)
         {
             Obj_AI_Minion theball = null;
-            foreach (var ball in BallsManager.BallsList.Where(b => b != null && E.IsInRange(b)))
+            foreach (var ball in BallsList.Where(b => b != null && E.IsInRange(b)))
             {
                 var rect = new Geometry.Polygon.Rectangle(user.ServerPosition, user.ServerPosition.Extend(ball.ServerPosition, 1000).To3D(), 80);
                 if (rect.IsInside(target))

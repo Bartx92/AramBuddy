@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
@@ -9,6 +10,7 @@ namespace AramBuddy.Champions.Gangplank
 {
     class Gangplank : Base
     {
+        private static List<Obj_AI_Minion> BarrelsList = new List<Obj_AI_Minion>();
         private static Spell.Targeted Q { get; }
         private static Spell.Active W { get; }
         private static Spell.Skillshot E { get; }
@@ -16,6 +18,7 @@ namespace AramBuddy.Champions.Gangplank
 
         static Gangplank()
         {
+            BarrelsList.Clear();
             MenuIni = MainMenu.AddMenu(MenuName, MenuName);
             AutoMenu = MenuIni.AddSubMenu("Auto");
             ComboMenu = MenuIni.AddSubMenu("Combo");
@@ -44,11 +47,19 @@ namespace AramBuddy.Champions.Gangplank
             ComboMenu.CreateSlider("RAOE", "R AOE HIT {0}", 2, 1, 5);
 
             KillStealMenu.CreateCheckBox("R", "Use R");
-            BarrelsManager.Init();
         }
 
         public override void Active()
         {
+            foreach (var barrel in ObjectManager.Get<Obj_AI_Minion>().Where(o => !o.IsDead && o.HasBuff("GangplankEBarrelActive") && o.GetBuff("GangplankEBarrelActive").Caster.IsMe))
+            {
+                if (!BarrelsList.Contains(barrel))
+                {
+                    BarrelsList.Add(barrel);
+                }
+            }
+            BarrelsList.RemoveAll(o => o.IsDead || o.Health <= 0);
+
             if (user.IsCC() && user.HealthPercent <= 80)
             {
                 W.Cast();
@@ -73,7 +84,7 @@ namespace AramBuddy.Champions.Gangplank
 
             if (Q.IsReady() && ComboMenu.CheckBoxValue(Q.Slot))
             {
-                foreach (var barrel in BarrelsManager.BarrelsList.OrderByDescending(b => b.CountEnemiesInRange(E.Width)).Where(b => b.IsInRange(target, E.Width) && b.Health <= 1))
+                foreach (var barrel in BarrelsList.OrderByDescending(b => b.CountEnemiesInRange(E.Width)).Where(b => b.IsInRange(target, E.Width) && b.Health <= 1))
                 {
                     Q.Cast(barrel);
                 }
@@ -97,7 +108,7 @@ namespace AramBuddy.Champions.Gangplank
 
             if (Q.IsReady() && HarassMenu.CheckBoxValue(Q.Slot) && HarassMenu.CompareSlider(Q.Slot + "mana", user.ManaPercent))
             {
-                foreach (var barrel in BarrelsManager.BarrelsList.OrderByDescending(b => b.CountEnemiesInRange(E.Width)).Where(b => b.IsInRange(target, E.Width) && b.Health <= 1))
+                foreach (var barrel in BarrelsList.OrderByDescending(b => b.CountEnemiesInRange(E.Width)).Where(b => b.IsInRange(target, E.Width) && b.Health <= 1))
                 {
                     Q.Cast(barrel);
                 }
@@ -120,7 +131,7 @@ namespace AramBuddy.Champions.Gangplank
             {
                 if (Q.IsReady() && LaneClearMenu.CheckBoxValue(Q.Slot) && LaneClearMenu.CompareSlider(Q.Slot + "mana", user.ManaPercent))
                 {
-                    foreach (var barrel in BarrelsManager.BarrelsList.OrderByDescending(b => b.CountEnemyMinionsInRange(E.Width)).Where(b => b.IsInRange(target, E.Width) && b.Health <= 1))
+                    foreach (var barrel in BarrelsList.OrderByDescending(b => b.CountEnemyMinionsInRange(E.Width)).Where(b => b.IsInRange(target, E.Width) && b.Health <= 1))
                     {
                         Q.Cast(barrel);
                     }
@@ -149,7 +160,7 @@ namespace AramBuddy.Champions.Gangplank
             {
                 if (Q.IsReady() && target.IsKillable(Q.Range) && KillStealMenu.CheckBoxValue(Q.Slot))
                 {
-                    foreach (var barrel in BarrelsManager.BarrelsList.OrderByDescending(b => b.CountEnemiesInRange(E.Width)).Where(b => b.IsInRange(target, E.Width) && b.Health <= 1 && E.WillKill(target)))
+                    foreach (var barrel in BarrelsList.OrderByDescending(b => b.CountEnemiesInRange(E.Width)).Where(b => b.IsInRange(target, E.Width) && b.Health <= 1 && E.WillKill(target)))
                     {
                         Q.Cast(barrel);
                     }

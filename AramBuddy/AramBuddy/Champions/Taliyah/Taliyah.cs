@@ -2,6 +2,7 @@
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
+using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Menu;
 using static AramBuddy.MainCore.Utility.Misc;
 
@@ -38,6 +39,14 @@ namespace AramBuddy.Champions.Taliyah
                 LaneClearMenu.CreateSlider(spell.Slot + "mana", spell.Slot + " Mana Manager", 60);
                 KillStealMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
             }
+            Interrupter.OnInterruptableSpell += Interrupter_OnInterruptableSpell;
+        }
+
+        private static void Interrupter_OnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs e)
+        {
+            if (sender == null || !sender.IsEnemy || !sender.IsKillable(W.Range) || !W.IsReady()) return;
+
+            W.Cast(sender);
         }
 
         public override void Active()
