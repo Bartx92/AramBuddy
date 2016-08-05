@@ -87,7 +87,7 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return EntityManager.Heroes.AllHeroes.Count(a => a.IsAttackPlayer() && a.IsValidTarget()) >= 2;
+                return EntityManager.Heroes.Allies.Count(a => a.IsAttackPlayer() && a.IsValidTarget()) >= 2;
             }
         }
 
