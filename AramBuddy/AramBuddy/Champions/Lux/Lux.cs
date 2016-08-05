@@ -30,11 +30,11 @@ namespace AramBuddy.Champions.Lux
             {
                 AllowedCollisionCount = int.MaxValue
             };
-            E = new Spell.Skillshot(SpellSlot.E, 1075, SkillShotType.Circular, 250, 1400, 335)
+            E = new Spell.Skillshot(SpellSlot.E, 1100, SkillShotType.Circular, 250, 1400, 335)
             {
                 AllowedCollisionCount = int.MaxValue
             };
-            R = new Spell.Skillshot(SpellSlot.R, 3000, SkillShotType.Linear, int.MaxValue, 1000, 110)
+            R = new Spell.Skillshot(SpellSlot.R, 3340, SkillShotType.Linear, int.MaxValue, 1000, 110)
             {
                 AllowedCollisionCount = int.MaxValue
             };
