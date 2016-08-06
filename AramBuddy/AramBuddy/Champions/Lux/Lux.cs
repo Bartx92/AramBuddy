@@ -22,10 +22,19 @@ namespace AramBuddy.Champions.Lux
             KillStealMenu = MenuIni.AddSubMenu("KillSteal");
             KappaEvade.KappaEvade.Init();
 
-            Q = new Spell.Skillshot(SpellSlot.Q, 1175, SkillShotType.Linear, 250, 1200, 70) { AllowedCollisionCount = 1 };
-            W = new Spell.Skillshot(SpellSlot.W, 1075, SkillShotType.Linear, 0, 1400, 85) { AllowedCollisionCount = int.MaxValue };
-            E = new Spell.Skillshot(SpellSlot.E, 1100, SkillShotType.Circular, 250, 1400, 335) { AllowedCollisionCount = int.MaxValue };
-            R = new Spell.Skillshot(SpellSlot.R, 3340, SkillShotType.Linear, int.MaxValue, 500, 110) { AllowedCollisionCount = int.MaxValue };
+            Q = new Spell.Skillshot(SpellSlot.Q, 1175, SkillShotType.Linear, 250, 1200, 70) {AllowedCollisionCount = 1};
+            W = new Spell.Skillshot(SpellSlot.W, 1075, SkillShotType.Linear, 0, 1400, 85)
+            {
+                AllowedCollisionCount = int.MaxValue
+            };
+            E = new Spell.Skillshot(SpellSlot.E, 1100, SkillShotType.Circular, 250, 1400, 335)
+            {
+                AllowedCollisionCount = int.MaxValue
+            };
+            R = new Spell.Skillshot(SpellSlot.R, 3340, SkillShotType.Linear, int.MaxValue, 500, 110)
+            {
+                AllowedCollisionCount = int.MaxValue
+            };
 
             SpellList.Add(Q);
             SpellList.Add(E);
@@ -66,13 +75,15 @@ namespace AramBuddy.Champions.Lux
 
         private static void Lux_PopE(EventArgs args)
         {
-            if (Player.Instance.Spellbook.GetSpell(SpellSlot.E).ToggleState == 2 || Player.Instance.Spellbook.GetSpell(SpellSlot.E).ToggleState == 1)
+            if (Player.Instance.Spellbook.GetSpell(SpellSlot.E).ToggleState == 2 ||
+                Player.Instance.Spellbook.GetSpell(SpellSlot.E).ToggleState == 1)
             {
                 E.Cast();
             }
         }
 
-        private static void SpellsDetector_OnTargetedSpellDetected(Obj_AI_Base sender, Obj_AI_Base target, GameObjectProcessSpellCastEventArgs args, Database.TargetedSpells.TSpell spell)
+        private static void SpellsDetector_OnTargetedSpellDetected(Obj_AI_Base sender, Obj_AI_Base target,
+            GameObjectProcessSpellCastEventArgs args, Database.TargetedSpells.TSpell spell)
         {
             if (target.IsMe && spell.DangerLevel >= 3 && AutoMenu.CheckBoxValue("W") && W.IsReady())
             {
@@ -81,7 +92,9 @@ namespace AramBuddy.Champions.Lux
             if (!AutoMenu.CheckBoxValue("Wallies") || !W.IsReady())
                 return;
             foreach (var ally in
-                EntityManager.Heroes.Allies.Where(a => !a.IsDead && !a.IsZombie && a.Distance(Player.Instance) <= W.Range).Where(ally => target.NetworkId.Equals(ally.NetworkId)))
+                EntityManager.Heroes.Allies.Where(
+                    a => !a.IsDead && !a.IsZombie && a.Distance(Player.Instance) <= W.Range)
+                    .Where(ally => target.NetworkId.Equals(ally.NetworkId)))
             {
                 W.Cast(ally);
             }
@@ -100,7 +113,11 @@ namespace AramBuddy.Champions.Lux
                 return;
             {
                 foreach (var ally in
-                    Collision.NewSpells.Where(spell => user.IsInDanger(spell)).SelectMany(spell => EntityManager.Heroes.Allies.Where(a => a.IsInRange(Player.Instance, W.Range) && a.IsInDanger(spell)))
+                    Collision.NewSpells.Where(spell => user.IsInDanger(spell))
+                        .SelectMany(
+                            spell =>
+                                EntityManager.Heroes.Allies.Where(
+                                    a => a.IsInRange(Player.Instance, W.Range) && a.IsInDanger(spell)))
                     )
                 {
                     W.Cast(ally);
@@ -108,9 +125,11 @@ namespace AramBuddy.Champions.Lux
             }
         }
 
-        private static void Interrupter_OnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs e)
+        private static void Interrupter_OnInterruptableSpell(Obj_AI_Base sender,
+            Interrupter.InterruptableSpellEventArgs e)
         {
-            if (sender == null || !sender.IsEnemy || !sender.IsKillable(Q.Range) || !Q.IsReady() || !AutoMenu.CheckBoxValue("IntQ"))
+            if (sender == null || !sender.IsEnemy || !sender.IsKillable(Q.Range) || !Q.IsReady() ||
+                !AutoMenu.CheckBoxValue("IntQ"))
                 return;
             Q.Cast(sender);
         }
@@ -142,11 +161,14 @@ namespace AramBuddy.Champions.Lux
                 if (spell.Slot == SpellSlot.R)
                 {
                     var rTarget = target = TargetSelector.GetTarget(E.Range, DamageType.Magical);
-                    R.CastLineAoE(rTarget, HitChance.Medium, ComboMenu.SliderValue("RAOE")); // still testing
-
-                    if (R.WillKill(rTarget))
+                    if (target != null && target.IsKillable(R.Range))
                     {
-                        R.Cast(rTarget, HitChance.Medium);
+                        R.CastLineAoE(rTarget, HitChance.Medium, ComboMenu.SliderValue("RAOE")); // still testing
+
+                        if (R.WillKill(rTarget))
+                        {
+                            R.Cast(rTarget, HitChance.Medium);
+                        }
                     }
                 }
                 if (spell.Slot == SpellSlot.W)
@@ -166,7 +188,10 @@ namespace AramBuddy.Champions.Lux
         public override void Harass()
         {
             foreach (var spell in
-                SpellList.Where(s => s.IsReady() && HarassMenu.CheckBoxValue(s.Slot) && HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s != W && s != R))
+                SpellList.Where(
+                    s =>
+                        s.IsReady() && HarassMenu.CheckBoxValue(s.Slot) &&
+                        HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s != W && s != R))
             {
                 var target = TargetSelector.GetTarget(E.Range, DamageType.Magical);
                 if (target == null || !target.IsKillable(spell.Range))
@@ -181,11 +206,15 @@ namespace AramBuddy.Champions.Lux
 
         public override void LaneClear()
         {
-            foreach (var target in EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m != null && m.IsValidTarget()))
+            foreach (
+                var target in EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m != null && m.IsValidTarget()))
             {
                 foreach (
                     var skillshot in
-                        SpellList.Where(s => s.IsReady() && LaneClearMenu.CheckBoxValue(s.Slot) && LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s != W && s != R)
+                        SpellList.Where(
+                            s =>
+                                s.IsReady() && LaneClearMenu.CheckBoxValue(s.Slot) &&
+                                LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s != W && s != R)
                             .Select(spell => spell as Spell.Skillshot))
                 {
                     skillshot.Cast(target, HitChance.Medium);
@@ -223,7 +252,10 @@ namespace AramBuddy.Champions.Lux
             {
                 foreach (
                     var skillshot in
-                        SpellList.Where(s => s.WillKill(target) && s.IsReady() && target.IsKillable(s.Range) && s.Slot != SpellSlot.W && KillStealMenu.CheckBoxValue(s.Slot))
+                        SpellList.Where(
+                            s =>
+                                s.WillKill(target) && s.IsReady() && target.IsKillable(s.Range) && s.Slot != SpellSlot.W &&
+                                KillStealMenu.CheckBoxValue(s.Slot))
                             .Select(spell => spell as Spell.Skillshot))
                 {
                     skillshot.Cast(target, HitChance.Medium);
