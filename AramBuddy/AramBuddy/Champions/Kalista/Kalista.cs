@@ -8,14 +8,14 @@ using EloBuddy.SDK.Menu;
 
 namespace AramBuddy.Champions.Kalista
 {
-    class Kalsita : Base
+    class Kalista : Base
     {
         public static Spell.Skillshot Q { get; }
         public static Spell.Skillshot W { get; }
         public static Spell.Active E { get; }
         public static Spell.Active R { get; }
 
-        static Kalsita()
+        static Kalista()
         {
             MenuIni = MainMenu.AddMenu(MenuName, MenuName);
             AutoMenu = MenuIni.AddSubMenu("Auto");
@@ -55,7 +55,7 @@ namespace AramBuddy.Champions.Kalista
         {
             var spear = new Item(ItemId.The_Black_Spear);
             var ally = EntityManager.Heroes.Allies.OrderByDescending(a => a.MaxHealth).FirstOrDefault(a => a != null && a.IsValidTarget(600));
-            if (ally != null && spear != null && spear.IsOwned(user) && spear.IsReady())
+            if (ally != null && spear.IsOwned(user) && spear.IsReady())
             {
                 spear.Cast(ally);
             }
