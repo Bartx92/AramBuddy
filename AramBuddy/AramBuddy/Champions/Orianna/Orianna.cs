@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using AramBuddy.KappaEvade;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
@@ -53,17 +54,30 @@ namespace AramBuddy.Champions.Orianna
 
             KillStealMenu.CreateCheckBox("R", "Use R");
             Interrupter.OnInterruptableSpell += Interrupter_OnInterruptableSpell;
+            KappaEvade.KappaEvade.Init();
+            SpellsDetector.OnTargetedSpellDetected += SpellsDetector_OnTargetedSpellDetected;
+        }
+
+        private static void SpellsDetector_OnTargetedSpellDetected(Obj_AI_Base sender, Obj_AI_Base target, GameObjectProcessSpellCastEventArgs args, Database.TargetedSpells.TSpell spell)
+        {
+            if (target.IsMe && E.IsReady())
+            {
+                E.Cast(target);
+            }
         }
 
         private static void Interrupter_OnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs e)
         {
-            if (sender == null || !sender.IsEnemy || !R.IsReady() || !AutoMenu.CheckBoxValue("IntR") || OriannaBall == null || !sender.PredictPosition().IsInRange(OriannaBall, R.Range)) return;
+            if (sender == null || !sender.IsEnemy || !R.IsReady() || !AutoMenu.CheckBoxValue("IntR") || OriannaBall == null || !sender.PredictPosition().IsInRange(OriannaBall, R.Range))
+                return;
             R.Cast(sender);
         }
 
         public override void Active()
         {
-            OriannaBall = ObjectManager.Get<Obj_AI_Base>().FirstOrDefault(o => o != null && (o.HasBuff("OrianaGhostSelf") || o.HasBuff("OrianaGhost") && (o.GetBuff("OrianaGhost").Caster.IsMe || o.GetBuff("OrianaGhostSelf").Caster.IsMe)));
+            OriannaBall =
+                ObjectManager.Get<Obj_AI_Base>()
+                    .FirstOrDefault(o => o != null && (o.HasBuff("OrianaGhostSelf") || o.HasBuff("OrianaGhost") && (o.GetBuff("OrianaGhost").Caster.IsMe || o.GetBuff("OrianaGhostSelf").Caster.IsMe)));
             if (AutoMenu.CheckBoxValue(R.Slot))
                 RAOE(AutoMenu.SliderValue("RAOE"));
         }
@@ -71,7 +85,8 @@ namespace AramBuddy.Champions.Orianna
         public override void Combo()
         {
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
-            if (target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             if (Q.IsReady() && ComboMenu.CheckBoxValue(Q.Slot))
             {
@@ -88,13 +103,15 @@ namespace AramBuddy.Champions.Orianna
         public override void Harass()
         {
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
-            if (target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             if (Q.IsReady() && HarassMenu.CheckBoxValue(Q.Slot) && HarassMenu.CompareSlider(Q.Slot + "mana", user.ManaPercent))
             {
                 Q.Cast(target, HitChance.Low);
             }
-            if (W.IsReady() && OriannaBall != null && target.PredictPosition().IsInRange(OriannaBall, W.Range) && HarassMenu.CheckBoxValue(W.Slot) && HarassMenu.CompareSlider(W.Slot + "mana", user.ManaPercent))
+            if (W.IsReady() && OriannaBall != null && target.PredictPosition().IsInRange(OriannaBall, W.Range) && HarassMenu.CheckBoxValue(W.Slot)
+                && HarassMenu.CompareSlider(W.Slot + "mana", user.ManaPercent))
             {
                 W.Cast();
             }
@@ -108,7 +125,8 @@ namespace AramBuddy.Champions.Orianna
                 {
                     Q.Cast(target, HitChance.Low);
                 }
-                if (W.IsReady() && OriannaBall != null && target.PredictPosition().IsInRange(OriannaBall, W.Range) && LaneClearMenu.CheckBoxValue(W.Slot) && LaneClearMenu.CompareSlider(W.Slot + "mana", user.ManaPercent))
+                if (W.IsReady() && OriannaBall != null && target.PredictPosition().IsInRange(OriannaBall, W.Range) && LaneClearMenu.CheckBoxValue(W.Slot)
+                    && LaneClearMenu.CompareSlider(W.Slot + "mana", user.ManaPercent))
                 {
                     W.Cast();
                 }
@@ -117,7 +135,8 @@ namespace AramBuddy.Champions.Orianna
 
         public override void Flee()
         {
-            if(!AutoMenu.CheckBoxValue("W") || OriannaBall == null || !W.IsReady()) return;
+            if (!AutoMenu.CheckBoxValue("W") || OriannaBall == null || !W.IsReady())
+                return;
 
             if (EntityManager.Heroes.Enemies.Any(e => e != null && e.PredictPosition().Distance(user) < 400) && user.HealthPercent < 25 && user.ManaPercent > 10)
             {

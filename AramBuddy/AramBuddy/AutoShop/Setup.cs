@@ -52,7 +52,7 @@ namespace AramBuddy.AutoShop
         {
             try
             {
-                bool useDefaultBuild = false;
+                var useDefaultBuild = false;
                 // When the game starts
                 AramBuddy.Events.OnGameStart += Events_OnGameStart;
 
@@ -111,7 +111,8 @@ namespace AramBuddy.AutoShop
                     }
                 }
 
-                if(useDefaultBuild) return;
+                if (useDefaultBuild)
+                    return;
 
                 // Check if the parse of the build for the champion completed successfully and output it to public
                 // variable CurrentChampionBuild

@@ -74,20 +74,20 @@ namespace AramBuddy.AutoShop
 
                 WebClient.DownloadStringTaskAsync("https://raw.githubusercontent.com/plsfixrito/AramBuddy/master/DefaultBuilds/" + filename);
                 WebClient.DownloadStringCompleted += delegate(object sender, DownloadStringCompletedEventArgs args)
-                {
-                    if (args.Result.Contains("data"))
                     {
-                        File.WriteAllText(Setup.BuildPath + "\\" + filename, args.Result);
-                        Setup.Builds.Add(BuildName(), File.ReadAllText(Setup.BuildPath + "\\" + filename));
-                        Logger.Send(BuildName() + " Build Created for " + Player.Instance.ChampionName + " - " + BuildName(), Logger.LogLevel.Info);
-                        Setup.DefaultBuild();
-                    }
-                    else
-                    {
-                        Logger.Send("Wrong Response, No Champion Build Created", Logger.LogLevel.Warn);
-                        Console.WriteLine(args.Result);
-                    }
-                };
+                        if (args.Result.Contains("data"))
+                        {
+                            File.WriteAllText(Setup.BuildPath + "\\" + filename, args.Result);
+                            Setup.Builds.Add(BuildName(), File.ReadAllText(Setup.BuildPath + "\\" + filename));
+                            Logger.Send(BuildName() + " Build Created for " + Player.Instance.ChampionName + " - " + BuildName(), Logger.LogLevel.Info);
+                            Setup.DefaultBuild();
+                        }
+                        else
+                        {
+                            Logger.Send("Wrong Response, No Champion Build Created", Logger.LogLevel.Warn);
+                            Console.WriteLine(args.Result);
+                        }
+                    };
             }
             catch (Exception ex)
             {

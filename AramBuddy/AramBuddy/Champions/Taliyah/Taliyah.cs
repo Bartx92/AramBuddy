@@ -44,20 +44,21 @@ namespace AramBuddy.Champions.Taliyah
 
         private static void Interrupter_OnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs e)
         {
-            if (sender == null || !sender.IsEnemy || !sender.IsKillable(W.Range) || !W.IsReady()) return;
+            if (sender == null || !sender.IsEnemy || !sender.IsKillable(W.Range) || !W.IsReady())
+                return;
 
             W.Cast(sender);
         }
 
         public override void Active()
         {
-
         }
 
         public override void Combo()
         {
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
-            if (target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             foreach (var spell in SpellList.Where(s => s.IsReady() && target.IsKillable(s.Range) && ComboMenu.CheckBoxValue(s.Slot)))
             {
@@ -68,7 +69,8 @@ namespace AramBuddy.Champions.Taliyah
         public override void Harass()
         {
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
-            if (target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             foreach (var spell in SpellList.Where(s => s.IsReady() && target.IsKillable(s.Range) && HarassMenu.CheckBoxValue(s.Slot) && HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)))
             {
@@ -80,7 +82,9 @@ namespace AramBuddy.Champions.Taliyah
         {
             foreach (var target in EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m != null && m.IsKillable(1000)))
             {
-                foreach (var spell in SpellList.Where(s => s.IsReady() && target.IsKillable(s.Range) && LaneClearMenu.CheckBoxValue(s.Slot) && LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)))
+                foreach (
+                    var spell in
+                        SpellList.Where(s => s.IsReady() && target.IsKillable(s.Range) && LaneClearMenu.CheckBoxValue(s.Slot) && LaneClearMenu.CompareSlider(s.Slot + "mana", user.ManaPercent)))
                 {
                     spell.Cast(target);
                 }
@@ -89,7 +93,6 @@ namespace AramBuddy.Champions.Taliyah
 
         public override void Flee()
         {
-
         }
 
         public override void KillSteal()

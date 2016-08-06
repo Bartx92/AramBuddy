@@ -4,10 +4,8 @@ using AramBuddy.KappaEvade;
 using AramBuddy.MainCore.Utility;
 using EloBuddy;
 using EloBuddy.SDK;
-using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Menu;
-using SharpDX;
 
 namespace AramBuddy.Champions.Garen
 {
@@ -60,8 +58,9 @@ namespace AramBuddy.Champions.Garen
 
         private static void Garen_SkillshotDetector(EventArgs args)
         {
-            if (!AutoMenu.CheckBoxValue("SDmgW") || !W.IsReady()) return;
-            foreach (var spell in KappaEvade.Collision.NewSpells.Where(spell => user.IsInDanger(spell)))
+            if (!AutoMenu.CheckBoxValue("SDmgW") || !W.IsReady())
+                return;
+            if (Collision.NewSpells.Any(s => user.IsInDanger(s)))
             {
                 W.Cast();
             }
@@ -74,29 +73,22 @@ namespace AramBuddy.Champions.Garen
                 W.Cast();
             }
         }
-        
+
         private static void Orbwalker_OnPostAttack(AttackableUnit target, EventArgs args)
         {
             var t = target as AIHeroClient;
-            foreach (
-                var spell in
-                    SpellList.Where(s => s.IsReady() && ComboMenu.CheckBoxValue(s.Slot))
-                        .Where(
-                            spell =>
-                                t.IsKillable(Player.Instance.GetAutoAttackRange()) && spell.IsReady() &&
-                                spell.Slot == SpellSlot.Q))
+            foreach (var spell in
+                SpellList.Where(s => s.IsReady() && ComboMenu.CheckBoxValue(s.Slot)).Where(spell => t.IsKillable(Player.Instance.GetAutoAttackRange()) && spell.IsReady() && spell.Slot == SpellSlot.Q))
             {
                 spell.Cast();
                 Player.IssueOrder(GameObjectOrder.AttackUnit, target);
             }
         }
 
-        private static void Interrupter_OnInterruptableSpell(Obj_AI_Base sender,
-            Interrupter.InterruptableSpellEventArgs e)
+        private static void Interrupter_OnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs e)
         {
-            if (sender == null || !sender.IsEnemy || !sender.IsKillable(Player.Instance.GetAutoAttackRange()) ||
-                !Q.IsReady() ||
-                !AutoMenu.CheckBoxValue("IntQ")) return;
+            if (sender == null || !sender.IsEnemy || !sender.IsKillable(Player.Instance.GetAutoAttackRange()) || !Q.IsReady() || !AutoMenu.CheckBoxValue("IntQ"))
+                return;
             {
                 Q.Cast();
                 Player.IssueOrder(GameObjectOrder.AttackUnit, sender);
@@ -105,9 +97,9 @@ namespace AramBuddy.Champions.Garen
 
         private static void Gapcloser_OnGapcloser(AIHeroClient sender, Gapcloser.GapcloserEventArgs e)
         {
-            if (sender == null || !sender.IsEnemy || !sender.IsKillable(1000)) return;
-            if (AutoMenu.CheckBoxValue("GapW") && W.IsReady() &&
-                e.End.IsInRange(Player.Instance, Player.Instance.GetAutoAttackRange()))
+            if (sender == null || !sender.IsEnemy || !sender.IsKillable(1000))
+                return;
+            if (AutoMenu.CheckBoxValue("GapW") && W.IsReady() && e.End.IsInRange(Player.Instance, Player.Instance.GetAutoAttackRange()))
             {
                 W.Cast();
             }
@@ -122,7 +114,8 @@ namespace AramBuddy.Champions.Garen
             foreach (var spell in SpellList.Where(s => s.IsReady() && ComboMenu.CheckBoxValue(s.Slot)))
             {
                 var target = TargetSelector.GetTarget(R.Range, DamageType.Physical);
-                if (target == null || !target.IsKillable(spell.Range)) return;
+                if (target == null || !target.IsKillable(spell.Range))
+                    return;
 
                 if (spell.Slot == SpellSlot.R)
                 {
@@ -146,14 +139,12 @@ namespace AramBuddy.Champions.Garen
 
         public override void Harass()
         {
-            foreach (
-                var spell in
-                    SpellList.Where(
-                        s =>
-                            s.IsReady() && HarassMenu.CheckBoxValue(s.Slot)))
+            foreach (var spell in
+                SpellList.Where(s => s.IsReady() && HarassMenu.CheckBoxValue(s.Slot)))
             {
                 var target = TargetSelector.GetTarget(R.Range, DamageType.Physical);
-                if (target == null || !target.IsKillable(spell.Range)) return;
+                if (target == null || !target.IsKillable(spell.Range))
+                    return;
 
                 if (spell.Slot == SpellSlot.R)
                 {
@@ -170,15 +161,9 @@ namespace AramBuddy.Champions.Garen
 
         public override void LaneClear()
         {
-            foreach (
-                var spell in
-                    EntityManager.MinionsAndMonsters.EnemyMinions.Where(
-                        m => m != null && m.IsValidTarget(Player.Instance.GetAutoAttackRange()))
-                        .SelectMany(
-                            target =>
-                                SpellList.Where(
-                                    s =>
-                                        s.IsReady() && s != R && LaneClearMenu.CheckBoxValue(s.Slot))))
+            foreach (var spell in
+                EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m != null && m.IsValidTarget(Player.Instance.GetAutoAttackRange()))
+                    .SelectMany(target => SpellList.Where(s => s.IsReady() && s != R && LaneClearMenu.CheckBoxValue(s.Slot))))
             {
                 if (spell.Slot == SpellSlot.R)
                 {
@@ -205,10 +190,9 @@ namespace AramBuddy.Champions.Garen
         {
             foreach (var target in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsValidTarget()))
             {
-                foreach (var spell in SpellList.Where(
-                    s =>
-                        s.WillKill(target) && s.IsReady() && target.IsKillable(s.Range) &&
-                        KillStealMenu.CheckBoxValue(s.Slot)).Where(spell => !Player.Instance.HasBuff("GarenE")))
+                foreach (
+                    var spell in
+                        SpellList.Where(s => s.WillKill(target) && s.IsReady() && target.IsKillable(s.Range) && KillStealMenu.CheckBoxValue(s.Slot)).Where(spell => !Player.Instance.HasBuff("GarenE")))
                 {
                     if (spell.Slot == SpellSlot.R)
                     {

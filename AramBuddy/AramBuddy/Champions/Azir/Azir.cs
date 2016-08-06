@@ -62,32 +62,35 @@ namespace AramBuddy.Champions.Azir
 
         private static void Dash_OnDash(Obj_AI_Base sender, Dash.DashEventArgs e)
         {
-            if (sender == null || !sender.IsEnemy || !sender.IsKillable(R.Range) || !R.IsReady() || !AutoMenu.CheckBoxValue("GapR")) return;
+            if (sender == null || !sender.IsEnemy || !sender.IsKillable(R.Range) || !R.IsReady() || !AutoMenu.CheckBoxValue("GapR"))
+                return;
             R.Cast(sender);
         }
 
         private static void Interrupter_OnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs e)
         {
-            if (sender == null || !sender.IsEnemy || !sender.IsKillable(R.Range) || !R.IsReady() || !AutoMenu.CheckBoxValue("IntR")) return;
+            if (sender == null || !sender.IsEnemy || !sender.IsKillable(R.Range) || !R.IsReady() || !AutoMenu.CheckBoxValue("IntR"))
+                return;
             R.Cast(sender);
         }
 
         private static void Gapcloser_OnGapcloser(AIHeroClient sender, Gapcloser.GapcloserEventArgs e)
         {
-            if (sender == null || !sender.IsEnemy || !sender.IsKillable(R.Range) || !R.IsReady() || !AutoMenu.CheckBoxValue("GapR")) return;
+            if (sender == null || !sender.IsEnemy || !sender.IsKillable(R.Range) || !R.IsReady() || !AutoMenu.CheckBoxValue("GapR"))
+                return;
             R.Cast(sender);
         }
 
         public override void Active()
         {
-
         }
 
         public override void Combo()
         {
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
 
-            if(target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             if (Orbwalker.ValidAzirSoldiers.Count < 1 && W.IsReady() && ComboMenu.CheckBoxValue(W.Slot))
             {
@@ -114,7 +117,8 @@ namespace AramBuddy.Champions.Azir
         {
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
 
-            if (target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             if (Orbwalker.ValidAzirSoldiers.Count < 1 && W.IsReady() && HarassMenu.CheckBoxValue(W.Slot) && HarassMenu.CompareSlider(W.Slot + "mana", user.ManaPercent))
             {
@@ -153,7 +157,6 @@ namespace AramBuddy.Champions.Azir
 
         public override void Flee()
         {
-
         }
 
         public override void KillSteal()

@@ -51,7 +51,8 @@ namespace AramBuddy.Champions.Fiora
 
         private static void Orbwalker_OnPostAttack(AttackableUnit target, System.EventArgs args)
         {
-            if(target == null || !E.IsReady() || !Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) return;
+            if (target == null || !E.IsReady() || !Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo))
+                return;
 
             if (ComboMenu.CheckBoxValue(E.Slot))
                 E.Cast();
@@ -59,7 +60,8 @@ namespace AramBuddy.Champions.Fiora
 
         private static void SpellsDetector_OnTargetedSpellDetected(Obj_AI_Base sender, Obj_AI_Base target, GameObjectProcessSpellCastEventArgs args, Database.TargetedSpells.TSpell spell)
         {
-            if(sender == null || !sender.IsEnemy || !target.IsMe || spell.DangerLevel < 2 || !W.IsReady()) return;
+            if (sender == null || !sender.IsEnemy || !target.IsMe || spell.DangerLevel < 2 || !W.IsReady())
+                return;
 
             var enemy = TargetSelector.GetTarget(W.Range, DamageType.Physical);
             if (enemy != null && enemy.IsKillable(W.Range))
@@ -110,7 +112,8 @@ namespace AramBuddy.Champions.Fiora
         public override void Combo()
         {
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
-            if (target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             if (Q.IsReady() && ComboMenu.CheckBoxValue(Q.Slot))
             {
@@ -129,7 +132,8 @@ namespace AramBuddy.Champions.Fiora
         public override void Harass()
         {
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
-            if (target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             if (Q.IsReady() && HarassMenu.CheckBoxValue(Q.Slot) && HarassMenu.CompareSlider(Q.Slot + "mana", user.ManaPercent))
             {
@@ -162,7 +166,6 @@ namespace AramBuddy.Champions.Fiora
 
         public override void Flee()
         {
-
         }
 
         public override void KillSteal()
@@ -176,20 +179,21 @@ namespace AramBuddy.Champions.Fiora
             }
         }
 
-
         private static IEnumerable<Obj_GeneralParticleEmitter> FioraVitals
         {
-            get { return ObjectManager.Get<Obj_GeneralParticleEmitter>().Where(FioraPassive); }
+            get
+            {
+                return ObjectManager.Get<Obj_GeneralParticleEmitter>().Where(FioraPassive);
+            }
         }
 
         private static readonly List<FioraPassives> PassiveList = new List<FioraPassives>();
 
         public static bool FioraPassive(Obj_GeneralParticleEmitter emitter)
         {
-            return emitter != null && emitter.IsValid &&
-                   (emitter.Name.Contains("Fiora_Base_R_Mark") ||
-                    (emitter.Name.Contains("Fiora_Base_R") && emitter.Name.Contains("Timeout")) ||
-                    (emitter.Name.Contains("Fiora_Base_Passive") && Directions.Any(emitter.Name.Contains)));
+            return emitter != null && emitter.IsValid
+                   && (emitter.Name.Contains("Fiora_Base_R_Mark") || (emitter.Name.Contains("Fiora_Base_R") && emitter.Name.Contains("Timeout"))
+                       || (emitter.Name.Contains("Fiora_Base_Passive") && Directions.Any(emitter.Name.Contains)));
         }
 
         /// <summary>
@@ -197,8 +201,8 @@ namespace AramBuddy.Champions.Fiora
         /// </summary>
         private class FioraPassives
         {
-            internal AIHeroClient Caster;
-            internal Obj_GeneralParticleEmitter Vital;
+            internal readonly AIHeroClient Caster;
+            internal readonly Obj_GeneralParticleEmitter Vital;
 
             public FioraPassives(AIHeroClient from, Obj_GeneralParticleEmitter target)
             {

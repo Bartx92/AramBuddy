@@ -43,7 +43,8 @@ namespace AramBuddy.Champions.TwistedFate
 
         private static void Obj_AI_Base_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (!sender.IsMe || args.Slot != SpellSlot.W) return;
+            if (!sender.IsMe || args.Slot != SpellSlot.W)
+                return;
             if (args.SData.Name.Equals("PickACard", StringComparison.CurrentCultureIgnoreCase))
             {
                 Selecting = true;
@@ -79,7 +80,8 @@ namespace AramBuddy.Champions.TwistedFate
                 lastcasted = Core.GameTickCount;
             }
 
-            if (!Selecting) return;
+            if (!Selecting)
+                return;
 
             if (str.Equals("Gold") && W.Name.Equals("GoldCardLock", StringComparison.CurrentCultureIgnoreCase))
             {
@@ -97,13 +99,13 @@ namespace AramBuddy.Champions.TwistedFate
 
         public override void Active()
         {
-
         }
 
         public override void Combo()
         {
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
-            if (target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             if (Q.IsReady() && ComboMenu.CheckBoxValue(Q.Slot))
             {
@@ -118,7 +120,8 @@ namespace AramBuddy.Champions.TwistedFate
         public override void Harass()
         {
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
-            if (target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             if (Q.IsReady() && HarassMenu.CheckBoxValue(Q.Slot) && HarassMenu.CompareSlider(Q.Slot + "mana", user.ManaPercent))
             {
@@ -147,7 +150,6 @@ namespace AramBuddy.Champions.TwistedFate
 
         public override void Flee()
         {
-
         }
 
         public override void KillSteal()

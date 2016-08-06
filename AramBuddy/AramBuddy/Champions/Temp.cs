@@ -30,7 +30,7 @@ namespace AramBuddy.Champions
             SpellList.Add(W);
             SpellList.Add(E);
             SpellList.Add(R);
-            
+
             foreach (var spell in SpellList)
             {
                 ComboMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
@@ -41,35 +41,29 @@ namespace AramBuddy.Champions
                 KillStealMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
             }
         }
-        
+
         public override void Active()
         {
-
         }
 
         public override void Combo()
         {
-
         }
 
         public override void Harass()
         {
-
         }
 
         public override void LaneClear()
         {
-
         }
 
         public override void Flee()
         {
-
         }
 
         public override void KillSteal()
         {
-
         }
     }
 }

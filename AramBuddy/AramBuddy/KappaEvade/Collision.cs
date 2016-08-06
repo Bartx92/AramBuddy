@@ -45,7 +45,7 @@ namespace AramBuddy.KappaEvade
             foreach (var spell in KappaEvade.DetectedSpells)
             {
                 var range = spell.Range;
-                var endpos = spell.Start.Extend(spell.End, spell.Range).To3D();
+                var endpos = spell.End;
                 var poly = spell.ToPolygon();
                 objects.AddRange(EntityManager.Heroes.AllHeroes.OrderBy(s => s.Distance(spell.Start)).Where(o => o != null && o.Team != spell.Caster.Team && o.IsValidTarget() && poly.IsInside(o) && spell.spell.Collisions.Contains(Database.SkillShotSpells.Collision.Heros)));
                 objects.AddRange(EntityManager.MinionsAndMonsters.Combined.OrderBy(s => s.Distance(spell.Start)).Where(o => o != null && o.Team != spell.Caster.Team && o.IsValidTarget() && poly.IsInside(o) && spell.spell.Collisions.Contains(Database.SkillShotSpells.Collision.Minions)));

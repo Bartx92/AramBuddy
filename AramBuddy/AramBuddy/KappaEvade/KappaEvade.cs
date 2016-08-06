@@ -83,7 +83,7 @@ namespace AramBuddy.KappaEvade
             {
                 var spell = Database.SkillShotSpells.SkillShotsSpellsList.FirstOrDefault(s => caster != null && (s.hero == caster.Hero && s.MissileName.ToLower() == missile.SData.Name.ToLower()));
 
-                if (DetectedSpells.All(s => spell.MissileName.ToLower() != s.spell.MissileName.ToLower() && caster.NetworkId != s.Caster.NetworkId))
+                if (DetectedSpells.All(s => !spell.MissileName.Equals(s.spell.MissileName, StringComparison.CurrentCultureIgnoreCase) && caster.NetworkId != s.Caster.NetworkId))
                 {
                     var endpos = missile.StartPosition.Extend(missile.EndPosition, spell.Range).To3D();
 
@@ -148,10 +148,10 @@ namespace AramBuddy.KappaEvade
             if (missile == null || caster == null || missile.IsAutoAttack() || !missile.IsValid)
                 return;
             //Chat.Print("OnDelete Detected " + missile.SData.Name);
-            if (DetectedSpells.Any(s => s.Caster != null && s.spell.MissileName.ToLower() == missile.SData.Name.ToLower() && caster.NetworkId == s.Caster.NetworkId))
+            if (DetectedSpells.Any(s => s.Caster != null && s.spell.MissileName.Equals(missile.SData.Name, StringComparison.CurrentCultureIgnoreCase) && caster.NetworkId == s.Caster.NetworkId))
             {
                 //Chat.Print("OnDelete Remove " + missile.SData.Name);
-                DetectedSpells.RemoveAll(s => s.Caster != null && s.spell.MissileName.ToLower() == missile.SData.Name.ToLower() && caster.NetworkId == s.Caster.NetworkId);
+                DetectedSpells.RemoveAll(s => s.Caster != null && s.spell.MissileName.Equals(missile.SData.Name, StringComparison.CurrentCultureIgnoreCase) && caster.NetworkId.Equals(s.Caster.NetworkId));
             }
         }
 

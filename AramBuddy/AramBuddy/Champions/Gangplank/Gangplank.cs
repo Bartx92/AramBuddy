@@ -10,7 +10,7 @@ namespace AramBuddy.Champions.Gangplank
 {
     class Gangplank : Base
     {
-        private static List<Obj_AI_Minion> BarrelsList = new List<Obj_AI_Minion>();
+        private static readonly List<Obj_AI_Minion> BarrelsList = new List<Obj_AI_Minion>();
         private static Spell.Targeted Q { get; }
         private static Spell.Active W { get; }
         private static Spell.Skillshot E { get; }
@@ -80,7 +80,8 @@ namespace AramBuddy.Champions.Gangplank
             }
 
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
-            if (target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             if (Q.IsReady() && ComboMenu.CheckBoxValue(Q.Slot))
             {
@@ -104,7 +105,8 @@ namespace AramBuddy.Champions.Gangplank
         public override void Harass()
         {
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
-            if (target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             if (Q.IsReady() && HarassMenu.CheckBoxValue(Q.Slot) && HarassMenu.CompareSlider(Q.Slot + "mana", user.ManaPercent))
             {
@@ -151,7 +153,6 @@ namespace AramBuddy.Champions.Gangplank
 
         public override void Flee()
         {
-
         }
 
         public override void KillSteal()

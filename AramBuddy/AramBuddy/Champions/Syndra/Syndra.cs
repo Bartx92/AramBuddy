@@ -50,7 +50,8 @@ namespace AramBuddy.Champions.Syndra
 
         private static void Interrupter_OnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs e)
         {
-            if(sender == null || !sender.IsEnemy || !sender.IsKillable(1000) || !E.IsReady()) return;
+            if (sender == null || !sender.IsEnemy || !sender.IsKillable(1000) || !E.IsReady())
+                return;
 
             if (SelectBall(sender) != null)
             {
@@ -80,7 +81,8 @@ namespace AramBuddy.Champions.Syndra
         public override void Combo()
         {
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
-            if (target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             if (Q.IsReady() && ComboMenu.CheckBoxValue(Q.Slot))
             {
@@ -116,7 +118,8 @@ namespace AramBuddy.Champions.Syndra
         public override void Harass()
         {
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
-            if (target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             if (Q.IsReady() && HarassMenu.CheckBoxValue(Q.Slot) && HarassMenu.CompareSlider(Q.Slot + "mana", user.ManaPercent))
             {
@@ -178,7 +181,8 @@ namespace AramBuddy.Champions.Syndra
         public override void Flee()
         {
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
-            if (target == null || !target.IsKillable(Q.Range)) return;
+            if (target == null || !target.IsKillable(Q.Range))
+                return;
 
             if (target.IsValidTarget(E.Range) && E.IsReady())
             {

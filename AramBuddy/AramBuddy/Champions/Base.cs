@@ -25,7 +25,8 @@ namespace AramBuddy.Champions
 
         public virtual void Game_OnTick(System.EventArgs args)
         {
-            if(user.IsDead) return;
+            if (user.IsDead)
+                return;
 
             var activemode = Orbwalker.ActiveModesFlags;
             this.Active();

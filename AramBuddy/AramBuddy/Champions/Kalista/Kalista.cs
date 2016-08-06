@@ -45,7 +45,8 @@ namespace AramBuddy.Champions.Kalista
 
         private static void Gapcloser_OnGapcloser(AIHeroClient sender, Gapcloser.GapcloserEventArgs e)
         {
-            if (sender == null || !sender.IsEnemy || !sender.IsKillable(R.Range) || !R.IsReady()) return;
+            if (sender == null || !sender.IsEnemy || !sender.IsKillable(R.Range) || !R.IsReady())
+                return;
 
             R.Cast();
         }
@@ -107,7 +108,6 @@ namespace AramBuddy.Champions.Kalista
 
         public override void Flee()
         {
-
         }
 
         public override void KillSteal()
