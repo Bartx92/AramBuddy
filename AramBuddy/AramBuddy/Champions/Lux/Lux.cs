@@ -135,17 +135,18 @@ namespace AramBuddy.Champions.Lux
         {
             foreach (var spell in SpellList.Where(s => s.IsReady() && ComboMenu.CheckBoxValue(s.Slot)))
             {
-                var target = TargetSelector.GetTarget(W.Range, DamageType.Physical);
+                var target = TargetSelector.GetTarget(E.Range, DamageType.Magical);
                 if (target == null || !target.IsKillable(spell.Range))
                     return;
 
                 if (spell.Slot == SpellSlot.R)
                 {
-                    R.CastLineAoE(target, HitChance.Medium, ComboMenu.SliderValue("RAOE")); // still testing
+                    var rTarget = target = TargetSelector.GetTarget(E.Range, DamageType.Magical);
+                    R.CastLineAoE(rTarget, HitChance.Medium, ComboMenu.SliderValue("RAOE")); // still testing
 
-                    if (R.WillKill(target))
+                    if (R.WillKill(rTarget))
                     {
-                        R.Cast(target, HitChance.Medium);
+                        R.Cast(rTarget, HitChance.Medium);
                     }
                 }
                 if (spell.Slot == SpellSlot.W)
@@ -167,7 +168,7 @@ namespace AramBuddy.Champions.Lux
             foreach (var spell in
                 SpellList.Where(s => s.IsReady() && HarassMenu.CheckBoxValue(s.Slot) && HarassMenu.CompareSlider(s.Slot + "mana", user.ManaPercent) && s != W && s != R))
             {
-                var target = TargetSelector.GetTarget(E.Range, DamageType.Physical);
+                var target = TargetSelector.GetTarget(E.Range, DamageType.Magical);
                 if (target == null || !target.IsKillable(spell.Range))
                     return;
 
