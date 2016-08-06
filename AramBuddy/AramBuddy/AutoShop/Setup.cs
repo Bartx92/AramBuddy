@@ -67,7 +67,7 @@ namespace AramBuddy.AutoShop
                                     // Try to buy more than one item if we can afford it
                                     Buy.BuyNextItem(CurrentChampionBuild);
                                 },
-                            new Random().Next(450 - Game.Ping, 900 + Game.Ping));
+                            new Random().Next(1000 + Game.Ping, 3000 + Game.Ping));
                     };
 
                 // Create the build path directory

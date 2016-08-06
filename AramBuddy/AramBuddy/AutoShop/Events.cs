@@ -56,7 +56,7 @@ namespace AramBuddy.AutoShop
                         if (sender.IsMe && args.Animation.ToLower().Contains("death"))
                         {
                             // The player has died; Invoke the OnPlayerDeath event
-                            OnPlayerDeath(sender, EventArgs.Empty);
+                            OnPlayerDeath?.Invoke(sender, EventArgs.Empty);
                         }
                     };
             }
