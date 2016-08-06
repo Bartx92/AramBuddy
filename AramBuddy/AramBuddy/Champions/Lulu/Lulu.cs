@@ -44,7 +44,7 @@ namespace AramBuddy.Champions.Lulu
             SpellList.Add(R);
 
 
-            ComboMenu.CreateCheckBox("Rsave", "R Saver");
+            AutoMenu.CreateCheckBox("Rsave", "R Saver");
             ComboMenu.CreateSlider("RAOE", "R AOE {0}", 3, 1, 5);
             AutoMenu.CreateCheckBox("DashQ", "Q on dashing Targets");
             AutoMenu.CreateCheckBox("FleeQ", "Flee Q");
@@ -239,7 +239,7 @@ namespace AramBuddy.Champions.Lulu
                         EntityManager.Heroes.Allies.Where(a => a.IsKillable(R.Range))
                             .Where(
                                 ally =>
-                                    ally.CountEnemiesInRange(300) >= AutoMenu.SliderValue("RAOE") &&
+                                    ally.CountEnemiesInRange(300) >= ComboMenu.SliderValue("RAOE") &&
                                     ComboMenu.CheckBoxValue("R")))
                 {
                     R.Cast(ally);
