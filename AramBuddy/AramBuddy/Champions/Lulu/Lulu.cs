@@ -98,7 +98,7 @@ namespace AramBuddy.Champions.Lulu
 
         private static void Lulu_SkillshotDetector(EventArgs args)
         {
-            if (!AutoMenu.CheckBoxValue("Rsave") && R.IsReady())
+            if (AutoMenu.CheckBoxValue("Rsave") && R.IsReady())
 
                 foreach (
                     var ally in
@@ -145,6 +145,12 @@ namespace AramBuddy.Champions.Lulu
                     EntityManager.Heroes.Allies.Where(a => a.IsKillable(W.Range) && target.NetworkId == a.NetworkId))
             {
                 W.Cast(ally);
+            }
+
+            if (!AutoMenu.CheckBoxValue("Rsave") || !R.IsReady() || spells.DangerLevel <= 2) return;
+            foreach (var ally in EntityManager.Heroes.Allies.Where(a => a.IsKillable(R.Range) && a.HealthPercent < 10))
+            {
+                R.Cast(ally);
             }
         }
 
