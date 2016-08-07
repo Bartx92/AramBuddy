@@ -58,17 +58,14 @@ namespace AramBuddy
                     };
                 WebClient2.DownloadStringTaskAsync(WebVersionPath);
 
-                Loading.OnLoadingComplete += delegate
+                Game.OnTick += delegate
                 {
-                    Game.OnTick += delegate
+                    if (UpdateMsg != string.Empty && !Sent && Outdated)
                     {
-                        if (UpdateMsg != string.Empty && !Sent && Outdated)
-                        {
-                            Chat.Print("<b>AramBuddy: There is a new Update Available for AramBuddy !</b>");
-                            Chat.Print("<b>AramBuddy: " + UpdateMsg + "</b>");
-                            Sent = true;
-                        }
-                    };
+                        Chat.Print("<b>AramBuddy: There is a new Update Available for AramBuddy !</b>");
+                        Chat.Print("<b>AramBuddy: " + UpdateMsg + "</b>");
+                        Sent = true;
+                    }
                 };
             }
             catch (Exception ex)
