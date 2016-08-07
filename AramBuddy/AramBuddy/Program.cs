@@ -18,22 +18,14 @@ namespace AramBuddy
     internal class Program
     {
         public static bool CustomChamp;
-
         public static bool Loaded;
-
         public static float Timer;
-
-        public static string Activemode;
-
         public static string Moveto;
-
-        public static bool Moving;
 
         public static Menu MenuIni, SpellsMenu;
 
         private static void Main(string[] args)
         {
-            CheckVersion.Init();
             Loading.OnLoadingComplete += Loading_OnLoadingComplete;
         }
 
@@ -45,6 +37,9 @@ namespace AramBuddy
                 Chat.Print(Game.MapId + " Is Not Supported By AramBuddy !");
                 return;
             }
+
+            // Checks for updates
+            CheckVersion.Init();
 
             // Initialize the AutoShop.
             Setup.Init();
