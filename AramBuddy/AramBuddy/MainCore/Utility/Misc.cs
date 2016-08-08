@@ -27,8 +27,8 @@ namespace AramBuddy.MainCore.Utility
         /// </summary>
         public static float TeamTotal(Vector3 Position, bool Enemy = false)
         {
-            float enemyteamTotal = 0;
-            float allyteamTotal = 0;
+            float enemyteamTotal = EntityManager.Turrets.Enemies.Where(t => !t.IsDead && t.Health > 0 && t.CountEnemiesInRange(t.GetAutoAttackRange()) > 1).Sum(turret => turret.Health); ;
+            float allyteamTotal = EntityManager.Turrets.Allies.Where(t => !t.IsDead && t.Health > 0 && t.CountAlliesInRange(t.GetAutoAttackRange()) > 1 && t.Distance(Player.Instance) <= 1000).Sum(turret => turret.Health);
 
             foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, Program.MenuIni["Safe"].Cast<Slider>().CurrentValue)))
             {
@@ -218,7 +218,7 @@ namespace AramBuddy.MainCore.Utility
         /// </summary>
         public static bool IsAttackPlayer(this AIHeroClient target)
         {
-            return AutoAttacks.FirstOrDefault(a => a.Attacker.NetworkId.Equals(target.NetworkId) && 250 + (a.Attacker.AttackCastDelay * 1000) + (a.Attacker.AttackDelay * 1000) > Core.GameTickCount - a.LastAttackSent) != null;
+            return AutoAttacks.FirstOrDefault(a => a.Attacker.NetworkId.Equals(target.NetworkId) && 300 + (a.Attacker.AttackCastDelay * 1000) + (a.Attacker.AttackDelay * 1000) > Core.GameTickCount - a.LastAttackSent) != null;
         }
 
         /// <summary>

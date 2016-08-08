@@ -388,12 +388,9 @@ namespace AramBuddy.Champions.Lulu
         {
             foreach (var target in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsValidTarget()))
             {
-                foreach (var skillshot in SpellList.Where(
-                    s =>
-                        s.WillKill(target) && s != R && s.IsReady() && target.IsKillable(s.Range) &&
-                        KillStealMenu.CheckBoxValue(s.Slot)).Select(spell => spell as Spell.Skillshot))
+                foreach (var spell in SpellList.Where(s => s.WillKill(target) && s != R && s.IsReady() && target.IsKillable(s.Range) && KillStealMenu.CheckBoxValue(s.Slot)))
                 {
-                    skillshot.Cast(target, HitChance.Medium);
+                    (spell as Spell.Skillshot)?.Cast(target, HitChance.Medium);
                 }
             }
         }

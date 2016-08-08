@@ -161,7 +161,7 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return HealthRelics.OrderBy(e => e.Distance(Player.Instance)).FirstOrDefault(e => e.IsValid && e.Distance(Player.Instance) < 2000 && e.CountEnemiesInRange(1000) < 1);
+                return HealthRelics.OrderBy(e => e.Distance(Player.Instance)).FirstOrDefault(e => e.IsValid && ((e.Distance(Player.Instance) < 2000 && e.CountEnemiesInRange(1000) < 1) || (e.Distance(Player.Instance) <= 500)));
             }
         }
 
@@ -176,8 +176,7 @@ namespace AramBuddy.MainCore.Utility
                     ObjectManager.Get<Obj_AI_Base>()
                         .FirstOrDefault(
                             l =>
-                            l.IsValid && !l.IsDead && Player.Instance.Hero != Champion.Thresh
-                            && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 500 || l.CountEnemiesInRange(1000) < 1) && l.IsAlly && l.Name.Equals("ThreshLantern"));
+                            l.IsValid && !l.IsDead && Player.Instance.Hero != Champion.Thresh && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 500 || l.CountEnemiesInRange(1000) < 1) && l.IsAlly && l.Name.Equals("ThreshLantern"));
             }
         }
 
