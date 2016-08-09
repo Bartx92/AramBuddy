@@ -17,6 +17,11 @@ namespace AramBuddy.MainCore.Utility
         {
             int[] LevelSet = { };
 
+            if (Player.Instance.ChampionName.Equals("Ryze"))
+            {
+                LevelSet = MaxRyze;
+            }
+
             if (MaxQChampions.Any(s => s.Equals(Player.Instance.ChampionName, StringComparison.CurrentCultureIgnoreCase)))
             {
                 LevelSet = MaxQSequence;
@@ -105,17 +110,22 @@ namespace AramBuddy.MainCore.Utility
             }
         }
 
+        public static int[] MaxRyze
+        {
+            get { return new[] {3, 1, 2, 3, 3, 4, 3, 1, 3, 1, 4, 1, 2, 1, 2, 1, 2, 2}; }
+        }
+
         /// <summary>
-        ///     Maxing Q Champions.
-        /// </summary>
-        private static readonly List<string> MaxQChampions = new List<string>
+    ///     Maxing Q Champions.
+    /// </summary>
+    private static readonly List<string> MaxQChampions = new List<string>
                                                                  {
                                                                      "Ahri", "Akali", "Alistar", "Amumu", "Annie", "Ashe", "Azir", "Blitzcrank", "Bard", "Braum", "Caitlyn", "Cassiopeia", "ChoGath",
                                                                      "Corki", "Darius", "Diana", "DrMundo", "Draven", "Elise", "Ekko", "Evelynn", "Ezreal", "Fiora", "Fizz", "Galio", "Gangplank", "Gnar",
                                                                      "Gragas", "Hecarim", "Heimerdinger", "Illaoi", "Irelia", "Janna", "JarvanIV", "Jax", "Jayce", "Jhin", "Jinx", "Karma", "Karthus",
                                                                      "Kassadin", "Katarina", "Kennen", "KhaZix", "Kindred", "Leblanc", "LeeSin", "Leona", "Lissandra", "Lucian", "Lulu", "Malphite",
                                                                      "Malzahar", "MasterYi", "MissFortune", "Morgana", "Nami", "Nautilus", "Nidalee", "Nocturne", "Olaf", "Orianna", "Pantheon", "Poppy",
-                                                                     "Quinn", "Rammus", "RekSai", "Renekton", "Rengar", "Riven", "Rumble", "Ryze", "Sejuani", "Shen", "Singed", "Sion", "Sivir", "Skarner",
+                                                                     "Quinn", "Rammus", "RekSai", "Renekton", "Rengar", "Riven", "Rumble", "Sejuani", "Shen", "Singed", "Sion", "Sivir", "Skarner",
                                                                      "Sona", "Soraka", "Swain", "Syndra", "TahmKench", "Taliyah", "Taric", "Teemo", "Thresh", "Tristana", "Trundle", "Tryndamere",
                                                                      "TwistedFate", "Udyr", "Urgot", "Varus", "Veigar", "Vi", "Vladimir", "VelKoz", "Warwick", "MonkeyKing", "Xerath", "XinZhao", "Yasuo",
                                                                      "Yorick", "Zac", "Zed", "Ziggs", "Zilean", "Zyra"
