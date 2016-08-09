@@ -112,17 +112,18 @@ namespace AramBuddy.Champions.Lulu
 
             if (AutoMenu.CheckBoxValue("Wself") && W.IsReady())
             {
-                foreach (var spell in Collision.NewSpells.Where(spell => Player.Instance.IsInDanger(spell)))
+                // ReSharper disable once UnusedVariable
+                foreach (var spell in Collision.NewSpells.Where(spell => user.IsInDanger(spell)))
                 {
-                    W.Cast(Player.Instance);
+                    W.Cast(user);
                 }
             }
 
-            if (!AutoMenu.CheckBoxValue("Wally") || !W.IsReady()) return;
+            if (!AutoMenu.CheckBoxValue("Wally") || !W.IsReady() || user.ManaPercent < 60) return;
 
             foreach (
                 var ally in
-                    from ally in EntityManager.Heroes.Allies.Where(a => a.IsKillable(W.Range) && a != Player.Instance)
+                    from ally in EntityManager.Heroes.Allies.Where(a => a.IsKillable(W.Range) && a != user)
                     from spell in Collision.NewSpells.Where(ally.IsInDanger)
                     select ally)
             {
@@ -135,10 +136,11 @@ namespace AramBuddy.Champions.Lulu
         {
             if (target.IsMe && spells.DangerLevel >= 3 && AutoMenu.CheckBoxValue("Wself") && W.IsReady())
             {
-                W.Cast(Player.Instance);
+                W.Cast(user);
             }
 
-            if (!AutoMenu.CheckBoxValue("Wally") || !W.IsReady() || spells.DangerLevel <= 2) return;
+            if (!AutoMenu.CheckBoxValue("Wally") || !W.IsReady() || spells.DangerLevel <= 2 ||
+                user.ManaPercent < 60) return;
 
             foreach (
                 var ally in
@@ -159,7 +161,7 @@ namespace AramBuddy.Champions.Lulu
             if (sender == null || !sender.IsEnemy || !sender.IsKillable(Q1.Range)) return;
             {
                 if (AutoMenu.CheckBoxValue("DashQ") && Q.IsReady() &&
-                    (e.EndPos.IsInRange(Player.Instance, Q.Range) || Pix.IsInRange(e.EndPos, Q.Range)))
+                    (e.EndPos.IsInRange(user, Q.Range) || Pix.IsInRange(e.EndPos, Q.Range)))
                 {
                     Q.Cast(e.EndPos);
                 }
@@ -193,7 +195,7 @@ namespace AramBuddy.Champions.Lulu
             {
                 if (sender.IsEnemy && sender.IsKillable(1000))
                 {
-                    if (AutoMenu.CheckBoxValue("GapQ") && Q.IsReady() && e.End.IsInRange(Player.Instance, Q.Range))
+                    if (AutoMenu.CheckBoxValue("GapQ") && Q.IsReady() && e.End.IsInRange(user, Q.Range))
                     {
                         Q.Cast(e.End);
                     }
@@ -201,26 +203,26 @@ namespace AramBuddy.Champions.Lulu
                     {
                         Q1.Cast(e.End);
                     }
-                    if (AutoMenu.CheckBoxValue("GapW") && W.IsReady() && e.End.IsInRange(Player.Instance, W.Range))
+                    if (AutoMenu.CheckBoxValue("GapW") && W.IsReady() && e.End.IsInRange(user, W.Range))
                     {
                         if (sender.IsKillable(W.Range))
                             W.Cast(sender);
                     }
-                    if (AutoMenu.CheckBoxValue("GapE") && E.IsReady() && e.End.IsInRange(Player.Instance, E.Range))
+                    if (AutoMenu.CheckBoxValue("GapE") && E.IsReady() && e.End.IsInRange(user, E.Range))
                     {
                         if (sender.IsKillable(E.Range))
                             E.Cast(sender);
                     }
-                    if (AutoMenu.CheckBoxValue("GapR") && R.IsReady() && e.End.IsInRange(Player.Instance, 300) &&
-                        Player.Instance.HealthPercent < 15)
+                    if (AutoMenu.CheckBoxValue("GapR") && R.IsReady() && e.End.IsInRange(user, 300) &&
+                        user.HealthPercent < 15)
                     {
-                        R.Cast(Player.Instance);
+                        R.Cast(user);
                     }
                 }
                 if (!sender.IsAlly) return;
                 {
                     if (!AutoMenu.CheckBoxValue("GapWally") || !W.IsReady() ||
-                        !sender.IsInRange(Player.Instance, W.Range))
+                        !sender.IsInRange(user, W.Range))
                         return;
                     {
                         if (sender.IsKillable(W.Range))
@@ -370,11 +372,11 @@ namespace AramBuddy.Champions.Lulu
         {
             if (W.IsReady() && AutoMenu.CheckBoxValue("FleeW") && user.ManaPercent >= 65)
             {
-                W.Cast(Player.Instance);
+                W.Cast(user);
             }
             if (E.IsReady() && AutoMenu.CheckBoxValue("FleeE") && user.ManaPercent >= 65)
             {
-                E.Cast(Player.Instance);
+                E.Cast(user);
             }
             var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
             if (target == null || !target.IsKillable(Q.Range)) return;
@@ -388,10 +390,23 @@ namespace AramBuddy.Champions.Lulu
         {
             foreach (var target in EntityManager.Heroes.Enemies.Where(e => e != null && e.IsValidTarget()))
             {
-                foreach (var spell in SpellList.Where(s => s.WillKill(target) && s != R && s.IsReady() && target.IsKillable(s.Range) && KillStealMenu.CheckBoxValue(s.Slot)))
-                {
-                    (spell as Spell.Skillshot)?.Cast(target, HitChance.Medium);
-                }
+                foreach (
+                    var spell in
+                        SpellList.Where(
+                            s =>
+                                s.WillKill(target) && s != R && s.IsReady() && target.IsKillable(s.Range) &&
+                                KillStealMenu.CheckBoxValue(s.Slot)))
+
+                    if (spell.Slot == SpellSlot.Q)
+                    {
+                        if (Q.GetPrediction(target).HitChance >= HitChance.Medium ||
+                            Q1.GetPrediction(target).HitChance >= HitChance.Medium)
+                            Q.Cast(target);
+                    }
+                    else
+                    {
+                        (spell as Spell.Targeted)?.Cast(target);
+                    }
             }
         }
     }

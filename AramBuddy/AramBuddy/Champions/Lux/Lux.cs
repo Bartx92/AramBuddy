@@ -75,8 +75,8 @@ namespace AramBuddy.Champions.Lux
 
         private static void Lux_PopE(EventArgs args)
         {
-            if (Player.Instance.Spellbook.GetSpell(SpellSlot.E).ToggleState == 2 ||
-                Player.Instance.Spellbook.GetSpell(SpellSlot.E).ToggleState == 1)
+            if (user.Spellbook.GetSpell(SpellSlot.E).ToggleState == 2 ||
+                user.Spellbook.GetSpell(SpellSlot.E).ToggleState == 1)
             {
                 E.Cast();
             }
@@ -87,13 +87,13 @@ namespace AramBuddy.Champions.Lux
         {
             if (target.IsMe && spell.DangerLevel >= 3 && AutoMenu.CheckBoxValue("W") && W.IsReady())
             {
-                W.Cast(Player.Instance);
+                W.Cast(user);
             }
-            if (!AutoMenu.CheckBoxValue("Wallies") || !W.IsReady())
+            if (!AutoMenu.CheckBoxValue("Wallies") || !W.IsReady() || user.ManaPercent < 65)
                 return;
             foreach (var ally in
                 EntityManager.Heroes.Allies.Where(
-                    a => !a.IsDead && !a.IsZombie && a.Distance(Player.Instance) <= W.Range)
+                    a => !a.IsDead && !a.IsZombie && a.Distance(user) <= W.Range)
                     .Where(ally => target.NetworkId.Equals(ally.NetworkId)))
             {
                 W.Cast(ally);
@@ -109,7 +109,7 @@ namespace AramBuddy.Champions.Lux
                     W.Cast(spell.Caster);
                 }
             }
-            if (!AutoMenu.CheckBoxValue("Wallies") || !W.IsReady())
+            if (!AutoMenu.CheckBoxValue("Wallies") || !W.IsReady() || user.ManaPercent < 65)
                 return;
             {
                 foreach (var ally in
@@ -117,7 +117,7 @@ namespace AramBuddy.Champions.Lux
                         .SelectMany(
                             spell =>
                                 EntityManager.Heroes.Allies.Where(
-                                    a => a.IsInRange(Player.Instance, W.Range) && a.IsInDanger(spell)))
+                                    a => a.IsInRange(user, W.Range) && a.IsInDanger(spell)))
                     )
                 {
                     W.Cast(ally);
@@ -138,11 +138,11 @@ namespace AramBuddy.Champions.Lux
         {
             if (sender == null || !sender.IsEnemy)
                 return;
-            if (Q.IsReady() && (e.End.IsInRange(Player.Instance, Q.Range)) && AutoMenu.CheckBoxValue("GapQ"))
+            if (Q.IsReady() && (e.End.IsInRange(user, Q.Range)) && AutoMenu.CheckBoxValue("GapQ"))
                 Q.Cast(e.End);
-            if (W.IsReady() && (e.End.IsInRange(Player.Instance, Q.Range)) && AutoMenu.CheckBoxValue("GapW"))
+            if (W.IsReady() && (e.End.IsInRange(user, Q.Range)) && AutoMenu.CheckBoxValue("GapW"))
                 W.Cast(sender);
-            if (E.IsReady() && (e.End.IsInRange(Player.Instance, Q.Range)) && AutoMenu.CheckBoxValue("GapE"))
+            if (E.IsReady() && (e.End.IsInRange(user, Q.Range)) && AutoMenu.CheckBoxValue("GapE"))
                 E.Cast(sender, HitChance.Medium);
         }
 
