@@ -31,6 +31,7 @@ namespace AramBuddy.Champions.Blitzcrank
             R = new Spell.Active(SpellSlot.R, 600);
 
             SpellList.Add(Q);
+            SpellList.Add(W);
             SpellList.Add(E);
             SpellList.Add(R);
 
