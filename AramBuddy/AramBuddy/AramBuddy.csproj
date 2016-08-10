@@ -68,7 +68,6 @@
     <Compile Include="Champions\Ashe\Ashe.cs" />
     <Compile Include="Champions\Azir\Azir.cs" />
     <Compile Include="Champions\Base.cs" />
-    <Compile Include="Champions\Blitzcrank\Blitzcrank.cs" />
     <Compile Include="Champions\Fiora\Fiora.cs" />
     <Compile Include="Champions\Gangplank\Gangplank.cs" />
     <Compile Include="Champions\Garen\Garen.cs" />
