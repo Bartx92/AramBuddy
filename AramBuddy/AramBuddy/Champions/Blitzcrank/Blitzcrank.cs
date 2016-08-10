@@ -31,7 +31,6 @@ namespace AramBuddy.Champions.Blitzcrank
             R = new Spell.Active(SpellSlot.R, 600);
 
             SpellList.Add(Q);
-            SpellList.Add(W);
             SpellList.Add(E);
             SpellList.Add(R);
 
@@ -81,7 +80,6 @@ namespace AramBuddy.Champions.Blitzcrank
                     {
                         if (spell.Slot == SpellSlot.Q && AutoMenu.CheckBoxValue("TurretQ") &&
                             user.ServerPosition.UnderAlliedTurret())
-
                         {
                             Q.Cast(enemy, HitChance.Medium);
                         }
