@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AramBuddy.GenesisSpellDatabase;
 using AramBuddy.MainCore.Logics;
 using AramBuddy.MainCore.Utility;
@@ -17,24 +18,31 @@ namespace AramBuddy.MainCore
         /// </summary>
         public static void Init()
         {
-            // Initialize Genesis Spell Library.
-            SpellManager.Initialize();
-            SpellLibrary.Initialize();
+            try
+            {
+                // Initialize Genesis Spell Library.
+                SpellManager.Initialize();
+                SpellLibrary.Initialize();
 
-            ObjectsManager.Init();
+                ObjectsManager.Init();
 
-            SpecialChamps.Init();
-            // Overrides Orbwalker Movements
-            Orbwalker.OverrideOrbwalkPosition = OverrideOrbwalkPosition;
+                SpecialChamps.Init();
+                // Overrides Orbwalker Movements
+                Orbwalker.OverrideOrbwalkPosition = OverrideOrbwalkPosition;
 
-            // Initialize AutoLvlup.
-            LvlupSpells.Init();
+                // Initialize AutoLvlup.
+                LvlupSpells.Init();
 
-            Obj_AI_Base.OnBasicAttack += Obj_AI_Base_OnBasicAttack;
-            Gapcloser.OnGapcloser += SpellsCasting.GapcloserOnOnGapcloser;
-            Interrupter.OnInterruptableSpell += SpellsCasting.Interrupter_OnInterruptableSpell;
-            Obj_AI_Base.OnBasicAttack += SpellsCasting.Obj_AI_Base_OnBasicAttack;
-            Obj_AI_Base.OnProcessSpellCast += SpellsCasting.Obj_AI_Base_OnProcessSpellCast;
+                Obj_AI_Base.OnBasicAttack += Obj_AI_Base_OnBasicAttack;
+                Gapcloser.OnGapcloser += SpellsCasting.GapcloserOnOnGapcloser;
+                Interrupter.OnInterruptableSpell += SpellsCasting.Interrupter_OnInterruptableSpell;
+                Obj_AI_Base.OnBasicAttack += SpellsCasting.Obj_AI_Base_OnBasicAttack;
+                Obj_AI_Base.OnProcessSpellCast += SpellsCasting.Obj_AI_Base_OnProcessSpellCast;
+            }
+            catch (Exception ex)
+            {
+                Logger.Send("There was an Error While Initialize Brain", ex, Logger.LogLevel.Error);
+            }
         }
 
         /// <summary>

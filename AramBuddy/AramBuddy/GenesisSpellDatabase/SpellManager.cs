@@ -16,7 +16,7 @@ namespace GenesisSpellLibrary
             try
             {
                 CurrentSpells = SpellLibrary.GetSpells(Player.Instance.Hero);
-                SpellsDictionary = new Dictionary<AIHeroClient, SpellBase>();
+                SpellsDictionary = new List<SpellBase>();
             }
             catch (Exception ex)
             {
@@ -27,20 +27,21 @@ namespace GenesisSpellLibrary
 
         public static SpellBase CurrentSpells { get; set; }
 
-        public static Dictionary<AIHeroClient, SpellBase> SpellsDictionary { get; set; }
+        public static List<SpellBase> SpellsDictionary { get; set; }
 
-        public static float GetRange(SpellSlot slot, AIHeroClient sender)
+        public static float? GetRange(SpellSlot slot, AIHeroClient sender)
         {
+            var spells = SpellsDictionary.FirstOrDefault();
             switch (slot)
             {
                 case SpellSlot.Q:
-                    return SpellsDictionary.FirstOrDefault(x => x.Key == sender).Value.Q.Range;
+                    return spells?.Q.Range;
                 case SpellSlot.W:
-                    return SpellsDictionary.FirstOrDefault(x => x.Key == sender).Value.W.Range;
+                    return spells?.W.Range;
                 case SpellSlot.E:
-                    return SpellsDictionary.FirstOrDefault(x => x.Key == sender).Value.E.Range;
+                    return spells?.E.Range;
                 case SpellSlot.R:
-                    return SpellsDictionary.FirstOrDefault(x => x.Key == sender).Value.R.Range;
+                    return spells?.R.Range;
                 default:
                     return 0;
             }
@@ -48,16 +49,17 @@ namespace GenesisSpellLibrary
 
         public static bool DontWaste(this Spell.SpellBase spell)
         {
+            var spells = SpellsDictionary.FirstOrDefault();
             switch (spell.Slot)
             {
                 case SpellSlot.Q:
-                    return SpellsDictionary.FirstOrDefault().Value.QDontWaste;
+                    return spells?.QDontWaste != null && spells.QDontWaste;
                 case SpellSlot.W:
-                    return SpellsDictionary.FirstOrDefault().Value.WDontWaste;
+                    return spells?.WDontWaste != null && spells.WDontWaste;
                 case SpellSlot.E:
-                    return SpellsDictionary.FirstOrDefault().Value.EDontWaste;
+                    return spells?.EDontWaste != null && spells.EDontWaste;
                 case SpellSlot.R:
-                    return SpellsDictionary.FirstOrDefault().Value.RDontWaste;
+                    return spells?.RDontWaste != null && spells.RDontWaste;
                 default:
                     return false;
             }
@@ -65,16 +67,17 @@ namespace GenesisSpellLibrary
 
         public static bool IsTP(this Spell.SpellBase spell)
         {
+            var spells = SpellsDictionary.FirstOrDefault();
             switch (spell.Slot)
             {
                 case SpellSlot.Q:
-                    return SpellsDictionary.FirstOrDefault().Value.QisTP;
+                    return spells?.QisTP != null && spells.QisTP;
                 case SpellSlot.W:
-                    return SpellsDictionary.FirstOrDefault().Value.WisTP;
+                    return spells?.WisTP != null && spells.WisTP;
                 case SpellSlot.E:
-                    return SpellsDictionary.FirstOrDefault().Value.EisTP;
+                    return spells?.EisTP != null && spells.EisTP;
                 case SpellSlot.R:
-                    return SpellsDictionary.FirstOrDefault().Value.RisTP;
+                    return spells?.RisTP != null && spells.RisTP;
                 default:
                     return false;
             }
@@ -82,16 +85,17 @@ namespace GenesisSpellLibrary
 
         public static bool IsCC(this Spell.SpellBase spell)
         {
+            var spells = SpellsDictionary.FirstOrDefault();
             switch (spell.Slot)
             {
                 case SpellSlot.Q:
-                    return SpellsDictionary.FirstOrDefault().Value.QisCC;
+                    return spells?.QisCC != null && spells.QisCC;
                 case SpellSlot.W:
-                    return SpellsDictionary.FirstOrDefault().Value.WisCC;
+                    return spells?.WisCC != null && spells.WisCC;
                 case SpellSlot.E:
-                    return SpellsDictionary.FirstOrDefault().Value.EisCC;
+                    return spells?.EisCC != null && spells.EisCC;
                 case SpellSlot.R:
-                    return SpellsDictionary.FirstOrDefault().Value.RisCC;
+                    return spells?.RisCC != null && spells.RisCC;
                 default:
                     return false;
             }
@@ -99,16 +103,17 @@ namespace GenesisSpellLibrary
 
         public static bool IsDangerDash(this Spell.SpellBase spell)
         {
+            var spells = SpellsDictionary.FirstOrDefault();
             switch (spell.Slot)
             {
                 case SpellSlot.Q:
-                    return SpellsDictionary.FirstOrDefault().Value.QisDangerDash;
+                    return spells?.QisDangerDash != null && spells.QisDangerDash;
                 case SpellSlot.W:
-                    return SpellsDictionary.FirstOrDefault().Value.WisDangerDash;
+                    return spells?.WisDangerDash != null && spells.WisDangerDash;
                 case SpellSlot.E:
-                    return SpellsDictionary.FirstOrDefault().Value.EisDangerDash;
+                    return spells?.EisDangerDash != null && spells.EisDangerDash;
                 case SpellSlot.R:
-                    return SpellsDictionary.FirstOrDefault().Value.RisDangerDash;
+                    return spells?.RisDangerDash != null && spells.RisDangerDash;
                 default:
                     return false;
             }
@@ -116,16 +121,17 @@ namespace GenesisSpellLibrary
 
         public static bool IsDash(this Spell.SpellBase spell)
         {
+            var spells = SpellsDictionary.FirstOrDefault();
             switch (spell.Slot)
             {
                 case SpellSlot.Q:
-                    return SpellsDictionary.FirstOrDefault().Value.QisDash;
+                    return spells?.QisDash != null && spells.QisDash;
                 case SpellSlot.W:
-                    return SpellsDictionary.FirstOrDefault().Value.WisDash;
+                    return spells?.WisDash != null && spells.WisDash;
                 case SpellSlot.E:
-                    return SpellsDictionary.FirstOrDefault().Value.EisDash;
+                    return spells?.EisDash != null && spells.EisDash;
                 case SpellSlot.R:
-                    return SpellsDictionary.FirstOrDefault().Value.RisDash;
+                    return spells?.RisDash != null && spells.RisDash;
                 default:
                     return false;
             }
@@ -133,16 +139,17 @@ namespace GenesisSpellLibrary
 
         public static bool IsToggle(this Spell.SpellBase spell)
         {
+            var spells = SpellsDictionary.FirstOrDefault();
             switch (spell.Slot)
             {
                 case SpellSlot.Q:
-                    return SpellsDictionary.FirstOrDefault().Value.QisToggle;
+                    return spells?.QisToggle != null && spells.QisToggle;
                 case SpellSlot.W:
-                    return SpellsDictionary.FirstOrDefault().Value.WisToggle;
+                    return spells?.WisToggle != null && spells.WisToggle;
                 case SpellSlot.E:
-                    return SpellsDictionary.FirstOrDefault().Value.EisToggle;
+                    return spells?.EisToggle != null && spells.EisToggle;
                 case SpellSlot.R:
-                    return SpellsDictionary.FirstOrDefault().Value.RisToggle;
+                    return spells?.RisToggle != null && spells.RisToggle;
                 default:
                     return false;
             }
@@ -150,16 +157,17 @@ namespace GenesisSpellLibrary
 
         public static bool IsSaver(this Spell.SpellBase spell)
         {
+            var spells = SpellsDictionary.FirstOrDefault();
             switch (spell.Slot)
             {
                 case SpellSlot.Q:
-                    return SpellsDictionary.FirstOrDefault().Value.QisSaver;
+                    return spells?.QisSaver != null && spells.QisSaver;
                 case SpellSlot.W:
-                    return SpellsDictionary.FirstOrDefault().Value.WisSaver;
+                    return spells?.WisSaver != null && spells.WisSaver;
                 case SpellSlot.E:
-                    return SpellsDictionary.FirstOrDefault().Value.EisSaver;
+                    return spells?.EisSaver != null && spells.EisSaver;
                 case SpellSlot.R:
-                    return SpellsDictionary.FirstOrDefault().Value.RisSaver;
+                    return spells?.RisSaver != null && spells.RisSaver;
                 default:
                     return false;
             }
@@ -184,7 +192,7 @@ namespace GenesisSpellLibrary
             //This only needs to be called once per champion, anymore is a memory leak.
             if (spells != null)
             {
-                SpellsDictionary.Add(hero, spells);
+                SpellsDictionary.Add(spells);
             }
         }
     }
