@@ -21,7 +21,6 @@ namespace AramBuddy.MainCore.Utility
             {
                 LevelSet = MaxRyze;
             }
-
             if (MaxQChampions.Any(s => s.Equals(Player.Instance.ChampionName, StringComparison.CurrentCultureIgnoreCase)))
             {
                 LevelSet = MaxQSequence;
