@@ -73,11 +73,27 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
-        ///     Returns true if Vector3 is UnderEnemyTurret.
+        ///     Returns true if Vector2 is UnderEnemyTurret.
         /// </summary>
         public static bool UnderEnemyTurret(this Vector2 pos)
         {
             return EntityManager.Turrets.Enemies.Any(t => !t.IsDead && t.IsValidTarget() && t.IsInRange(pos, t.GetAutoAttackRange() + (Player.Instance.BoundingRadius * 2)));
+        }
+
+        /// <summary>
+        ///     Returns true if Vector3 is UnderAlliedTurret.
+        /// </summary>
+        public static bool UnderAlliedTurret(this Vector3 pos)
+        {
+            return EntityManager.Turrets.Allies.Any(t => !t.IsDead && t.IsInRange(pos, t.GetAutoAttackRange() + (Player.Instance.BoundingRadius * 2)));
+        }
+
+        /// <summary>
+        ///     Returns true if Vector2 is UnderAlliedTurret.
+        /// </summary>
+        public static bool UnderAlliedTurret(this Vector2 pos)
+        {
+            return EntityManager.Turrets.Allies.Any(t => !t.IsDead && t.IsInRange(pos, t.GetAutoAttackRange() + (Player.Instance.BoundingRadius * 2)));
         }
 
         /// <summary>
