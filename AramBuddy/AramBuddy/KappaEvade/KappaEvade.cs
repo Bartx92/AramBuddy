@@ -11,7 +11,7 @@ using Color = System.Drawing.Color;
 
 namespace AramBuddy.KappaEvade
 {
-    static class KappaEvade
+    internal static class KappaEvade
     {
         public static void Init()
         {

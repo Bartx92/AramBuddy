@@ -136,7 +136,7 @@ namespace AramBuddy.AutoShop
         /// </summary>
         public static readonly string[] Tank =
             {
-                "Alistar", "Amumu", "Blitzcrank", "Bard", "Braum", "ChoGath", "DrMundo", "Garen", "Gnar", "Hecarim", "Illaoi", "Irelia", "JarvanIV", "Leona",
+                "Alistar", "Amumu", "Blitzcrank", "Bard", "Braum", "ChoGath", "DrMundo", "Garen", "Gnar", "Hecarim", "Kled", "Illaoi", "Irelia", "JarvanIV", "Leona",
                 "Malphite", "Maokai", "Nasus", "Nautilus", "Nunu", "Poppy", "Rammus", "Sejuani", "Shaco", "Shen", "Shyvana", "Singed", "Sion", "Skarner", "TahmKench",
                 "Taric", "Thresh", "Trundle", "Udyr", "Vi", "Volibear", "Warwick", "Yorick", "Zac"
             };

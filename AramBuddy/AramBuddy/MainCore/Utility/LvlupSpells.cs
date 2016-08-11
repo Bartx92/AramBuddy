@@ -123,7 +123,7 @@ namespace AramBuddy.MainCore.Utility
                                                                      "Ahri", "Akali", "Alistar", "Amumu", "Annie", "Ashe", "Azir", "Blitzcrank", "Bard", "Braum", "Caitlyn", "Cassiopeia", "ChoGath",
                                                                      "Corki", "Darius", "Diana", "DrMundo", "Draven", "Elise", "Ekko", "Evelynn", "Ezreal", "Fiora", "Fizz", "Galio", "Gangplank", "Gnar",
                                                                      "Gragas", "Hecarim", "Heimerdinger", "Illaoi", "Irelia", "Janna", "JarvanIV", "Jax", "Jayce", "Jhin", "Jinx", "Karma", "Karthus",
-                                                                     "Kassadin", "Katarina", "Kennen", "KhaZix", "Kindred", "Leblanc", "LeeSin", "Leona", "Lissandra", "Lucian", "Lulu", "Malphite",
+                                                                     "Kassadin", "Katarina", "Kennen", "KhaZix", "Kindred", "Kled", "Leblanc", "LeeSin", "Leona", "Lissandra", "Lucian", "Lulu", "Malphite",
                                                                      "Malzahar", "MasterYi", "MissFortune", "Morgana", "Nami", "Nautilus", "Nidalee", "Nocturne", "Olaf", "Orianna", "Pantheon", "Poppy",
                                                                      "Quinn", "Rammus", "RekSai", "Renekton", "Rengar", "Riven", "Rumble", "Sejuani", "Shen", "Singed", "Sion", "Sivir", "Skarner",
                                                                      "Sona", "Soraka", "Swain", "Syndra", "TahmKench", "Taliyah", "Taric", "Teemo", "Thresh", "Tristana", "Trundle", "Tryndamere",

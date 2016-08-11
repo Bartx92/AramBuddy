@@ -35,7 +35,7 @@
             <ComboBoxItem x:Name="ColorTaupe" Content="Taupe" />
             <ComboBoxItem x:Name="ColorSienna" Content="Sienna" />
         </ComboBox>
-        <Label x:Name="VersionLabel" Content="Optimized for League of Legends version 6.11" HorizontalAlignment="Left"
+        <Label x:Name="VersionLabel" Content="Optimized for League of Legends version 6.16" HorizontalAlignment="Left"
                Margin="24,53,0,0" VerticalAlignment="Top" />
         <Label x:Name="CreditsLabel" HorizontalContentAlignment="Center" HorizontalAlignment="Center"
                Margin="18,92,10,121" VerticalAlignment="Center" Width="266">

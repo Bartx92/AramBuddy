@@ -7,7 +7,7 @@ using SharpDX;
 
 namespace AramBuddy.KappaEvade
 {
-    static class SpellsDetector
+    internal static class SpellsDetector
     {
         public delegate void TargetedSpellDetected(Obj_AI_Base sender, Obj_AI_Base target, GameObjectProcessSpellCastEventArgs args, Database.TargetedSpells.TSpell spell);
 

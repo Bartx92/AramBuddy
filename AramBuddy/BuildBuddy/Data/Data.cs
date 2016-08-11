@@ -59,6 +59,7 @@
             "Kennen          ",
             "Kha'Zix         ",
             "Kindred         ",
+            "Kled            ",
             "Kog'Maw         ",
             "LeBlanc         ",
             "Lee Sin         ",

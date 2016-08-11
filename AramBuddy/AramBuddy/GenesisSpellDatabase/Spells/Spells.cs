@@ -1190,6 +1190,28 @@ namespace GenesisSpellLibrary.Spells
         }
     }
 
+    public class Kled : SpellBase
+    {
+        public sealed override Spell.SpellBase Q { get; set; }
+
+        public sealed override Spell.SpellBase W { get; set; }
+
+        public sealed override Spell.SpellBase E { get; set; }
+
+        public sealed override Spell.SpellBase R { get; set; }
+
+        public Kled()
+        {
+            this.Q = new Spell.Skillshot(SpellSlot.Q, 1000, SkillShotType.Linear, 250, 1000, 70) { AllowedCollisionCount = 0 };
+            this.W = new Spell.Active(SpellSlot.W);
+            this.E = new Spell.Skillshot(SpellSlot.E, 1000, SkillShotType.Linear);
+            this.R = new Spell.Skillshot(SpellSlot.R, 2000, SkillShotType.Linear);
+            this.QisCC = true;
+            this.RisCC = true;
+            this.RDontWaste = true;
+        }
+    }
+
     public class KogMaw : SpellBase
     {
         public sealed override Spell.SpellBase Q { get; set; }
