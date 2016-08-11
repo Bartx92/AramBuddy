@@ -81,11 +81,12 @@ namespace AramBuddy.AutoShop
                 Game.OnLoad += delegate { OnBuyAllow(EventArgs.Empty); };
 
                 // When the player dies, invoke the event
-                OnPlayerDeath += delegate { OnBuyAllow(EventArgs.Empty); };
+                //OnPlayerDeath += delegate { OnBuyAllow(EventArgs.Empty); };
 
+                // When the player losses the disable shopping buff
                 Obj_AI_Base.OnBuffLose += delegate(Obj_AI_Base sender, Obj_AI_BaseBuffLoseEventArgs args)
                     {
-                        if (sender.IsMe && args.Buff.DisplayName.ToLower().Equals("aramshopdisableplayer"))
+                        if (sender.IsMe && args.Buff.DisplayName.Equals("aramshopdisableplayer", StringComparison.CurrentCultureIgnoreCase))
                         {
                             OnBuyAllow(EventArgs.Empty);
                         }

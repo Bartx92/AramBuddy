@@ -146,7 +146,7 @@ namespace AramBuddy.MainCore.Logics
         public static void MeleeLogic()
         {
             // if there is a TeamFight follow NearestEnemy.
-            if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 20 && !ModesManager.Flee && ObjectsManager.NearestEnemy != null && Misc.TeamTotal(ObjectsManager.NearestEnemy.PredictPosition()) >= Misc.TeamTotal(ObjectsManager.NearestEnemy.PredictPosition(), true)
+            if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 20 && !ModesManager.Flee && ObjectsManager.NearestEnemy != null && Player.Instance.Health > ObjectsManager.NearestEnemy.Health && Misc.TeamTotal(ObjectsManager.NearestEnemy.PredictPosition()) >= Misc.TeamTotal(ObjectsManager.NearestEnemy.PredictPosition(), true)
                 && (ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret() && Misc.SafeToDive || !ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret()))
             {
                 Program.Moveto = "NearestEnemy";
@@ -304,7 +304,7 @@ namespace AramBuddy.MainCore.Logics
                 }
 
                 // This to prevent Walking into walls, buildings or traps.
-                if (/*NavMesh.GetCollisionFlags(pos) == CollisionFlags.Wall || NavMesh.GetCollisionFlags(pos) == CollisionFlags.Building || */ObjectsManager.EnemyTraps.Any(t => t.Trap.IsInRange(pos, t.Trap.BoundingRadius * 2)))
+                if (pos.IsWall() || pos.IsBuilding() || ObjectsManager.EnemyTraps.Any(t => t.Trap.IsInRange(pos, t.Trap.BoundingRadius * 2)))
                 {
                     return;
                 }

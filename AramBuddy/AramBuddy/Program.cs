@@ -62,7 +62,7 @@ namespace AramBuddy
         private static void Events_OnGameEnd(EventArgs args)
         {
             if (MenuIni["quit"].Cast<CheckBox>().CurrentValue)
-                Core.DelayAction(() => Game.QuitGame(), 10000);
+                Core.DelayAction(() => Game.QuitGame(), 10250 + Game.Ping);
         }
 
         private static void Init()
