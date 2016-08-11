@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AramBuddy.MainCore.Utility;
 using EloBuddy;
 using EloBuddy.SDK;
 
@@ -54,11 +55,14 @@ namespace AramBuddy.KappaEvade
                 {
                     objects.Add((Obj_AI_Base)YasuoWall);
                 }
-                foreach (var obj in objects.OrderBy(o => o.Distance(spell.Start)).Where(o => o != null && o.IsValidTarget() && poly.IsInside(o)))
+                var collide = objects.OrderBy(o => o.Distance(spell.Start)).FirstOrDefault(o => o != null && o.IsValidTarget() && new Geometry.Polygon.Circle(o.ServerPosition, o.BoundingRadius + o.BoundingRadius * 0.15f).Points.Any(p => poly.IsInside(p)));
+
+                if (collide != null)
                 {
-                    range = obj.Distance(spell.Start);
+                    range = collide.Distance(spell.Start);
                     endpos = spell.Start.Extend(spell.End, range).To3D();
                 }
+
                 var newspell = new KappaEvade.ActiveSpells { spell = spell.spell, ArriveTime = spell.ArriveTime, Caster = spell.Caster, Range = range, End = endpos, Start = spell.Start, Width = spell.Width, Missile = spell.Missile, EndTime = spell.EndTime };
                 NewSpells.Add(newspell);
             }

@@ -150,7 +150,7 @@ namespace AramBuddy.MainCore.Logics
                 && (ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret() && Misc.SafeToDive || !ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret()))
             {
                 Program.Moveto = "NearestEnemy";
-                Position = ObjectsManager.NearestEnemy.PredictPosition().Random();
+                Position = ObjectsManager.NearestEnemy.PredictPosition();
                 return;
             }
 
@@ -219,18 +219,19 @@ namespace AramBuddy.MainCore.Logics
             if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 20 && !ModesManager.Flee && ObjectsManager.NearestEnemy != null && Misc.TeamTotal(ObjectsManager.NearestEnemy.PredictPosition()) >= Misc.TeamTotal(ObjectsManager.NearestEnemy.PredictPosition(), true)
                 && (ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret() && Misc.SafeToDive || !ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret()))
             {
+                var kitedistance = Player.Instance.GetAutoAttackRange() - Player.Instance.GetAutoAttackRange() * 0.15f;
                 // if there is a TeamFight move from NearestEnemy to nearestally.
                 if (ObjectsManager.NearestAlly != null)
                 {
                     Program.Moveto = "NearestEnemyToNearestAlly";
-                    Position = ObjectsManager.NearestEnemy.PredictPosition().Random().Extend(ObjectsManager.NearestAlly.PredictPosition().Random(), Player.Instance.GetAutoAttackRange() - 100).To3D();
+                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.NearestAlly.PredictPosition(), kitedistance).To3D();
                     return;
                 }
                 // if there is a TeamFight move from NearestEnemy to AllySpawn.
                 if (ObjectsManager.AllySpawn != null)
                 {
                     Program.Moveto = "NearestEnemyToAllySpawn";
-                    Position = ObjectsManager.NearestEnemy.PredictPosition().Random().Extend(ObjectsManager.AllySpawn.Position.Random(), Player.Instance.GetAutoAttackRange() - 100).To3D();
+                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.AllySpawn.Position, kitedistance).To3D();
                     return;
                 }
             }
@@ -303,8 +304,7 @@ namespace AramBuddy.MainCore.Logics
                 }
 
                 // This to prevent Walking into walls, buildings or traps.
-                if (/*NavMesh.GetCollisionFlags(pos) == CollisionFlags.Wall || NavMesh.GetCollisionFlags(pos) == CollisionFlags.Building
-                    || */ObjectsManager.EnemyTraps.Any(t => t.Trap.IsInRange(pos, t.Trap.BoundingRadius * 2)))
+                if (/*NavMesh.GetCollisionFlags(pos) == CollisionFlags.Wall || NavMesh.GetCollisionFlags(pos) == CollisionFlags.Building || */ObjectsManager.EnemyTraps.Any(t => t.Trap.IsInRange(pos, t.Trap.BoundingRadius * 2)))
                 {
                     return;
                 }
