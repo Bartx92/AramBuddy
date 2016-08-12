@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AramBuddy.MainCore.Utility;
 using EloBuddy;
 using EloBuddy.SDK;
@@ -343,7 +344,7 @@ namespace AramBuddy.MainCore.Logics
         public static void MoveTo(Vector3 pos)
         {
             // This to prevent the bot from spamming unnecessary movements.
-            if (!Player.Instance.Path.LastOrDefault().IsInRange(pos, 75) && !Player.Instance.IsInRange(pos, 75) && Core.GameTickCount - lastmove >= 500)
+            if (!Player.Instance.Path.LastOrDefault().IsInRange(pos, 70) && !Player.Instance.IsInRange(pos, 70) && Core.GameTickCount - lastmove >= new Random().Next(475 + Game.Ping, 1000 + Game.Ping))
             {
                 // This to prevent diving.
                 if (pos.UnderEnemyTurret() && !SafeToDive)

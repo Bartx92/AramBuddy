@@ -17,6 +17,7 @@ namespace AramBuddy
 {
     internal class Program
     {
+        public static int MoveToCommands;
         public static bool CustomChamp;
         public static bool Loaded;
         public static float Timer;
@@ -46,7 +47,7 @@ namespace AramBuddy
 
             Chat.OnInput += delegate (ChatInputEventArgs msg)
             {
-                if (msg.Input.Equals("Load " + Player.Instance.Hero, StringComparison.CurrentCultureIgnoreCase) && !CustomChamp)
+                if (msg.Input.Equals("Load Custom", StringComparison.CurrentCultureIgnoreCase) && !CustomChamp)
                 {
                     var Instance = (Base)Activator.CreateInstance(null, "AramBuddy.Champions." + Player.Instance.Hero + "." + Player.Instance.Hero).Unwrap();
                     CustomChamp = true;
@@ -57,6 +58,13 @@ namespace AramBuddy
             Timer = Game.Time;
             Game.OnTick += Game_OnTick;
             Events.OnGameEnd += Events_OnGameEnd;
+            Player.OnPostIssueOrder += Player_OnPostIssueOrder;
+        }
+        
+        private static void Player_OnPostIssueOrder(Obj_AI_Base sender, PlayerIssueOrderEventArgs args)
+        {
+            if (sender.IsMe && args.Order == GameObjectOrder.MoveTo)
+                MoveToCommands++;
         }
 
         private static void Events_OnGameEnd(EventArgs args)
@@ -120,6 +128,8 @@ namespace AramBuddy
                 + Moveto + " | ActiveMode: " + Orbwalker.ActiveModesFlags + " | Alone: " + Brain.Alone() + " | AttackObject: " + ModesManager.AttackObject + " | LastTurretAttack: "
                 + (Core.GameTickCount - Brain.LastTurretAttack) + " | SafeToDive: " + Misc.SafeToDive + " | LastTeamFight: " + (int)(Core.GameTickCount - Pathing.LastTeamFight));
 
+            Drawing.DrawText(Drawing.Width * 0.01f, Drawing.Height * 0.050f, System.Drawing.Color.White, "Movement Commands Issued: " + MoveToCommands);
+            
             Drawing.DrawText(
                 Game.CursorPos.WorldToScreen().X + 50,
                 Game.CursorPos.WorldToScreen().Y,
