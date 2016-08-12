@@ -318,6 +318,23 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
+        ///     Returns Nearest Ally Minion.
+        /// </summary>
+        public static Obj_AI_Minion NearestMinion
+        {
+            get
+            {
+                return
+                    EntityManager.MinionsAndMonsters.AlliedMinions.OrderBy(a => a.Distance(Player.Instance))
+                        .FirstOrDefault(
+                            m =>
+                            m.CountAlliesInRange(1300) - m.CountEnemiesInRange(1250) >= 0 && ((m.IsUnderEnemyturret() && Misc.SafeToDive) || !m.IsUnderEnemyturret()) && m.IsValidTarget(2500)
+                            && m.IsValid && m.IsHPBarRendered && !m.IsDead && !m.IsZombie && m.HealthPercent > 25
+                            && Misc.TeamTotal(m.PredictPosition()) - Misc.TeamTotal(m.PredictPosition(), true) >= 0);
+            }
+        }
+
+        /// <summary>
         ///     Returns Second Tier Turret.
         /// </summary>
         public static Obj_AI_Turret SecondTurret
@@ -355,13 +372,33 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
+        ///     Returns Nearest Object.
+        /// </summary>
+        public static GameObject NearestEnemyObject
+        {
+            get
+            {
+                var list = new List<GameObject>();
+                list.Clear();
+                if (EnemyNexues != null)
+                    list.Add(EnemyNexues);
+                if (EnemyInhb != null)
+                    list.Add(EnemyInhb);
+                if (EnemyTurret != null)
+                    list.Add(EnemyTurret);
+
+                return list.OrderBy(o => o.Distance(Player.Instance)).FirstOrDefault(o => o.IsValid && !o.IsDead);
+            }
+        }
+
+        /// <summary>
         ///     Returns Closest Enemy Turret.
         /// </summary>
         public static Obj_AI_Turret EnemyTurret
         {
             get
             {
-                return EntityManager.Turrets.Enemies.OrderBy(t => t.Distance(Player.Instance)).FirstOrDefault(t => t.IsValidTarget() && !t.IsDead);
+                return EntityManager.Turrets.Enemies.OrderBy(t => t.Distance(Player.Instance)).FirstOrDefault(t => !t.IsDead && t.IsValid && t.Health > 0);
             }
         }
 
@@ -372,7 +409,7 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return ObjectManager.Get<Obj_BarracksDampener>().FirstOrDefault(i => i.IsEnemy && !i.IsDead);
+                return ObjectManager.Get<Obj_BarracksDampener>().FirstOrDefault(i => i.IsEnemy && !i.IsDead && i.Health > 0);
             }
         }
 

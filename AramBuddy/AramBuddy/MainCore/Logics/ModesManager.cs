@@ -259,9 +259,9 @@ namespace AramBuddy.MainCore.Logics
         {
             get
             {
-                return (ObjectsManager.EnemyNexues != null && ObjectsManager.EnemyNexues.IsInRange(Player.Instance, Player.Instance.GetAutoAttackRange() + ObjectsManager.EnemyNexues.BoundingRadius))
-                       || (ObjectsManager.EnemyInhb != null && ObjectsManager.EnemyInhb.IsInRange(Player.Instance, Player.Instance.GetAutoAttackRange() + ObjectsManager.EnemyInhb.BoundingRadius))
-                       || (ObjectsManager.EnemyTurret != null && ObjectsManager.EnemyTurret.IsInRange(Player.Instance, Player.Instance.GetAutoAttackRange() + ObjectsManager.EnemyTurret.BoundingRadius));
+                return (ObjectsManager.EnemyNexues != null && ObjectsManager.EnemyNexues.IsInRange(Player.Instance, Player.Instance.GetAutoAttackRange() + ObjectsManager.EnemyNexues.BoundingRadius * 3))
+                       || (ObjectsManager.EnemyInhb != null && ObjectsManager.EnemyInhb.IsInRange(Player.Instance, Player.Instance.GetAutoAttackRange() + ObjectsManager.EnemyInhb.BoundingRadius * 3))
+                       || (ObjectsManager.EnemyTurret != null && ObjectsManager.EnemyTurret.IsInRange(Player.Instance, Player.Instance.GetAutoAttackRange() + ObjectsManager.EnemyTurret.BoundingRadius * 3));
             }
         }
     }

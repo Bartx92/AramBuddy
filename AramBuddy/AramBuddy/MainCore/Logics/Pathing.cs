@@ -3,6 +3,7 @@ using AramBuddy.MainCore.Utility;
 using EloBuddy;
 using EloBuddy.SDK;
 using SharpDX;
+using static AramBuddy.MainCore.Utility.Misc;
 
 namespace AramBuddy.MainCore.Logics
 {
@@ -28,7 +29,7 @@ namespace AramBuddy.MainCore.Logics
                 Teleport.Cast();
             }
 
-            if (Misc.TeamFight)
+            if (TeamFight)
             {
                 LastTeamFight = Core.GameTickCount;
             }
@@ -49,7 +50,7 @@ namespace AramBuddy.MainCore.Logics
                 if (ObjectsManager.EnemyTurret != null)
                 {
                     var Circle = new Geometry.Polygon.Circle(ObjectsManager.EnemyTurret.ServerPosition, ObjectsManager.EnemyTurret.GetAutoAttackRange());
-                    if ((!Circle.Points.Any(p => rect.IsInside(p)) || Circle.Points.Any(p => rect.IsInside(p)) && Misc.SafeToDive) && !EntityManager.Heroes.Enemies.Any(e => rect.IsInside(e.PredictPosition()) && e.IsValidTarget() && !e.IsDead))
+                    if ((!Circle.Points.Any(p => rect.IsInside(p)) || Circle.Points.Any(p => rect.IsInside(p)) && SafeToDive) && !EntityManager.Heroes.Enemies.Any(e => rect.IsInside(e.PredictPosition()) && e.IsValidTarget() && !e.IsDead))
                     {
                         if (ObjectsManager.HealthRelic.Name.Contains("Bard"))
                         {
@@ -123,7 +124,7 @@ namespace AramBuddy.MainCore.Logics
             }
 
             // Moves to AllySpawn if the bot is diving and it's not safe to dive.
-            if (((Player.Instance.IsUnderEnemyturret() && !Misc.SafeToDive) || Core.GameTickCount - Brain.LastTurretAttack < 2000) && ObjectsManager.AllySpawn != null)
+            if (((Player.Instance.IsUnderEnemyturret() && !SafeToDive) || Core.GameTickCount - Brain.LastTurretAttack < 2000) && ObjectsManager.AllySpawn != null)
             {
                 Program.Moveto = "AllySpawn";
                 Position = ObjectsManager.AllySpawn.Position.Random();
@@ -146,8 +147,8 @@ namespace AramBuddy.MainCore.Logics
         public static void MeleeLogic()
         {
             // if there is a TeamFight follow NearestEnemy.
-            if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 20 && !ModesManager.Flee && ObjectsManager.NearestEnemy != null && Player.Instance.Health > ObjectsManager.NearestEnemy.Health && Misc.TeamTotal(ObjectsManager.NearestEnemy.PredictPosition()) >= Misc.TeamTotal(ObjectsManager.NearestEnemy.PredictPosition(), true)
-                && (ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret() && Misc.SafeToDive || !ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret()))
+            if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 20 && !ModesManager.Flee && ObjectsManager.NearestEnemy != null && Player.Instance.Health > ObjectsManager.NearestEnemy.Health && TeamTotal(ObjectsManager.NearestEnemy.PredictPosition()) >= TeamTotal(ObjectsManager.NearestEnemy.PredictPosition(), true)
+                && (ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret() && SafeToDive || !ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret()))
             {
                 Program.Moveto = "NearestEnemy";
                 Position = ObjectsManager.NearestEnemy.PredictPosition();
@@ -216,22 +217,69 @@ namespace AramBuddy.MainCore.Logics
         /// </summary>
         public static void RangedLogic()
         {
-            if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 20 && !ModesManager.Flee && ObjectsManager.NearestEnemy != null && Misc.TeamTotal(ObjectsManager.NearestEnemy.PredictPosition()) >= Misc.TeamTotal(ObjectsManager.NearestEnemy.PredictPosition(), true)
-                && (ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret() && Misc.SafeToDive || !ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret()))
+            if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 20 && !ModesManager.Flee && ObjectsManager.NearestEnemy != null && TeamTotal(ObjectsManager.NearestEnemy.PredictPosition()) >= TeamTotal(ObjectsManager.NearestEnemy.PredictPosition(), true)
+                && (ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret() && SafeToDive || !ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret()))
             {
-                var kitedistance = Player.Instance.GetAutoAttackRange() - Player.Instance.GetAutoAttackRange() * 0.15f;
                 // if there is a TeamFight move from NearestEnemy to nearestally.
                 if (ObjectsManager.NearestAlly != null)
                 {
                     Program.Moveto = "NearestEnemyToNearestAlly";
-                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.NearestAlly.PredictPosition(), kitedistance).To3D();
+                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.NearestAlly.PredictPosition(), KiteDistance).To3D();
                     return;
                 }
                 // if there is a TeamFight move from NearestEnemy to AllySpawn.
                 if (ObjectsManager.AllySpawn != null)
                 {
                     Program.Moveto = "NearestEnemyToAllySpawn";
-                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.AllySpawn.Position, kitedistance).To3D();
+                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.AllySpawn.Position, KiteDistance).To3D();
+                    return;
+                }
+            }
+
+            // if Can AttackObject then start attacking THE DAMN OBJECT FFS.
+            if (ObjectsManager.NearestEnemyObject != null
+                && (TeamTotal(ObjectsManager.NearestEnemyObject.Position) > TeamTotal(ObjectsManager.NearestEnemyObject.Position, true) || ObjectsManager.NearestEnemyObject.CountEnemiesInRange(1250) < 1))
+            {
+                var extendto = new Vector3();
+                if (ObjectsManager.AllySpawn != null)
+                {
+                    extendto = ObjectsManager.AllySpawn.Position;
+                }
+                if (ObjectsManager.NearestMinion != null)
+                {
+                    extendto = ObjectsManager.NearestMinion.Position;
+                }
+                if (ObjectsManager.NearestAlly != null)
+                {
+                    extendto = ObjectsManager.NearestAlly.Position;
+                }
+                if (ObjectsManager.EnemyTurret != null)
+                {
+                    var rect = new Geometry.Polygon.Rectangle(Player.Instance.ServerPosition, ObjectsManager.NearestEnemyObject.Position, 500);
+                    var Circle = new Geometry.Polygon.Circle(ObjectsManager.EnemyTurret.ServerPosition, ObjectsManager.EnemyTurret.GetAutoAttackRange());
+                    if (!Circle.Points.Any(p => rect.IsInside(p)))
+                    {
+                        if (ObjectsManager.NearestEnemyObject is Obj_AI_Turret)
+                        {
+                            if (SafeToDive)
+                            {
+                                Program.Moveto = "NearestEnemyObject";
+                                Position = ObjectsManager.NearestEnemyObject.Position.Extend(extendto, KiteDistance).To3D();
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            Program.Moveto = "NearestEnemyObject2";
+                            Position = ObjectsManager.NearestEnemyObject.Position.Extend(extendto, KiteDistance).To3D();
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    Program.Moveto = "NearestEnemyObject3";
+                    Position = ObjectsManager.NearestEnemyObject.Position.Extend(extendto, KiteDistance).To3D();
                     return;
                 }
             }
@@ -298,7 +346,7 @@ namespace AramBuddy.MainCore.Logics
             if (!Player.Instance.Path.LastOrDefault().IsInRange(pos, 75) && !Player.Instance.IsInRange(pos, 75) && Core.GameTickCount - lastmove >= 500)
             {
                 // This to prevent diving.
-                if (pos.UnderEnemyTurret() && !Misc.SafeToDive)
+                if (pos.UnderEnemyTurret() && !SafeToDive)
                 {
                     return;
                 }

@@ -118,6 +118,16 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
+        ///     Returns true if you can deal damage to the target and kill him.
+        /// </summary>
+        public static bool IsKillable(this Obj_AI_Base target)
+        {
+            return !target.HasBuff("kindredrnodeathbuff") && !target.Buffs.Any(b => b.Name.ToLower().Contains("fioraw")) && !target.HasBuff("JudicatorIntervention") && !target.IsZombie
+                   && !target.HasBuff("ChronoShift") && !target.HasBuff("UndyingRage") && !target.IsInvulnerable && !target.IsZombie && !target.HasBuff("bansheesveil") && !target.IsDead
+                   && !target.IsPhysicalImmune && target.Health > 0 && !target.HasBuffOfType(BuffType.Invulnerability) && !target.HasBuffOfType(BuffType.PhysicalImmunity) && target.IsValidTarget();
+        }
+
+        /// <summary>
         ///     Casts spell with selected hitchance.
         /// </summary>
         public static void Cast(this Spell.Skillshot spell, Obj_AI_Base target, HitChance hitChance)
@@ -129,6 +139,17 @@ namespace AramBuddy.MainCore.Utility
                 {
                     spell.Cast(pred.CastPosition);
                 }
+            }
+        }
+
+        /// <summary>
+        ///     Distance To Keep from an Object and still be able to attack.
+        /// </summary>
+        public static float KiteDistance
+        {
+            get
+            {
+                return Player.Instance.GetAutoAttackRange() - Player.Instance.GetAutoAttackRange() * 0.15f;
             }
         }
 

@@ -92,7 +92,6 @@
     <Compile Include="KappaEvade\KappaEvade.cs" />
     <Compile Include="KappaEvade\SpellsDetector.cs" />
     <Compile Include="MainCore\Brain.cs" />
-    <Compile Include="MainCore\Logics\CloneControler.cs" />
     <Compile Include="MainCore\Logics\SpecialChamps.cs" />
     <Compile Include="MainCore\Logics\SpellsCasting.cs" />
     <Compile Include="MainCore\Logics\ModesManager.cs" />
