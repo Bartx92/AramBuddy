@@ -12,7 +12,7 @@ namespace AramBuddy.MainCore.Utility
         {
             // Clears and adds new HealthRelics and bardhealthshrines.
             HealthRelics.Clear();
-            foreach (var hr in ObjectManager.Get<GameObject>().Where(o => o.Name.ToLower().Contains("healthrelic") && o.IsValid).Where(hr => hr != null))
+            foreach (var hr in ObjectManager.Get<GameObject>().Where(o => o != null && o.Name.ToLower().Contains("healthrelic") && o.IsValid && !o.IsDead))
             {
                 HealthRelics.Add(hr);
             }
@@ -25,7 +25,7 @@ namespace AramBuddy.MainCore.Utility
                 {
                     var ttrap = new traps { Trap = trap, IsSpecial = false };
                     EnemyTraps.Add(ttrap);
-                }/*
+                } /*
                 if (SpecialTrapsNames.Contains(trap.Name))
                 {
                     var ttrap = new traps { Trap = trap, IsSpecial = true };
@@ -39,10 +39,11 @@ namespace AramBuddy.MainCore.Utility
                         ObjectManager.Get<GameObject>()
                             .Where(o => o.Name.Equals("bardhealthshrine", StringComparison.CurrentCultureIgnoreCase) && o.IsAlly && o.IsValid && !o.IsDead)
                             .Where(hr => hr != null && !HealthRelics.Contains(hr) && Logger.Send("Added " + hr.Name, Logger.LogLevel.Info)));
-                    
+
                     // Removes HealthRelics and Enemy Traps.
-                    HealthRelics.RemoveAll(h => (h == null || !h.IsValid || h.IsDead) && Logger.Send("Removed " + h?.Name, Logger.LogLevel.Info));
-                    EnemyTraps.RemoveAll(t => (t.Trap == null || !t.Trap.IsValid || t.Trap.IsDead) && Logger.Send("Removed " + t.Trap?.Name, Logger.LogLevel.Info));
+                    
+                    HealthRelics.RemoveAll(h => h == null || !h.IsValid || h.IsDead || EntityManager.Heroes.AllHeroes.Any(a => !a.IsDead && a.IsValidTarget() && a.Distance(h) <= a.BoundingRadius + h.BoundingRadius));
+                    EnemyTraps.RemoveAll(t => t.Trap == null || !t.Trap.IsValid || t.Trap.IsDead || EntityManager.Heroes.Allies.Any(a => !a.IsDead && a.IsValidTarget() && a.Distance(t.Trap) <= a.BoundingRadius + t.Trap.BoundingRadius));
                 };
 
             GameObject.OnCreate += GameObject_OnCreate;
@@ -62,7 +63,7 @@ namespace AramBuddy.MainCore.Utility
                     var trap = new traps { Trap = caster, IsSpecial = false };
                     EnemyTraps.Add(trap);
                     Logger.Send("Create " + sender.Name, Logger.LogLevel.Info);
-                }/*
+                } /*
                 if (SpecialTrapsNames.Contains(caster.Name) && caster.IsEnemy)
                 {
                     var trap = new traps { Trap = caster, IsSpecial = true };
@@ -91,7 +92,7 @@ namespace AramBuddy.MainCore.Utility
                 {
                     EnemyTraps.Remove(trap);
                     Logger.Send("Delete " + sender.Name, Logger.LogLevel.Info);
-                }/*
+                } /*
                 if (EnemyTraps.Contains(Specialtrap) && caster.IsEnemy)
                 {
                     EnemyTraps.Remove(Specialtrap);
@@ -124,8 +125,8 @@ namespace AramBuddy.MainCore.Utility
         /// </summary>
         public static List<string> SpecialTrapsNames = new List<string>
                                                            {
-                                                               "Fizz_Base_R_OrbitFish.troy", "Gragas_Base_Q_Enemy", "Lux_Base_E_tar_aoe_red.troy", "Soraka_Base_E_rune.troy", "Ziggs_Base_W_aoe_red.troy",
-                                                               "Viktor_Catalyst_red.troy", "Viktor_base_W_AUG_red.troy", "Barrel"
+                                                               "Fizz_Base_R_OrbitFish.troy", "Gragas_Base_Q_Enemy", "Lux_Base_E_tar_aoe_green.troy", "Soraka_Base_E_rune.troy", "Ziggs_Base_W_aoe_green.troy",
+                                                               "Viktor_Catalyst_green.troy", "Viktor_base_W_AUG_green.troy", "Barrel"
                                                            };
 
         /// <summary>
@@ -156,7 +157,9 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return HealthRelics.OrderBy(e => e.Distance(Player.Instance)).FirstOrDefault(e => e.IsValid && ((e.Distance(Player.Instance) < 2000 && e.CountEnemiesInRange(1000) < 1) || (e.Distance(Player.Instance) <= 500)));
+                return
+                    HealthRelics.OrderBy(e => e.Distance(Player.Instance))
+                        .FirstOrDefault(e => e.IsValid && ((e.Distance(Player.Instance) < 2000 && e.CountEnemiesInRange(1000) < 1) || (e.Distance(Player.Instance) <= 500)));
             }
         }
 
@@ -171,7 +174,8 @@ namespace AramBuddy.MainCore.Utility
                     ObjectManager.Get<Obj_AI_Base>()
                         .FirstOrDefault(
                             l =>
-                            l.IsValid && !l.IsDead && Player.Instance.Hero != Champion.Thresh && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 500 || l.CountEnemiesInRange(1000) < 1) && l.IsAlly && l.Name.Equals("ThreshLantern"));
+                            l.IsValid && !l.IsDead && Player.Instance.Hero != Champion.Thresh
+                            && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 500 || l.CountEnemiesInRange(1000) < 1) && l.IsAlly && l.Name.Equals("ThreshLantern"));
             }
         }
 
