@@ -58,14 +58,14 @@ namespace AramBuddy.MainCore.Logics
                             if (!formana)
                             {
                                 Program.Moveto = "BardShrine";
-                                Position = ObjectsManager.HealthRelic.Position.Random();
+                                Position = ObjectsManager.HealthRelic.Position;
                                 return;
                             }
                         }
                         else
                         {
                             Program.Moveto = "HealthRelic";
-                            Position = ObjectsManager.HealthRelic.Position.Random();
+                            Position = ObjectsManager.HealthRelic.Position;
                             return;
                         }
                     }
@@ -79,14 +79,14 @@ namespace AramBuddy.MainCore.Logics
                             if (!formana)
                             {
                                 Program.Moveto = "BardShrine";
-                                Position = ObjectsManager.HealthRelic.Position.Random();
+                                Position = ObjectsManager.HealthRelic.Position;
                                 return;
                             }
                         }
                         else
                         {
                             Program.Moveto = "HealthRelic";
-                            Position = ObjectsManager.HealthRelic.Position.Random();
+                            Position = ObjectsManager.HealthRelic.Position;
                             return;
                         }
                     }

@@ -75,6 +75,11 @@ namespace AramBuddy
 
         private static void Init()
         {
+            if (Orbwalker.MovementDelay < 250)
+            {
+                Orbwalker.MovementDelay = 250 + Game.Ping;
+            }
+
             MenuIni = MainMenu.AddMenu("AramBuddy", "AramBuddy");
             SpellsMenu = MenuIni.AddSubMenu("Spells");
             MenuIni.AddGroupLabel("AramBuddy Settings");
