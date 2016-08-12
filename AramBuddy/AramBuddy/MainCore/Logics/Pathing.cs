@@ -35,7 +35,7 @@ namespace AramBuddy.MainCore.Logics
             }
 
             // Hunting Bard chimes kappa.
-            if (Player.Instance.Hero == Champion.Bard && ObjectsManager.BardChime != null && ObjectsManager.BardChime.Distance(Player.Instance) <= 500)
+            if (Player.Instance.Hero == Champion.Bard && ObjectsManager.BardChime != null && ObjectsManager.BardChime.Distance(Player.Instance) <= 600)
             {
                 Program.Moveto = "BardChime";
                 Position = ObjectsManager.BardChime.Position.Random();

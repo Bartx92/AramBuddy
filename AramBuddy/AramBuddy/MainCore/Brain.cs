@@ -61,21 +61,6 @@ namespace AramBuddy.MainCore
             {
                 Pathing.MoveTo(Pathing.Position);
             }
-
-            // Removes HealthRelics if a hero is in range with them.
-            var HR = ObjectsManager.HealthRelics.FirstOrDefault(h => EntityManager.Heroes.AllHeroes.Any(a => !a.IsDead && a.IsInRange(h, h.BoundingRadius * 2)));
-            if (HR != null)
-            {
-                ObjectsManager.HealthRelics.Remove(HR);
-                Logger.Send("Removed " + HR.Name, Logger.LogLevel.Info);
-            }
-
-            var trap = ObjectsManager.EnemyTraps.FirstOrDefault(h => EntityManager.Heroes.Allies.Any(a => !a.IsDead && !h.IsSpecial && a.IsInRange(h.Trap, h.Trap.BoundingRadius * 2)));
-            if (trap.Trap != null)
-            {
-                ObjectsManager.EnemyTraps.Remove(trap);
-                Logger.Send("Removed " + trap.Trap.Name, Logger.LogLevel.Info);
-            }
         }
 
         /// <summary>

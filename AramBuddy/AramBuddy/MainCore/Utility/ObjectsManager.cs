@@ -16,17 +16,6 @@ namespace AramBuddy.MainCore.Utility
             {
                 HealthRelics.Add(hr);
             }
-            foreach (var bardshrine in ObjectManager.Get<GameObject>().Where(o => o.Name.ToLower().Contains("bardhealthshrine") && o.IsAlly && o.IsValid).Where(hr => hr != null))
-            {
-                HealthRelics.Add(bardshrine);
-            }
-
-            // Clears and adds new Bard Chimes.
-            BardChimes.Clear();
-            foreach (var bardchime in ObjectManager.Get<GameObject>().Where(o => o.Name.ToLower().Contains("bardchimeminion") && o.IsAlly && o.IsValid).Where(hr => hr != null))
-            {
-                BardChimes.Add(bardchime);
-            }
 
             // Clears and adds new EnemyTraps.
             EnemyTraps.Clear();
@@ -46,14 +35,14 @@ namespace AramBuddy.MainCore.Utility
 
             Game.OnTick += delegate
                 {
-                    BardChimes.AddRange(
-                        ObjectManager.Get<GameObject>()
-                            .Where(o => o.Name.ToLower().Contains("bardchimeminion") && o.IsAlly && o.IsValid && !o.IsDead)
-                            .Where(hr => hr != null && !BardChimes.Contains(hr) && Logger.Send("Added " + hr.Name, Logger.LogLevel.Info)));
                     HealthRelics.AddRange(
                         ObjectManager.Get<GameObject>()
-                            .Where(o => o.Name.ToLower().Contains("bardhealthshrine") && o.IsAlly && o.IsValid && !o.IsDead)
+                            .Where(o => o.Name.Equals("bardhealthshrine", StringComparison.CurrentCultureIgnoreCase) && o.IsAlly && o.IsValid && !o.IsDead)
                             .Where(hr => hr != null && !HealthRelics.Contains(hr) && Logger.Send("Added " + hr.Name, Logger.LogLevel.Info)));
+                    
+                    // Removes HealthRelics and Enemy Traps.
+                    HealthRelics.RemoveAll(h => (h == null || !h.IsValid || h.IsDead) && Logger.Send("Removed " + h?.Name, Logger.LogLevel.Info));
+                    EnemyTraps.RemoveAll(t => (t.Trap == null || !t.Trap.IsValid || t.Trap.IsDead) && Logger.Send("Removed " + t.Trap?.Name, Logger.LogLevel.Info));
                 };
 
             GameObject.OnCreate += GameObject_OnCreate;
@@ -142,7 +131,13 @@ namespace AramBuddy.MainCore.Utility
         /// <summary>
         ///     BardChimes list.
         /// </summary>
-        public static List<GameObject> BardChimes = new List<GameObject>();
+        public static IEnumerable<GameObject> BardChimes
+        {
+            get
+            {
+                return ObjectManager.Get<GameObject>().Where(o => o.Name.ToLower().Contains("bardchimeminion") && o.IsAlly && o.IsValid && !o.IsDead);
+            }
+        }
 
         /// <summary>
         ///     HealthRelics and BardHealthShrines list.
@@ -192,7 +187,7 @@ namespace AramBuddy.MainCore.Utility
                         .FirstOrDefault(
                             l =>
                             l.IsValid && !l.IsDead && Player.Instance.Hero == Champion.Bard && (!l.Position.UnderEnemyTurret() || l.Position.UnderEnemyTurret() && Misc.SafeToDive) && l.IsAlly
-                            && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 500 || l.CountEnemiesInRange(1000) < 1));
+                            && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 600 || l.CountEnemiesInRange(1000) < 1));
             }
         }
 
