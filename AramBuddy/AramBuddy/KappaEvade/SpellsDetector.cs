@@ -9,12 +9,12 @@ namespace AramBuddy.KappaEvade
 {
     internal static class SpellsDetector
     {
-        public delegate void TargetedSpellDetected(Obj_AI_Base sender, Obj_AI_Base target, GameObjectProcessSpellCastEventArgs args, Database.TargetedSpells.TSpell spell);
+        public delegate void TargetedSpellDetected(AIHeroClient sender, AIHeroClient target, GameObjectProcessSpellCastEventArgs args, Database.TargetedSpells.TSpell spell);
 
         public static event TargetedSpellDetected OnTargetedSpellDetected;
 
         public delegate void SkillShotDetected(
-            Obj_AI_Base sender,
+            AIHeroClient sender,
             GameObjectProcessSpellCastEventArgs args,
             Database.SkillShotSpells.SSpell spell,
             Vector3 Start,
@@ -63,7 +63,7 @@ namespace AramBuddy.KappaEvade
                 //Chat.Print("OnProcessSpellCast Detected " + args.SData.Name);
                 var spell = Database.SkillShotSpells.SkillShotsSpellsList.FirstOrDefault(s => s.hero == caster.Hero && s.slot == args.Slot && args.SData.Name.Equals(s.SpellName, StringComparison.CurrentCultureIgnoreCase));
                 if (spell.DetectByMissile) return;
-                OnSkillShotDetected?.Invoke(sender, args, spell, args.Start, args.End, spell.Range, spell.Width, null);
+                OnSkillShotDetected?.Invoke(caster, args, spell, args.Start, args.End, spell.Range, spell.Width, null);
             }
 
             if (hero == null)
@@ -71,7 +71,7 @@ namespace AramBuddy.KappaEvade
             if (Database.TargetedSpells.TargetedSpellsList.Any(s => s.hero == caster.Hero && s.slot == args.Slot))
             {
                 var spell = Database.TargetedSpells.TargetedSpellsList.FirstOrDefault(s => s.hero == caster.Hero && s.slot == args.Slot);
-                OnTargetedSpellDetected?.Invoke(sender, hero, args, spell);
+                OnTargetedSpellDetected?.Invoke(caster, hero, args, spell);
             }
         }
     }

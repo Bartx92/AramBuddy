@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AramBuddy.KappaEvade;
+using AramBuddy.MainCore.Utility;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
@@ -44,7 +45,6 @@ namespace AramBuddy.Champions.Fiora
                 LaneClearMenu.CreateSlider(spell.Slot + "mana", spell.Slot + " Mana Manager", 60);
                 KillStealMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
             }
-            KappaEvade.KappaEvade.Init();
             SpellsDetector.OnTargetedSpellDetected += SpellsDetector_OnTargetedSpellDetected;
             Orbwalker.OnPostAttack += Orbwalker_OnPostAttack;
         }
@@ -119,11 +119,11 @@ namespace AramBuddy.Champions.Fiora
             {
                 foreach (var passive in PassiveList.Where(p => p.Caster.Equals(target)))
                 {
-                    var pos = target.ServerPosition.Extend(VitalPos(passive.Vital), 100).To3D();
+                    var pos = target.ServerPosition.Extend(VitalPos(passive.Vital), 150).To3D();
                     Q.Cast(pos);
                 }
             }
-            if (target.HealthPercent <= 20 && target.IsKillable(R.Range) && R.IsReady() && ComboMenu.CheckBoxValue(R.Slot))
+            if (target.HealthPercent <= 50 && target.IsKillable(R.Range) && R.IsReady() && ComboMenu.CheckBoxValue(R.Slot))
             {
                 R.Cast(target);
             }
@@ -166,6 +166,10 @@ namespace AramBuddy.Champions.Fiora
 
         public override void Flee()
         {
+            if (user.CountEnemiesInRange(1000) > 0 && Q.IsReady())
+            {
+                Q.Cast(user.ServerPosition.Extend(ObjectsManager.AllySpawn.Position.Random(), Q.RangeSquared).To3D());
+            }
         }
 
         public override void KillSteal()

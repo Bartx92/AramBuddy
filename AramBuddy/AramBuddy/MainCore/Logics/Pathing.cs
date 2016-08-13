@@ -151,9 +151,20 @@ namespace AramBuddy.MainCore.Logics
             if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 20 && !ModesManager.Flee && ObjectsManager.NearestEnemy != null && Player.Instance.Health > ObjectsManager.NearestEnemy.Health && TeamTotal(ObjectsManager.NearestEnemy.PredictPosition()) >= TeamTotal(ObjectsManager.NearestEnemy.PredictPosition(), true)
                 && (ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret() && SafeToDive || !ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret()))
             {
-                Program.Moveto = "NearestEnemy";
-                Position = ObjectsManager.NearestEnemy.PredictPosition();
-                return;
+                // if there is a TeamFight move from NearestEnemy to nearestally.
+                if (ObjectsManager.NearestAlly != null)
+                {
+                    Program.Moveto = "NearestEnemyToNearestAlly";
+                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.NearestAlly.PredictPosition(), KiteDistance).To3D();
+                    return;
+                }
+                // if there is a TeamFight move from NearestEnemy to AllySpawn.
+                if (ObjectsManager.AllySpawn != null)
+                {
+                    Program.Moveto = "NearestEnemyToAllySpawn";
+                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.AllySpawn.Position, KiteDistance).To3D();
+                    return;
+                }
             }
 
             // if SafestAllyToFollow not exsist picks other to follow.

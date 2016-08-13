@@ -19,7 +19,6 @@ namespace AramBuddy.Champions.Blitzcrank
             HarassMenu = MenuIni.AddSubMenu("Harass");
             LaneClearMenu = MenuIni.AddSubMenu("LaneClear");
             KillStealMenu = MenuIni.AddSubMenu("KillSteal");
-            KappaEvade.KappaEvade.Init();
 
             Q = new Spell.Skillshot(SpellSlot.Q, 925, SkillShotType.Linear, 250, 1800, 70);
             {

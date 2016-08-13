@@ -27,29 +27,64 @@ namespace AramBuddy.MainCore.Utility
         /// </summary>
         public static float TeamTotal(Vector3 Position, bool Enemy = false)
         {
-            float enemyteamTotal = EntityManager.Turrets.Enemies.Where(t => !t.IsDead && t.Health > 0 && t.CountEnemiesInRange(t.GetAutoAttackRange()) > 1).Sum(turret => turret.Health); ;
+            float enemyteamTotal = EntityManager.Turrets.Enemies.Where(t => !t.IsDead && t.Health > 0 && t.CountEnemiesInRange(t.GetAutoAttackRange()) > 1).Sum(turret => turret.Health);
             float allyteamTotal = EntityManager.Turrets.Allies.Where(t => !t.IsDead && t.Health > 0 && t.CountAlliesInRange(t.GetAutoAttackRange()) > 1 && t.Distance(Player.Instance) <= 1000).Sum(turret => turret.Health);
 
-            foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, Program.MenuIni["Safe"].Cast<Slider>().CurrentValue)))
+            enemyteamTotal += EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => !m.IsDead && m.Health > 0 && m.IsValidTarget() && m.CountEnemiesInRange(700) > 1).Sum(minion => (minion.Health * 0.35f) + minion.Armor + minion.SpellBlock + minion.TotalMagicalDamage + minion.TotalAttackDamage);
+            allyteamTotal += EntityManager.MinionsAndMonsters.AlliedMinions.Where(m => !m.IsDead && m.Health > 0 && m.IsValidTarget() && m.CountAlliesInRange(700) > 1).Sum(minion => (minion.Health * 0.35f) + minion.Armor + minion.SpellBlock + minion.TotalMagicalDamage + minion.TotalAttackDamage);
+            
+            enemyteamTotal +=
+                EntityManager.Heroes.Enemies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, Program.MenuIni["Safe"].Cast<Slider>().CurrentValue))
+                    .Sum(enemy => enemy.Health + enemy.Mana + enemy.Armor + enemy.SpellBlock + enemy.TotalMagicalDamage + enemy.TotalAttackDamage);
+            allyteamTotal +=
+                EntityManager.Heroes.Allies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, Program.MenuIni["Safe"].Cast<Slider>().CurrentValue))
+                    .Sum(ally => ally.Health + ally.Mana + ally.Armor + ally.SpellBlock + ally.TotalMagicalDamage + ally.TotalAttackDamage);
+            
+            enemyteamTotal += TeamDamage(Position, true);
+            allyteamTotal += TeamDamage(Position);
+            
+            return Enemy ? enemyteamTotal : allyteamTotal;
+        }
+
+        /// <summary>
+        ///     Cache the Damages to prevent lags.
+        /// </summary>
+        private static float EnemyTeamDamage;
+        private static float AllyTeamDamage;
+
+        /// <summary>
+        ///     Last Update Done To The Damages.
+        /// </summary>
+        private static int lastupdate;
+
+        /// <summary>
+        ///     Returns Spells Damage for the Whole Team.
+        /// </summary>
+        public static float TeamDamage(Vector3 Position, bool Enemy = false)
+        {
+            if (Core.GameTickCount - lastupdate > 1500)
             {
-                enemyteamTotal += enemy.TotalShieldHealth();
-                enemyteamTotal += enemy.Mana;
-                enemyteamTotal += enemy.Armor;
-                enemyteamTotal += enemy.SpellBlock;
-                enemyteamTotal += enemy.TotalMagicalDamage;
-                enemyteamTotal += enemy.TotalAttackDamage;
+                EnemyTeamDamage = 0;
+                AllyTeamDamage = 0;
+                var spelllist = new List<SpellSlot> { SpellSlot.Q, SpellSlot.W, SpellSlot.E, SpellSlot.R };
+
+                foreach (var slot in spelllist)
+                {
+                    foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, Program.MenuIni["Safe"].Cast<Slider>().CurrentValue)
+                    && e.Spellbook.GetSpell(slot).IsLearned && e.Spellbook.GetSpell(slot).SData.Mana < e.Mana))
+                    {
+                        EnemyTeamDamage += enemy.GetSpellDamage(Player.Instance, slot);
+                    }
+                    foreach (var ally in EntityManager.Heroes.Allies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, Program.MenuIni["Safe"].Cast<Slider>().CurrentValue)
+                    && e.Spellbook.GetSpell(slot).IsLearned && e.Spellbook.GetSpell(slot).SData.Mana < e.Mana))
+                    {
+                        AllyTeamDamage += ally.GetSpellDamage(Player.Instance, slot);
+                    }
+                }
+                lastupdate = Core.GameTickCount;
             }
 
-            foreach (var ally in EntityManager.Heroes.Allies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, Program.MenuIni["Safe"].Cast<Slider>().CurrentValue)))
-            {
-                allyteamTotal += ally.TotalShieldHealth();
-                allyteamTotal += ally.Mana;
-                allyteamTotal += ally.Armor;
-                allyteamTotal += ally.SpellBlock;
-                allyteamTotal += ally.TotalMagicalDamage;
-                allyteamTotal += ally.TotalAttackDamage;
-            }
-            return Enemy ? enemyteamTotal : allyteamTotal;
+            return Enemy ? EnemyTeamDamage : AllyTeamDamage;
         }
 
         /// <summary>

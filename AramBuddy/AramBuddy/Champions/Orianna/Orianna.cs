@@ -54,7 +54,6 @@ namespace AramBuddy.Champions.Orianna
 
             KillStealMenu.CreateCheckBox("R", "Use R");
             Interrupter.OnInterruptableSpell += Interrupter_OnInterruptableSpell;
-            KappaEvade.KappaEvade.Init();
             SpellsDetector.OnTargetedSpellDetected += SpellsDetector_OnTargetedSpellDetected;
         }
 

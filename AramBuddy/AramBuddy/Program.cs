@@ -34,10 +34,13 @@ namespace AramBuddy
         {
             if (Game.MapId != GameMapId.HowlingAbyss)
             {
-                Console.WriteLine(Game.MapId + " Is Not Supported By AramBuddy !");
+                Logger.Send(Game.MapId + " Is Not Supported By AramBuddy !", Logger.LogLevel.Warn);
                 Chat.Print(Game.MapId + " Is Not Supported By AramBuddy !");
                 return;
             }
+
+            // Inits KappaEvade
+            KappaEvade.KappaEvade.Init();
 
             // Checks for updates
             CheckVersion.Init();
@@ -52,6 +55,7 @@ namespace AramBuddy
                     var Instance = (Base)Activator.CreateInstance(null, "AramBuddy.Champions." + Player.Instance.Hero + "." + Player.Instance.Hero).Unwrap();
                     CustomChamp = true;
                     msg.Process = false;
+                    Logger.Send("Loaded Custom Champion " + Player.Instance.Hero, Logger.LogLevel.Info);
                 }
             };
 
@@ -70,7 +74,7 @@ namespace AramBuddy
         private static void Events_OnGameEnd(EventArgs args)
         {
             if (MenuIni["quit"].Cast<CheckBox>().CurrentValue)
-                Core.DelayAction(() => Game.QuitGame(), 10250 + Game.Ping);
+                Core.DelayAction(() => Game.QuitGame(), 12250 + Game.Ping);
         }
 
         private static void Init()
@@ -182,11 +186,10 @@ namespace AramBuddy
             }
             else
             {
-                if (Player.Instance.IsDead)
+                if (!Player.Instance.IsDead)
                 {
-                    return;
+                    Brain.Decisions();
                 }
-                Brain.Decisions();
             }
         }
     }

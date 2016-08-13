@@ -55,7 +55,7 @@ namespace AramBuddy.KappaEvade
 
         public struct ActiveSpells
         {
-            public Obj_AI_Base Caster;
+            public AIHeroClient Caster;
             public Vector3 Start;
             public Vector3 End;
             public float Range;
@@ -169,7 +169,7 @@ namespace AramBuddy.KappaEvade
             }
         }
 
-        private static void SpellsDetector_OnSkillShotDetected(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args, Database.SkillShotSpells.SSpell spell, Vector3 Start, Vector3 End, float Range, float Width, MissileClient missile)
+        private static void SpellsDetector_OnSkillShotDetected(AIHeroClient sender, GameObjectProcessSpellCastEventArgs args, Database.SkillShotSpells.SSpell spell, Vector3 Start, Vector3 End, float Range, float Width, MissileClient missile)
         {
             var spellrange = Range;
             var endpos = spell.IsFixedRange ? Start.Extend(End, spellrange).To3D() : End;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using AramBuddy.KappaEvade;
 using AramBuddy.MainCore.Utility;
 using EloBuddy;
 using EloBuddy.SDK;
@@ -23,6 +24,29 @@ namespace AramBuddy
         /// </summary>
         /// <param name="args">The arguments the event provides</param>
         public delegate void OnGameStartHandler(EventArgs args);
+
+        /// <summary>
+        ///     A handler for the InComingDamage event
+        /// </summary>
+        /// <param name="args">The arguments the event provides</param>
+        public delegate void OnInComingDamage(InComingDamageEventArgs args);
+
+        public class InComingDamageEventArgs
+        {
+            public static AIHeroClient Target;
+            public static float InComingDamage;
+            public static Type DamageType;
+            public enum Type
+            {
+                TurretAttack, HeroAttack, MinionAttack, SkillShot, TargetedSpell
+            }
+            public InComingDamageEventArgs(AIHeroClient target, float Damage, Type type)
+            {
+                Target = target;
+                InComingDamage = Damage;
+                DamageType = type;
+            }
+        }
 
         static Events()
         {
@@ -64,6 +88,42 @@ namespace AramBuddy
                     }
                 };
 
+            Game.OnUpdate += delegate
+                {
+                    // Used to Invoke the Incoming Damage Event When there is SkillShot Incoming
+                    foreach (var spell in Collision.NewSpells)
+                    {
+                        foreach (var ally in EntityManager.Heroes.Allies.Where(a => !a.IsDead && a.IsValidTarget() && a.IsInDanger(spell)))
+                        {
+                            OnIncomingDamage?.Invoke(new InComingDamageEventArgs(ally, spell.Caster.GetSpellDamage(ally, spell.spell.slot), InComingDamageEventArgs.Type.SkillShot));
+                        }
+                    }
+                };
+
+            SpellsDetector.OnTargetedSpellDetected += delegate(AIHeroClient sender, AIHeroClient target, GameObjectProcessSpellCastEventArgs args, Database.TargetedSpells.TSpell spell)
+            {
+                // Used to Invoke the Incoming Damage Event When there is a TargetedSpell Incoming
+                if (target.IsAlly)
+                        OnIncomingDamage?.Invoke(new InComingDamageEventArgs(target, sender.GetSpellDamage(target, spell.slot), InComingDamageEventArgs.Type.TargetedSpell));
+                };
+
+            Obj_AI_Base.OnBasicAttack += delegate(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+            {
+                // Used to Invoke the Incoming Damage Event When there is an AutoAttack Incoming
+                    var target = args.Target as AIHeroClient;
+                    var hero = sender as AIHeroClient;
+                    var turret = sender as Obj_AI_Turret;
+                    var minion = sender as Obj_AI_Minion;
+
+                    if(target == null || !target.IsAlly) return;
+
+                    if(hero != null)
+                        OnIncomingDamage?.Invoke(new InComingDamageEventArgs(target, hero.GetAutoAttackDamage(target), InComingDamageEventArgs.Type.HeroAttack));
+                    if (turret != null)
+                        OnIncomingDamage?.Invoke(new InComingDamageEventArgs(target, turret.GetAutoAttackDamage(target), InComingDamageEventArgs.Type.TurretAttack));
+                    if (minion != null)
+                        OnIncomingDamage?.Invoke(new InComingDamageEventArgs(target, minion.GetAutoAttackDamage(target), InComingDamageEventArgs.Type.MinionAttack));
+                };
             #endregion
 
             // Invoke the OnGameStart event
@@ -93,5 +153,10 @@ namespace AramBuddy
         /// Fires when the game has started
         /// </summary>
         public static event OnGameStartHandler OnGameStart;
+
+        /// <summary>
+        /// Fires when There is In Coming Damage to an ally
+        /// </summary>
+        public static event OnInComingDamage OnIncomingDamage;
     }
 }
