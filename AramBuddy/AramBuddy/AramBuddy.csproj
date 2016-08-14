@@ -60,6 +60,12 @@
     <Compile Include="AutoShop\Sequences\Buy.cs" />
     <Compile Include="AutoShop\Sequences\Parse.cs" />
     <Compile Include="AutoShop\Setup.cs" />
+    <Compile Include="Plugins\Activator\Cleanse\Qss.cs" />
+    <Compile Include="Plugins\Activator\Database.cs" />
+    <Compile Include="Plugins\Activator\Items\Defence.cs" />
+    <Compile Include="Plugins\Activator\Items\Offence.cs" />
+    <Compile Include="Plugins\Activator\Items\Potions.cs" />
+    <Compile Include="Plugins\Activator\Load.cs" />
     <Compile Include="Plugins\Champions\Aatrox\Aatrox.cs" />
     <Compile Include="Plugins\Champions\Ahri\Ahri.cs" />
     <Compile Include="Plugins\Champions\Akali\Akali.cs" />

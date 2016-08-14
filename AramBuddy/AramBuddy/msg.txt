@@ -1,1 +1,1 @@
-Major Improvements to the bot !
+Added Built-In Activator !

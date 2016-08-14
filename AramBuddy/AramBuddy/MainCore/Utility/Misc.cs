@@ -283,6 +283,14 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
+        ///     Returns true if the Item IsReady.
+        /// </summary>
+        public static bool ItemReady(this Item item, Menu menu)
+        {
+            return item != null && item.IsOwned(Player.Instance) && item.IsReady() && menu.CheckBoxValue(item.Id.ToString());
+        }
+
+        /// <summary>
         ///     Returns True if the target is attacking a player.
         /// </summary>
         public static bool IsAttackPlayer(this AIHeroClient target)

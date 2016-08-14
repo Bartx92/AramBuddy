@@ -33,9 +33,9 @@ namespace AramBuddy
 
         public class InComingDamageEventArgs
         {
-            public static AIHeroClient Target;
-            public static float InComingDamage;
-            public static Type DamageType;
+            public AIHeroClient Target;
+            public float InComingDamage;
+            public Type DamageType;
             public enum Type
             {
                 TurretAttack, HeroAttack, MinionAttack, SkillShot, TargetedSpell

@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Net;
 using AramBuddy.MainCore.Utility;
 using EloBuddy;
-using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Rendering;
 using SharpDX;
 using Color = System.Drawing.Color;
