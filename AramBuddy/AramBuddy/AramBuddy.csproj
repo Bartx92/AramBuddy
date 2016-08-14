@@ -60,6 +60,7 @@
     <Compile Include="AutoShop\Sequences\Buy.cs" />
     <Compile Include="AutoShop\Sequences\Parse.cs" />
     <Compile Include="AutoShop\Setup.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="Plugins\Activator\Cleanse\Qss.cs" />
     <Compile Include="Plugins\Activator\Database.cs" />
     <Compile Include="Plugins\Activator\Items\Defence.cs" />

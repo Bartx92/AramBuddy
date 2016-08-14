@@ -12,6 +12,7 @@ using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 using EloBuddy.SDK.Rendering;
 using SharpDX;
+using static AramBuddy.Config;
 
 namespace AramBuddy
 {
@@ -89,7 +90,7 @@ namespace AramBuddy
         {
             try
             {
-                if (MenuIni["quit"].Cast<CheckBox>().CurrentValue)
+                if (QuitOnGameEnd)
                     Core.DelayAction(() => Game.QuitGame(), 20000 + Game.Ping);
             }
             catch (Exception ex)
@@ -110,12 +111,32 @@ namespace AramBuddy
                 MenuIni = MainMenu.AddMenu("AramBuddy", "AramBuddy");
                 SpellsMenu = MenuIni.AddSubMenu("Spells");
                 MenuIni.AddGroupLabel("AramBuddy Settings");
-                MenuIni.Add("debug", new CheckBox("Enable Debugging Mode"));
-                var enableactivator = MenuIni.Add("activator", new CheckBox("Enable Built-In Activator"));
-                MenuIni.Add("DisableSpells", new CheckBox("Disable Built-in Casting Logic", false));
-                MenuIni.Add("quit", new CheckBox("Quit On Game End"));
-                MenuIni.Add("Safe", new Slider("Safe Slider (Recommended 1250)", 1250, 0, 2500));
-                MenuIni.AddLabel("More Value = more defensive playstyle");
+                var debug = MenuIni.CreateCheckBox("debug", "Enable Debugging Mode");
+                var activator = MenuIni.CreateCheckBox("activator", "Enable Built-In Activator");
+                var DisableSpells = MenuIni.CreateCheckBox("DisableSpells", "Disable Built-in Casting Logic", false);
+                var quit = MenuIni.CreateCheckBox("quit", "Quit On Game End");
+                MenuIni.AddSeparator(0);
+                var Safe = MenuIni.CreateSlider("Safe", "Safe Slider (Recommended 1250)", 1250, 0, 2500);
+                MenuIni.AddLabel("More Safe Value = more defensive playstyle");
+                MenuIni.AddSeparator(0);
+                var HRHP = MenuIni.CreateSlider("HRHP", "Health Percent To Pick Health Relics (Recommended 75%)", 75);
+                var HRMP = MenuIni.CreateSlider("HRMP", "Mana Percent To Pick Health Relics (Recommended 15%)", 15);
+                MenuIni.AddSeparator(0);
+                var Reset = MenuIni.CreateCheckBox("reset", "Reset All Settings To Default", false);
+                Reset.OnValueChange += delegate(ValueBase<bool> sender, ValueBase<bool>.ValueChangeArgs args)
+                    {
+                        if (args.NewValue)
+                        {
+                            Reset.CurrentValue = false;
+                            debug.CurrentValue = true;
+                            activator.CurrentValue = true;
+                            DisableSpells.CurrentValue = false;
+                            quit.CurrentValue = true;
+                            Safe.CurrentValue = 1250;
+                            HRHP.CurrentValue = 75;
+                            HRMP.CurrentValue = 15;
+                        }
+                    };
 
                 SpellsMenu.AddGroupLabel("SummonerSpells");
                 SpellsMenu.Add("Heal", new CheckBox("Use Heal"));
@@ -124,29 +145,12 @@ namespace AramBuddy
                 SpellsMenu.Add("Ghost", new CheckBox("Use Ghost"));
                 SpellsMenu.Add("Flash", new CheckBox("Use Flash"));
                 SpellsMenu.Add("Cleanse", new CheckBox("Use Cleanse"));
-                /*
-                SpellsMenu.AddSeparator(0);
-                SpellsMenu.AddGroupLabel("Combo - " + Player.Instance.Hero);
-                SpellsMenu.Add("Q" + Player.Instance.Hero, new CheckBox("Use Q"));
-                SpellsMenu.Add("W" + Player.Instance.Hero, new CheckBox("Use W"));
-                SpellsMenu.Add("E" + Player.Instance.Hero, new CheckBox("Use E"));
-                SpellsMenu.Add("R" + Player.Instance.Hero, new CheckBox("Use R"));
-                SpellsMenu.AddSeparator(0);
-                SpellsMenu.AddGroupLabel("Harass - " + Player.Instance.Hero);
-                SpellsMenu.Add("QHarass" + Player.Instance.Hero, new CheckBox("Use Q"));
-                SpellsMenu.Add("WHarass" + Player.Instance.Hero, new CheckBox("Use W"));
-                SpellsMenu.Add("EHarass" + Player.Instance.Hero, new CheckBox("Use E"));
-                SpellsMenu.AddSeparator(0);
-                SpellsMenu.AddGroupLabel("LaneClear - " + Player.Instance.Hero);
-                SpellsMenu.Add("QLaneClear" + Player.Instance.Hero, new CheckBox("Use Q"));
-                SpellsMenu.Add("WLaneClear" + Player.Instance.Hero, new CheckBox("Use W"));
-                SpellsMenu.Add("ELaneClear" + Player.Instance.Hero, new CheckBox("Use E"));
-                */
+
                 // Initialize Bot Functions.
                 Brain.Init();
 
                 // Inits Activator
-                if(enableactivator.CurrentValue)
+                if(EnableActivator)
                     Plugins.Activator.Load.Init();
 
                 Drawing.OnEndScene += Drawing_OnEndScene;
@@ -162,8 +166,8 @@ namespace AramBuddy
         {
             try
             {
-                if (!MenuIni["debug"].Cast<CheckBox>().CurrentValue)
-                    return;
+                if (!EnableActivator) return;
+
                 Drawing.DrawText(
                     Drawing.Width * 0.01f,
                     Drawing.Height * 0.025f,

@@ -8,6 +8,7 @@ using EloBuddy.SDK.Menu.Values;
 using EloBuddy.SDK.Spells;
 using GenesisSpellLibrary;
 using GenesisSpellLibrary.Spells;
+using static AramBuddy.Config;
 
 namespace AramBuddy.MainCore.Logics
 {
@@ -90,7 +91,7 @@ namespace AramBuddy.MainCore.Logics
                     break;
             }
 
-            if (!Program.MenuIni["DisableSpells"].Cast<CheckBox>().CurrentValue && !Program.CustomChamp)
+            if (!DisableSpellsCasting && !Program.CustomChamp)
             {
                 ModesBase();
             }

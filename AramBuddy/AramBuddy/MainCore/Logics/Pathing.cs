@@ -6,6 +6,7 @@ using EloBuddy;
 using EloBuddy.SDK;
 using SharpDX;
 using static AramBuddy.MainCore.Utility.Misc;
+using static AramBuddy.Config;
 
 namespace AramBuddy.MainCore.Logics
 {
@@ -45,7 +46,7 @@ namespace AramBuddy.MainCore.Logics
             }
 
             // Moves to HealthRelic if the bot needs heal.
-            if ((Player.Instance.HealthPercent < 75 || (Player.Instance.ManaPercent < 15 && Player.Instance.Mana > 0)) && ObjectsManager.HealthRelic != null)
+            if ((Player.Instance.HealthPercent <= HealthRelicHP || (Player.Instance.ManaPercent <= HealthRelicMP && Player.Instance.Mana > 0)) && ObjectsManager.HealthRelic != null)
             {
                 var formana = Player.Instance.ManaPercent < 15 && Player.Instance.Mana > 0;
                 var rect = new Geometry.Polygon.Rectangle(Player.Instance.ServerPosition, ObjectsManager.HealthRelic.Position, 500);
