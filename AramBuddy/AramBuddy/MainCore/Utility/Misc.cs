@@ -95,7 +95,7 @@ namespace AramBuddy.MainCore.Utility
             get
             {
                 return ObjectsManager.EnemyTurret != null && Player.Instance.HealthPercent > 10 && Core.GameTickCount - Brain.LastTurretAttack > 3000
-                       && (ObjectsManager.EnemyTurret.CountMinions() > 2 || ObjectsManager.EnemyTurret.CountAlliesInRange(825) > 1);
+                       && (ObjectsManager.EnemyTurret.CountMinions() > 2 || ObjectsManager.EnemyTurret.CountAlliesInRange(825) > 1 || ObjectsManager.EnemyTurret.IsAttackPlayer() && Core.GameTickCount - ObjectsManager.EnemyTurret.LastPlayerAttack() < 1000);
             }
         }
 
@@ -182,7 +182,7 @@ namespace AramBuddy.MainCore.Utility
         /// </summary>
         public static float KiteDistance(GameObject target)
         {
-            return (Player.Instance.GetAutoAttackRange() + target.BoundingRadius) - Player.Instance.GetAutoAttackRange() * 0.25f;
+            return (Player.Instance.GetAutoAttackRange() + target.BoundingRadius) - Player.Instance.GetAutoAttackRange() *  (Player.Instance.IsMelee ? 0.40f : 0.30f);
         }
 
         /// <summary>
@@ -270,11 +270,11 @@ namespace AramBuddy.MainCore.Utility
         /// </summary>
         public class LastAttack
         {
-            public AIHeroClient Attacker;
-            public AIHeroClient Target;
+            public Obj_AI_Base Attacker;
+            public Obj_AI_Base Target;
             public float LastAttackSent;
 
-            public LastAttack(AIHeroClient from, AIHeroClient target)
+            public LastAttack(Obj_AI_Base from, Obj_AI_Base target)
             {
                 this.Attacker = from;
                 this.Target = target;
@@ -293,9 +293,17 @@ namespace AramBuddy.MainCore.Utility
         /// <summary>
         ///     Returns True if the target is attacking a player.
         /// </summary>
-        public static bool IsAttackPlayer(this AIHeroClient target)
+        public static bool IsAttackPlayer(this Obj_AI_Base target)
         {
             return AutoAttacks.FirstOrDefault(a => a.Attacker.NetworkId.Equals(target.NetworkId) && 300 + (a.Attacker.AttackCastDelay * 1000) + (a.Attacker.AttackDelay * 1000) > Core.GameTickCount - a.LastAttackSent) != null;
+        }
+
+        /// <summary>
+        ///     Returns the last GameTickCount for the Attack.
+        /// </summary>
+        public static float? LastPlayerAttack(this Obj_AI_Base target)
+        {
+            return AutoAttacks.FirstOrDefault(a => a.Attacker.NetworkId.Equals(target.NetworkId) && 300 + (a.Attacker.AttackCastDelay * 1000) + (a.Attacker.AttackDelay * 1000) > Core.GameTickCount - a.LastAttackSent)?.LastAttackSent;
         }
 
         /// <summary>

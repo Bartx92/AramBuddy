@@ -28,7 +28,8 @@ namespace AramBuddy.KappaEvade
 
         public static bool IsInDanger(this Obj_AI_Base target, ActiveSpells spell)
         {
-            return spell.ToPolygon().IsInside(target);
+            var HitBox = new Geometry.Polygon.Circle(target.ServerPosition, target.BoundingRadius + 10);
+            return HitBox.Points.Any(p => spell.ToPolygon().IsInside(p));
         }
 
         public static Geometry.Polygon.Sector CreateCone(Vector3 Center, Vector3 Direction, float Angle, float Range)

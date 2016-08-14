@@ -90,7 +90,7 @@ namespace AramBuddy
             try
             {
                 if (MenuIni["quit"].Cast<CheckBox>().CurrentValue)
-                    Core.DelayAction(() => Game.QuitGame(), 15000 + Game.Ping);
+                    Core.DelayAction(() => Game.QuitGame(), 20000 + Game.Ping);
             }
             catch (Exception ex)
             {
@@ -102,16 +102,16 @@ namespace AramBuddy
         {
             try
             {
-                if (Orbwalker.MovementDelay < 250)
+                if (Orbwalker.MovementDelay < 200)
                 {
-                    Orbwalker.MovementDelay = 250 + Game.Ping;
+                    Orbwalker.MovementDelay = 200 + Game.Ping;
                 }
 
                 MenuIni = MainMenu.AddMenu("AramBuddy", "AramBuddy");
                 SpellsMenu = MenuIni.AddSubMenu("Spells");
                 MenuIni.AddGroupLabel("AramBuddy Settings");
                 MenuIni.Add("debug", new CheckBox("Enable Debugging Mode"));
-                var enableactivator = MenuIni.Add("activator", new CheckBox("Enable Built-In Activator", false));
+                var enableactivator = MenuIni.Add("activator", new CheckBox("Enable Built-In Activator"));
                 MenuIni.Add("DisableSpells", new CheckBox("Disable Built-in Casting Logic", false));
                 MenuIni.Add("quit", new CheckBox("Quit On Game End"));
                 MenuIni.Add("Safe", new Slider("Safe Slider (Recommended 1250)", 1250, 0, 2500));

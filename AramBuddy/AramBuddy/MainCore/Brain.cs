@@ -88,9 +88,20 @@ namespace AramBuddy.MainCore
         /// </summary>
         public static void Obj_AI_Base_OnBasicAttack(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (sender is Obj_AI_Turret && args.Target.IsMe)
+            var turret = sender as Obj_AI_Turret;
+            if (turret != null)
             {
-                LastTurretAttack = Core.GameTickCount;
+                if (args.Target.IsMe)
+                {
+                    LastTurretAttack = Core.GameTickCount;
+                }
+                
+                var target = args.Target as AIHeroClient;
+                if (target != null && target.IsAlly && !target.IsMe)
+                {
+                    var lastAttack = new Misc.LastAttack(turret, target) { Attacker = turret, LastAttackSent = Core.GameTickCount, Target = target };
+                    Misc.AutoAttacks.Add(lastAttack);
+                }
             }
         }
 

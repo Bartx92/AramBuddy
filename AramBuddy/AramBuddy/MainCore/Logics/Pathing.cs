@@ -357,7 +357,7 @@ namespace AramBuddy.MainCore.Logics
         public static void MoveTo(Vector3 pos)
         {
             // This to prevent the bot from spamming unnecessary movements.
-            if (!Player.Instance.Path.LastOrDefault().IsInRange(pos, 70) && !Player.Instance.IsInRange(pos, 70) && Core.GameTickCount - lastmove >= new Random().Next(475 + Game.Ping, 1000 + Game.Ping))
+            if (!Player.Instance.Path.LastOrDefault().IsInRange(pos, 50) && !Player.Instance.IsInRange(pos, 50) && Core.GameTickCount - lastmove >= new Random().Next(450 + Game.Ping, 900 + Game.Ping))
             {
                 // This to prevent diving.
                 if (pos.UnderEnemyTurret() && !SafeToDive)
