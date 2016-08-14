@@ -180,12 +180,9 @@ namespace AramBuddy.MainCore.Utility
         /// <summary>
         ///     Distance To Keep from an Object and still be able to attack.
         /// </summary>
-        public static float KiteDistance
+        public static float KiteDistance(GameObject target)
         {
-            get
-            {
-                return Player.Instance.GetAutoAttackRange() - Player.Instance.GetAutoAttackRange() * 0.15f;
-            }
+            return (Player.Instance.GetAutoAttackRange() + target.BoundingRadius) - Player.Instance.GetAutoAttackRange() * 0.25f;
         }
 
         /// <summary>

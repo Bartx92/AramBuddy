@@ -123,7 +123,7 @@ namespace AramBuddy.AutoShop
 
                     // and set up event listeners
                     SetUpEventListeners();
-                    if (Player.Instance.IsInShopRange())
+                    if (Player.Instance.IsInShopRange() || Player.Instance.IsDead)
                     {
                         Buy.BuyNextItem(CurrentChampionBuild);
                     }

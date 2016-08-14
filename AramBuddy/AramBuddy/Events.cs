@@ -51,7 +51,6 @@ namespace AramBuddy
         static Events()
         {
             // Invoke the OnGameEnd event
-
             #region OnGameEnd
 
             // Variable used to make sure that the event invoke isn't spammed and is only called once

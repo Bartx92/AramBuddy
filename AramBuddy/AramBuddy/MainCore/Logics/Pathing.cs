@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using AramBuddy.MainCore.Logics.Casting;
 using AramBuddy.MainCore.Utility;
 using EloBuddy;
 using EloBuddy.SDK;
@@ -155,14 +156,14 @@ namespace AramBuddy.MainCore.Logics
                 if (ObjectsManager.NearestAlly != null)
                 {
                     Program.Moveto = "NearestEnemyToNearestAlly";
-                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.NearestAlly.PredictPosition(), KiteDistance).To3D();
+                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.NearestAlly.PredictPosition(), KiteDistance(ObjectsManager.NearestEnemy)).To3D();
                     return;
                 }
                 // if there is a TeamFight move from NearestEnemy to AllySpawn.
                 if (ObjectsManager.AllySpawn != null)
                 {
                     Program.Moveto = "NearestEnemyToAllySpawn";
-                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.AllySpawn.Position, KiteDistance).To3D();
+                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.AllySpawn.Position, KiteDistance(ObjectsManager.NearestEnemy)).To3D();
                     return;
                 }
             }
@@ -236,14 +237,14 @@ namespace AramBuddy.MainCore.Logics
                 if (ObjectsManager.NearestAlly != null)
                 {
                     Program.Moveto = "NearestEnemyToNearestAlly";
-                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.NearestAlly.PredictPosition(), KiteDistance).To3D();
+                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.NearestAlly.PredictPosition(), KiteDistance(ObjectsManager.NearestEnemy)).To3D();
                     return;
                 }
                 // if there is a TeamFight move from NearestEnemy to AllySpawn.
                 if (ObjectsManager.AllySpawn != null)
                 {
                     Program.Moveto = "NearestEnemyToAllySpawn";
-                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.AllySpawn.Position, KiteDistance).To3D();
+                    Position = ObjectsManager.NearestEnemy.PredictPosition().Extend(ObjectsManager.AllySpawn.Position, KiteDistance(ObjectsManager.NearestEnemy)).To3D();
                     return;
                 }
             }
@@ -265,6 +266,7 @@ namespace AramBuddy.MainCore.Logics
                 {
                     extendto = ObjectsManager.NearestAlly.Position;
                 }
+                var extendtopos = ObjectsManager.NearestEnemyObject.Position.Extend(extendto, KiteDistance(ObjectsManager.NearestEnemyObject)).To3D();
                 if (ObjectsManager.EnemyTurret != null)
                 {
                     var rect = new Geometry.Polygon.Rectangle(Player.Instance.ServerPosition, ObjectsManager.NearestEnemyObject.Position, 500);
@@ -276,14 +278,14 @@ namespace AramBuddy.MainCore.Logics
                             if (SafeToDive)
                             {
                                 Program.Moveto = "NearestEnemyObject";
-                                Position = ObjectsManager.NearestEnemyObject.Position.Extend(extendto, KiteDistance).To3D();
+                                Position = extendtopos;
                                 return;
                             }
                         }
                         else
                         {
                             Program.Moveto = "NearestEnemyObject2";
-                            Position = ObjectsManager.NearestEnemyObject.Position.Extend(extendto, KiteDistance).To3D();
+                            Position = extendtopos;
                             return;
                         }
                     }
@@ -291,7 +293,7 @@ namespace AramBuddy.MainCore.Logics
                 else
                 {
                     Program.Moveto = "NearestEnemyObject3";
-                    Position = ObjectsManager.NearestEnemyObject.Position.Extend(extendto, KiteDistance).To3D();
+                    Position = extendtopos;
                     return;
                 }
             }

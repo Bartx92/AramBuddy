@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using AramBuddy.AutoShop;
-using AramBuddy.Champions;
 using AramBuddy.MainCore;
 using AramBuddy.MainCore.Logics;
 using AramBuddy.MainCore.Utility;
+using AramBuddy.Plugins.Champions;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Events;
@@ -52,7 +52,7 @@ namespace AramBuddy
             {
                 if (msg.Input.Equals("Load Custom", StringComparison.CurrentCultureIgnoreCase) && !CustomChamp)
                 {
-                    var Instance = (Base)Activator.CreateInstance(null, "AramBuddy.Champions." + Player.Instance.Hero + "." + Player.Instance.Hero).Unwrap();
+                    var Instance = (Base)Activator.CreateInstance(null, "AramBuddy.Plugins.Champions." + Player.Instance.Hero + "." + Player.Instance.Hero).Unwrap();
                     CustomChamp = true;
                     msg.Process = false;
                     Logger.Send("Loaded Custom Champion " + Player.Instance.Hero, Logger.LogLevel.Info);

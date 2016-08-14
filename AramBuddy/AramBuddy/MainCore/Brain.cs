@@ -2,6 +2,7 @@
 using System.Linq;
 using AramBuddy.GenesisSpellDatabase;
 using AramBuddy.MainCore.Logics;
+using AramBuddy.MainCore.Logics.Casting;
 using AramBuddy.MainCore.Utility;
 using EloBuddy;
 using EloBuddy.SDK;
@@ -24,14 +25,19 @@ namespace AramBuddy.MainCore
                 SpellManager.Initialize();
                 SpellLibrary.Initialize();
 
+                // Initialize ObjectsManager.
                 ObjectsManager.Init();
 
                 SpecialChamps.Init();
+
                 // Overrides Orbwalker Movements
                 Orbwalker.OverrideOrbwalkPosition = OverrideOrbwalkPosition;
 
                 // Initialize AutoLvlup.
                 LvlupSpells.Init();
+
+                // Initialize TeamFights Detector.
+                TeamFightsDetection.Init();
 
                 Obj_AI_Base.OnBasicAttack += Obj_AI_Base_OnBasicAttack;
                 Gapcloser.OnGapcloser += SpellsCasting.GapcloserOnOnGapcloser;
@@ -78,21 +84,13 @@ namespace AramBuddy.MainCore
         public static float LastTurretAttack;
 
         /// <summary>
-        ///     Checks Turret Attacks.
+        ///     Checks Turret Attacks And saves Heros AutoAttacks.
         /// </summary>
         public static void Obj_AI_Base_OnBasicAttack(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (sender is Obj_AI_Turret && args.Target.IsMe)
             {
                 LastTurretAttack = Core.GameTickCount;
-            }
-
-            var from = sender as AIHeroClient;
-            var target = args.Target as AIHeroClient;
-            if (from != null && target != null)
-            {
-                var lastAttack = new Misc.LastAttack(from, target) { Attacker = from, LastAttackSent = Core.GameTickCount, Target = target };
-                Misc.AutoAttacks.Add(lastAttack);
             }
         }
 
