@@ -166,7 +166,7 @@ namespace AramBuddy
         {
             try
             {
-                if (!EnableActivator) return;
+                if (!EnableDebug) return;
 
                 Drawing.DrawText(
                     Drawing.Width * 0.01f,
