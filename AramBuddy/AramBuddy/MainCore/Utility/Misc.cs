@@ -29,18 +29,18 @@ namespace AramBuddy.MainCore.Utility
         /// </summary>
         public static float TeamTotal(Vector3 Position, bool Enemy = false)
         {
-            float enemyteamTotal = EntityManager.Turrets.Enemies.Where(t => !t.IsDead && t.Health > 0 && t.CountEnemiesInRange(t.GetAutoAttackRange()) > 1).Sum(turret => turret.Health);
-            float allyteamTotal = EntityManager.Turrets.Allies.Where(t => !t.IsDead && t.Health > 0 && t.CountAlliesInRange(t.GetAutoAttackRange()) > 1 && t.Distance(Player.Instance) <= 1000).Sum(turret => turret.Health);
+            float enemyteamTotal = EntityManager.Turrets.Enemies.Where(t => !t.IsDead && t.Health > 0 && t.CountEnemiesInRange(t.GetAutoAttackRange()) > 1).Sum(turret => turret.Health + turret.TotalAttackDamage);
+            float allyteamTotal = EntityManager.Turrets.Allies.Where(t => !t.IsDead && t.Health > 0 && t.CountAlliesInRange(t.GetAutoAttackRange()) > 1 && t.Distance(Player.Instance) <= 1000).Sum(turret => turret.Health + turret.TotalAttackDamage);
 
-            enemyteamTotal += EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => !m.IsDead && m.Health > 0 && m.IsValidTarget() && m.CountEnemiesInRange(700) > 1).Sum(minion => (minion.Health * 0.35f) + minion.Armor + minion.SpellBlock + minion.TotalMagicalDamage + minion.TotalAttackDamage);
-            allyteamTotal += EntityManager.MinionsAndMonsters.AlliedMinions.Where(m => !m.IsDead && m.Health > 0 && m.IsValidTarget() && m.CountAlliesInRange(700) > 1).Sum(minion => (minion.Health * 0.35f) + minion.Armor + minion.SpellBlock + minion.TotalMagicalDamage + minion.TotalAttackDamage);
+            enemyteamTotal += EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => !m.IsDead && m.Health > 0 && m.IsValidTarget() && m.CountEnemiesInRange(700) > 1).Sum(minion => (minion.Health * 0.30f) + minion.Armor + minion.SpellBlock + minion.TotalMagicalDamage + minion.TotalAttackDamage);
+            allyteamTotal += EntityManager.MinionsAndMonsters.AlliedMinions.Where(m => !m.IsDead && m.Health > 0 && m.IsValidTarget() && m.CountAlliesInRange(700) > 1).Sum(minion => (minion.Health * 0.30f) + minion.Armor + minion.SpellBlock + minion.TotalMagicalDamage + minion.TotalAttackDamage);
             
             enemyteamTotal +=
                 EntityManager.Heroes.Enemies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, SafeValue))
-                    .Sum(enemy => enemy.Health + enemy.Mana + enemy.Armor + enemy.SpellBlock + enemy.TotalMagicalDamage + enemy.TotalAttackDamage);
+                    .Sum(enemy => enemy.Health + (enemy.Mana * 0.25f) + enemy.Armor + enemy.SpellBlock + enemy.TotalMagicalDamage + enemy.TotalAttackDamage);
             allyteamTotal +=
                 EntityManager.Heroes.Allies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, SafeValue))
-                    .Sum(ally => ally.Health + ally.Mana + ally.Armor + ally.SpellBlock + ally.TotalMagicalDamage + ally.TotalAttackDamage);
+                    .Sum(ally => ally.Health + (ally.Mana * 0.25f) + ally.Armor + ally.SpellBlock + ally.TotalMagicalDamage + ally.TotalAttackDamage);
             
             enemyteamTotal += TeamDamage(Position, true);
             allyteamTotal += TeamDamage(Position);

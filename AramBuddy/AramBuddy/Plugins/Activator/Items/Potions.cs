@@ -22,8 +22,12 @@ namespace AramBuddy.Plugins.Activator.Items
             try
             {
                 PotionsMenu = Load.MenuIni.AddSubMenu("Potions");
-                Pots.ForEach(p => PotionsMenu.CreateCheckBox(p.Id.ToString(), "Use " + p.Id));
-                Pots.ForEach(p => PotionsMenu.CreateSlider(p.Id + "hp", p.Id + " Health% {0}", 60));
+                Pots.ForEach(
+                    p =>
+                        {
+                            PotionsMenu.CreateCheckBox(p.Id.ToString(), "Use " + p.Id);
+                            PotionsMenu.CreateSlider(p.Id + "hp", p.Id + " Health% {0}", 60);
+                        });
                 Game.OnTick += Game_OnTick;
             }
             catch (Exception ex)

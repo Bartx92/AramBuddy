@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
-
+using static AramBuddy.Config;
 namespace AramBuddy.MainCore.Utility
 {
     internal class ObjectsManager
@@ -124,10 +124,10 @@ namespace AramBuddy.MainCore.Utility
         ///     Special Traps Names.
         /// </summary>
         public static List<string> SpecialTrapsNames = new List<string>
-                                                           {
-                                                               "Fizz_Base_R_OrbitFish.troy", "Gragas_Base_Q_Enemy", "Lux_Base_E_tar_aoe_green.troy", "Soraka_Base_E_rune.troy", "Ziggs_Base_W_aoe_green.troy",
-                                                               "Viktor_Catalyst_green.troy", "Viktor_base_W_AUG_green.troy", "Barrel"
-                                                           };
+        {
+            "Fizz_Base_R_OrbitFish.troy", "Gragas_Base_Q_Enemy", "Lux_Base_E_tar_aoe_green.troy", "Soraka_Base_E_rune.troy", "Ziggs_Base_W_aoe_green.troy",
+            "Viktor_Catalyst_green.troy", "Viktor_base_W_AUG_green.troy", "Barrel"
+        };
 
         /// <summary>
         ///     BardChimes list.
@@ -159,7 +159,7 @@ namespace AramBuddy.MainCore.Utility
             {
                 return
                     HealthRelics.OrderBy(e => e.Distance(Player.Instance))
-                        .FirstOrDefault(e => e.IsValid && ((e.Distance(Player.Instance) < 2000 && e.CountEnemiesInRange(1000) < 1) || (e.Distance(Player.Instance) <= 500)));
+                        .FirstOrDefault(e => e.IsValid && ((e.Distance(Player.Instance) < 3000 && e.CountEnemiesInRange(SafeValue) < 1) || (e.Distance(Player.Instance) <= 500)));
             }
         }
 
@@ -175,7 +175,7 @@ namespace AramBuddy.MainCore.Utility
                         .FirstOrDefault(
                             l =>
                             l.IsValid && !l.IsDead && Player.Instance.Hero != Champion.Thresh
-                            && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 500 || l.CountEnemiesInRange(1000) < 1) && l.IsAlly && l.Name.Equals("ThreshLantern"));
+                            && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 500 || l.CountEnemiesInRange(SafeValue) < 1) && l.IsAlly && l.Name.Equals("ThreshLantern"));
             }
         }
 
@@ -191,7 +191,7 @@ namespace AramBuddy.MainCore.Utility
                         .FirstOrDefault(
                             l =>
                             l.IsValid && !l.IsDead && Player.Instance.Hero == Champion.Bard && (!l.Position.UnderEnemyTurret() || l.Position.UnderEnemyTurret() && Misc.SafeToDive) && l.IsAlly
-                            && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 600 || l.CountEnemiesInRange(1000) < 1));
+                            && (l.CountEnemiesInRange(1000) > 0 && Player.Instance.Distance(l) < 600 || l.CountEnemiesInRange(SafeValue) < 1));
             }
         }
 
@@ -246,7 +246,7 @@ namespace AramBuddy.MainCore.Utility
                         .ThenByDescending(a => a.Distance(AllyNexues))
                         .Where(
                             a => !a.Added() &&
-                            a.IsValidTarget() && ((a.IsUnderEnemyturret() && Misc.SafeToDive) || !a.IsUnderEnemyturret()) && a.CountAlliesInRange(1300) > 1 && a.HealthPercent > 10
+                            a.IsValidTarget() && ((a.IsUnderEnemyturret() && Misc.SafeToDive) || !a.IsUnderEnemyturret()) && a.CountAlliesInRange(SafeValue) > 1 && a.HealthPercent > 10
                             && !a.IsInShopRange() && !a.IsDead && !a.IsZombie && !a.IsMe
                             && (a.Spellbook.IsCharging || a.Spellbook.IsChanneling || a.Spellbook.IsAutoAttacking || a.IsAttackPlayer() || a.Spellbook.IsCastingSpell
                                 || a.Path.LastOrDefault().Distance(a) > 50 || EntityManager.Heroes.Enemies.Any(e => e.IsValidTarget() && e.IsInRange(a, Player.Instance.GetAutoAttackRange()))));
@@ -282,7 +282,7 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return BestAlliesToFollow.OrderBy(a => a.Distance(Player.Instance)).FirstOrDefault(a => Misc.TeamTotal(a.PredictPosition()) - Misc.TeamTotal(a.PredictPosition(), true) > 0 && Player.Instance.HealthPercent >= a.HealthPercent);
+                return BestAlliesToFollow.OrderBy(a => a.Distance(Player.Instance)).FirstOrDefault(a => Misc.TeamTotal(a.PredictPosition()) - Misc.TeamTotal(a.PredictPosition(), true) > 0 && Player.Instance.Health >= a.Health);
             }
         }
 
@@ -295,7 +295,7 @@ namespace AramBuddy.MainCore.Utility
             {
                 return
                     BestAlliesToFollow.OrderByDescending(a => Misc.TeamTotal(a.PredictPosition()) - Misc.TeamTotal(a.PredictPosition(), true))
-                        .FirstOrDefault(a => a.CountAlliesInRange(1000) > a.CountEnemiesInRange(1000));
+                        .FirstOrDefault(a => a.CountAlliesInRange(SafeValue) > a.CountEnemiesInRange(SafeValue) && a.Health >= Player.Instance.Health);
             }
         }
 
@@ -310,7 +310,7 @@ namespace AramBuddy.MainCore.Utility
                     EntityManager.MinionsAndMonsters.AlliedMinions.OrderByDescending(a => a.Distance(AllyNexues))
                         .FirstOrDefault(
                             m =>
-                            m.CountAlliesInRange(1300) - m.CountEnemiesInRange(1250) >= 0 && ((m.IsUnderEnemyturret() && Misc.SafeToDive) || !m.IsUnderEnemyturret()) && m.IsValidTarget(2500)
+                            m.CountAlliesInRange(SafeValue) - m.CountEnemiesInRange(SafeValue) >= 0 && ((m.IsUnderEnemyturret() && Misc.SafeToDive) || !m.IsUnderEnemyturret()) && m.IsValidTarget(2500)
                             && m.IsValid && m.IsHPBarRendered && !m.IsDead && !m.IsZombie && m.HealthPercent > 25
                             && Misc.TeamTotal(m.PredictPosition()) - Misc.TeamTotal(m.PredictPosition(), true) >= 0);
             }
@@ -327,7 +327,7 @@ namespace AramBuddy.MainCore.Utility
                     EntityManager.MinionsAndMonsters.AlliedMinions.OrderBy(a => a.Distance(Player.Instance))
                         .FirstOrDefault(
                             m =>
-                            m.CountAlliesInRange(1300) - m.CountEnemiesInRange(1250) >= 0 && ((m.IsUnderEnemyturret() && Misc.SafeToDive) || !m.IsUnderEnemyturret()) && m.IsValidTarget(2500)
+                            m.CountAlliesInRange(SafeValue) - m.CountEnemiesInRange(SafeValue) >= 0 && ((m.IsUnderEnemyturret() && Misc.SafeToDive) || !m.IsUnderEnemyturret()) && m.IsValidTarget(2500)
                             && m.IsValid && m.IsHPBarRendered && !m.IsDead && !m.IsZombie && m.HealthPercent > 25
                             && Misc.TeamTotal(m.PredictPosition()) - Misc.TeamTotal(m.PredictPosition(), true) >= 0);
             }

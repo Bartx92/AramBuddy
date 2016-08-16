@@ -4,6 +4,7 @@ using AramBuddy.KappaEvade;
 using AramBuddy.MainCore.Utility;
 using EloBuddy;
 using EloBuddy.SDK;
+using EloBuddy.SDK.Constants;
 using EloBuddy.SDK.Events;
 
 namespace AramBuddy
@@ -125,6 +126,16 @@ namespace AramBuddy
                     if (minion != null)
                         OnIncomingDamage?.Invoke(new InComingDamageEventArgs(minion, target, minion.GetAutoAttackDamage(target), InComingDamageEventArgs.Type.MinionAttack));
                 };
+            Obj_AI_Base.OnProcessSpellCast += delegate (Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+            {
+                var caster = sender as AIHeroClient;
+                var target = args.Target as AIHeroClient;
+                if (caster == null || target == null || !caster.IsEnemy || !target.IsAlly || args.IsAutoAttack()) return;
+                if (!Database.TargetedSpells.TargetedSpellsList.Any(s => s.hero == caster.Hero && s.slot == args.Slot))
+                {
+                    OnIncomingDamage?.Invoke(new InComingDamageEventArgs(caster, target, caster.GetSpellDamage(target, args.Slot), InComingDamageEventArgs.Type.TargetedSpell));
+                }
+            };
             #endregion
 
             // Invoke the OnGameStart event

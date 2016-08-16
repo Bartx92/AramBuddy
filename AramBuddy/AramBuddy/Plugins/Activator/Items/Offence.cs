@@ -26,8 +26,12 @@ namespace AramBuddy.Plugins.Activator.Items
                 Offen = Load.MenuIni.AddSubMenu("Offence Items");
                 DmgItems.ForEach(i => Offen.CreateCheckBox(i.Id.ToString(), "Use " + i.Id));
                 AAItems.ForEach(i => Offen.CreateCheckBox(i.Id.ToString(), "Use " + i.Id));
-                HPItems.ForEach(i => Offen.CreateCheckBox(i.Id.ToString(), "Use " + i.Id));
-                HPItems.ForEach(i => Offen.CreateSlider(i.Id + "hp", i.Id + " Use on Health% {0}", 70));
+                HPItems.ForEach(
+                    i =>
+                        {
+                            Offen.CreateCheckBox(i.Id.ToString(), "Use " + i.Id);
+                            Offen.CreateSlider(i.Id + "hp", i.Id + " Use on Health% {0}", 70);
+                        });
                 Orbwalker.OnPostAttack += Orbwalker_OnPostAttack;
                 Game.OnTick += Game_OnTick;
             }

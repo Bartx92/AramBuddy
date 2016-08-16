@@ -119,17 +119,17 @@ namespace AramBuddy.MainCore.Utility
     ///     Maxing Q Champions.
     /// </summary>
     private static readonly List<string> MaxQChampions = new List<string>
-                                                                 {
-                                                                     "Ahri", "Akali", "Alistar", "Amumu", "Annie", "Ashe", "Azir", "Blitzcrank", "Bard", "Braum", "Caitlyn", "Cassiopeia", "ChoGath",
-                                                                     "Corki", "Darius", "Diana", "DrMundo", "Draven", "Elise", "Ekko", "Evelynn", "Ezreal", "Fiora", "Fizz", "Galio", "Gangplank", "Gnar",
-                                                                     "Gragas", "Hecarim", "Heimerdinger", "Illaoi", "Irelia", "Janna", "JarvanIV", "Jax", "Jayce", "Jhin", "Jinx", "Karma", "Karthus",
-                                                                     "Kassadin", "Katarina", "Kennen", "KhaZix", "Kindred", "Kled", "Leblanc", "LeeSin", "Leona", "Lissandra", "Lucian", "Lulu", "Malphite",
-                                                                     "Malzahar", "MasterYi", "MissFortune", "Morgana", "Nami", "Nautilus", "Nidalee", "Nocturne", "Olaf", "Orianna", "Pantheon", "Poppy",
-                                                                     "Quinn", "Rammus", "RekSai", "Renekton", "Rengar", "Riven", "Rumble", "Sejuani", "Shen", "Singed", "Sion", "Sivir", "Skarner",
-                                                                     "Sona", "Soraka", "Swain", "Syndra", "TahmKench", "Taliyah", "Taric", "Teemo", "Thresh", "Tristana", "Trundle", "Tryndamere",
-                                                                     "TwistedFate", "Udyr", "Urgot", "Varus", "Veigar", "Vi", "Vladimir", "VelKoz", "Warwick", "MonkeyKing", "Xerath", "XinZhao", "Yasuo",
-                                                                     "Yorick", "Zac", "Zed", "Ziggs", "Zilean", "Zyra"
-                                                                 };
+        {
+            "Ahri", "Akali", "Alistar", "Amumu", "Annie", "Ashe", "Azir", "Blitzcrank", "Bard", "Braum", "Caitlyn", "Cassiopeia", "ChoGath",
+            "Corki", "Darius", "Diana", "DrMundo", "Draven", "Elise", "Ekko", "Evelynn", "Ezreal", "Fiora", "Fizz", "Galio", "Gangplank", "Gnar",
+            "Gragas", "Hecarim", "Heimerdinger", "Illaoi", "Irelia", "Janna", "JarvanIV", "Jax", "Jayce", "Jhin", "Jinx", "Karma", "Karthus",
+            "Kassadin", "Katarina", "Kennen", "KhaZix", "Kindred", "Kled", "Leblanc", "LeeSin", "Leona", "Lissandra", "Lucian", "Lulu", "Malphite",
+            "Malzahar", "MasterYi", "MissFortune", "Morgana", "Nami", "Nautilus", "Nidalee", "Nocturne", "Olaf", "Orianna", "Pantheon", "Poppy",
+            "Quinn", "Rammus", "RekSai", "Renekton", "Rengar", "Riven", "Rumble", "Sejuani", "Shen", "Singed", "Sion", "Sivir", "Skarner",
+            "Sona", "Soraka", "Swain", "Syndra", "TahmKench", "Taliyah", "Taric", "Teemo", "Thresh", "Tristana", "Trundle", "Tryndamere",
+            "TwistedFate", "Udyr", "Urgot", "Varus", "Veigar", "Vi", "Vladimir", "VelKoz", "Warwick", "MonkeyKing", "Xerath", "XinZhao", "Yasuo",
+            "Yorick", "Zac", "Zed", "Ziggs", "Zilean", "Zyra"
+        };
 
         /// <summary>
         ///     Maxing W Champions.
@@ -140,9 +140,9 @@ namespace AramBuddy.MainCore.Utility
         ///     Maxing E Champions.
         /// </summary>
         private static readonly List<string> MaxEChampions = new List<string>
-                                                                 {
-                                                                     "Aatrox", "Anivia", "Cassiopeia", "Fiddlesticks", "Garen", "Kalista", "Kayle", "Lux", "Maokai", "Mordekaiser", "Nasus", "Nunu",
-                                                                     "Shaco", "Shyvana", "Twitch", "Viktor"
-                                                                 };
+        {
+            "Aatrox", "Anivia", "Cassiopeia", "Fiddlesticks", "Garen", "Kalista", "Kayle", "Lux", "Maokai", "Mordekaiser", "Nasus", "Nunu",
+            "Shaco", "Shyvana", "Twitch", "Viktor"
+        };
     }
 }
