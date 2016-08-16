@@ -1,8 +1,10 @@
 ﻿#region
 
 using System;
+using AramBuddy.AutoShop.Sequences;
 using AramBuddy.MainCore.Utility;
 using EloBuddy;
+using EloBuddy.SDK;
 
 #endregion
 
@@ -78,7 +80,10 @@ namespace AramBuddy.AutoShop
             try
             {
                 // When the game loads the first time, invoke the event
-                Game.OnLoad += delegate { OnBuyAllow(EventArgs.Empty); };
+                Game.OnLoad += delegate
+                    {
+                        OnBuyAllow(EventArgs.Empty);
+                    };                        
 
                 // When the player dies, invoke the event
                 //OnPlayerDeath += delegate { OnBuyAllow(EventArgs.Empty); };
@@ -88,9 +93,17 @@ namespace AramBuddy.AutoShop
                     {
                         if (sender.IsMe && args.Buff.DisplayName.Equals("aramshopdisableplayer", StringComparison.CurrentCultureIgnoreCase))
                         {
+                            Buy.CanShop = true;
                             OnBuyAllow(EventArgs.Empty);
                         }
                     };
+                Obj_AI_Base.OnBuffGain += delegate(Obj_AI_Base sender, Obj_AI_BaseBuffGainEventArgs args)
+                {
+                    if (sender.IsMe && args.Buff.DisplayName.Equals("aramshopdisableplayer", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        Buy.CanShop = false;
+                    }
+                };
             }
             catch (NullReferenceException ex)
             {

@@ -12,38 +12,30 @@ namespace AramBuddy.Plugins.Activator.Cleanse
 {
     internal class Qss
     {
-        private static List<Item> SelfQss = new List<Item>
-        {
-            Quicksilver_Sash, Mercurial_Scimitar
-        };
+        private static readonly List<Item> SelfQss = new List<Item> { Quicksilver_Sash, Mercurial_Scimitar };
 
-        private static List<Item> AllyQss = new List<Item>
-        {
-            Mikaels
-        };
+        private static readonly List<Item> AllyQss = new List<Item> { Mikaels };
 
-        private static List<BuffType> BuffsToQss = new List<BuffType>
+        private static readonly List<BuffType> BuffsToQss = new List<BuffType>
         {
-            BuffType.Blind, BuffType.Charm, BuffType.Fear, BuffType.Flee,
-            BuffType.Knockback, BuffType.Knockup, BuffType.NearSight,
-            BuffType.Poison, BuffType.Polymorph, BuffType.Sleep,
-            BuffType.Slow, BuffType.Snare, BuffType.Silence,
-            BuffType.Stun, BuffType.Suppression, BuffType.Taunt
+            BuffType.Blind, BuffType.Charm, BuffType.Fear, BuffType.Flee, BuffType.Knockback, BuffType.Knockup, BuffType.NearSight,
+            BuffType.Poison, BuffType.Polymorph, BuffType.Sleep, BuffType.Slow, BuffType.Snare, BuffType.Silence, BuffType.Stun,
+            BuffType.Suppression, BuffType.Taunt
         };
 
         private class SaveBuffs
         {
-            public AIHeroClient Owner;
-            public BuffType buff;
+            public readonly AIHeroClient Owner;
+            public readonly BuffType buff;
 
             public SaveBuffs(AIHeroClient owner, BuffType type)
             {
-                Owner = owner;
-                buff = type;
+                this.Owner = owner;
+                this.buff = type;
             }
         }
 
-        private static List<SaveBuffs> SavedBuffs = new List<SaveBuffs>();
+        private static readonly List<SaveBuffs> SavedBuffs = new List<SaveBuffs>();
 
         private static Menu Clean;
 
@@ -124,7 +116,8 @@ namespace AramBuddy.Plugins.Activator.Cleanse
             try
             {
                 var caster = sender as AIHeroClient;
-                if (caster == null || !caster.IsAlly || !BuffsToQss.Contains(args.Buff.Type)) return;
+                if (caster == null || !caster.IsAlly || !BuffsToQss.Contains(args.Buff.Type))
+                    return;
                 SavedBuffs.Remove(new SaveBuffs(caster, args.Buff.Type));
             }
             catch (Exception ex)
@@ -138,7 +131,8 @@ namespace AramBuddy.Plugins.Activator.Cleanse
             try
             {
                 var caster = sender as AIHeroClient;
-                if (caster == null || !caster.IsAlly || !BuffsToQss.Contains(args.Buff.Type)) return;
+                if (caster == null || !caster.IsAlly || !BuffsToQss.Contains(args.Buff.Type))
+                    return;
                 SavedBuffs.Add(new SaveBuffs(caster, args.Buff.Type));
             }
             catch (Exception ex)

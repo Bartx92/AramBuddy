@@ -13,8 +13,10 @@ namespace AramBuddy.AutoShop.Sequences
 {
     internal class Buy
     {
-        // Saves the value of the bought item so it doesn't try to buy things it cant buy.
-        public static int TempValue;
+        /// <summary>
+        ///     Returns True if you can buy items from the shop
+        /// </summary>
+        public static bool CanShop;
 
         /// <summary>
         ///     Attempts to buy the next item, and continues to buy next items until
@@ -44,11 +46,10 @@ namespace AramBuddy.AutoShop.Sequences
                 var currentprice = theitem.ItemInfo.Gold.Base + ia;
 
                 // Check if we can buy the item
-                if ((item.Value != null) && (item.Key != null) && (item.Key != ItemId.Unknown) && item.Value.ValidForPlayer && item.Value.InStore && item.Value.Gold.Purchasable
-                    && item.Value.AvailableForMap && (Player.Instance.Gold - TempValue >= currentprice))
+                if ((item.Value != null) && CanShop && (item.Key != null) && (item.Key != ItemId.Unknown) && item.Value.ValidForPlayer && item.Value.InStore && item.Value.Gold.Purchasable
+                    && item.Value.AvailableForMap && (Player.Instance.Gold >= currentprice))
                 {
                     // Buy the actual item from the shop
-                    TempValue += currentprice;
                     Shop.BuyItem(item.Key);
 
                     // Increment the static item index

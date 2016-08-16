@@ -10,6 +10,7 @@ namespace AramBuddy.Plugins.Activator.Items
     internal class Defence
     {
         private static Menu Def;
+
         public static void Init()
         {
             try
@@ -39,7 +40,8 @@ namespace AramBuddy.Plugins.Activator.Items
         {
             try
             {
-                if (Randuins.ItemReady(Def) && Def.CompareSlider(Randuins.Id + "hp", Player.Instance.HealthPercent) && Player.Instance.CountEnemiesInRange(Randuins.Range) > 0 && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo))
+                if (Randuins.ItemReady(Def) && Def.CompareSlider(Randuins.Id + "hp", Player.Instance.HealthPercent) && Player.Instance.CountEnemiesInRange(Randuins.Range) > 0
+                    && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo))
                 {
                     Randuins.Cast();
                 }
@@ -54,8 +56,9 @@ namespace AramBuddy.Plugins.Activator.Items
         {
             try
             {
-                if (args.Target == null || !args.Target.IsKillable()) return;
-                
+                if (args.Target == null || !args.Target.IsKillable())
+                    return;
+
                 if (args.Target.IsAlly && !args.Target.IsMe && Def.CheckBoxValue("ally"))
                 {
                     if (Solari.ItemReady(Def) && Solari.IsInRange(args.Target) && Def.CompareSlider(Solari.Id + "hp", args.Target.HealthPercent))

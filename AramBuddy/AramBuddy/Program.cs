@@ -1,6 +1,6 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
-using AramBuddy.AutoShop;
 using AramBuddy.MainCore;
 using AramBuddy.MainCore.Logics;
 using AramBuddy.MainCore.Utility;
@@ -49,7 +49,12 @@ namespace AramBuddy
                 CheckVersion.Init();
 
                 // Initialize the AutoShop.
-                Setup.Init();
+                AutoShop.Setup.Init();
+
+                if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat"))
+                {
+                    File.Create(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat");
+                }
 
                 Chat.OnInput += delegate (ChatInputEventArgs msg)
                 {
@@ -91,7 +96,7 @@ namespace AramBuddy
             try
             {
                 if (QuitOnGameEnd)
-                    Core.DelayAction(() => Game.QuitGame(), 20000 + Game.Ping);
+                    Core.DelayAction(() => Game.QuitGame(), new Random().Next(15000 + Game.Ping, 30000 + Game.Ping));
             }
             catch (Exception ex)
             {

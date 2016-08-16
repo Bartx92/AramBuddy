@@ -33,6 +33,7 @@ namespace AramBuddy
 
         public class InComingDamageEventArgs
         {
+            public Obj_AI_Base Sender;
             public AIHeroClient Target;
             public float InComingDamage;
             public Type DamageType;
@@ -40,8 +41,9 @@ namespace AramBuddy
             {
                 TurretAttack, HeroAttack, MinionAttack, SkillShot, TargetedSpell
             }
-            public InComingDamageEventArgs(AIHeroClient target, float Damage, Type type)
+            public InComingDamageEventArgs(Obj_AI_Base sender, AIHeroClient target, float Damage, Type type)
             {
+                Sender = sender;
                 Target = target;
                 InComingDamage = Damage;
                 DamageType = type;
@@ -94,7 +96,7 @@ namespace AramBuddy
                     {
                         foreach (var ally in EntityManager.Heroes.Allies.Where(a => !a.IsDead && a.IsValidTarget() && a.IsInDanger(spell)))
                         {
-                            OnIncomingDamage?.Invoke(new InComingDamageEventArgs(ally, spell.Caster.GetSpellDamage(ally, spell.spell.slot), InComingDamageEventArgs.Type.SkillShot));
+                            OnIncomingDamage?.Invoke(new InComingDamageEventArgs(spell.Caster, ally, spell.Caster.GetSpellDamage(ally, spell.spell.slot), InComingDamageEventArgs.Type.SkillShot));
                         }
                     }
                 };
@@ -103,7 +105,7 @@ namespace AramBuddy
             {
                 // Used to Invoke the Incoming Damage Event When there is a TargetedSpell Incoming
                 if (target.IsAlly)
-                        OnIncomingDamage?.Invoke(new InComingDamageEventArgs(target, sender.GetSpellDamage(target, spell.slot), InComingDamageEventArgs.Type.TargetedSpell));
+                        OnIncomingDamage?.Invoke(new InComingDamageEventArgs(sender, target, sender.GetSpellDamage(target, spell.slot), InComingDamageEventArgs.Type.TargetedSpell));
                 };
 
             Obj_AI_Base.OnBasicAttack += delegate(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
@@ -117,11 +119,11 @@ namespace AramBuddy
                     if(target == null || !target.IsAlly) return;
 
                     if(hero != null)
-                        OnIncomingDamage?.Invoke(new InComingDamageEventArgs(target, hero.GetAutoAttackDamage(target), InComingDamageEventArgs.Type.HeroAttack));
+                        OnIncomingDamage?.Invoke(new InComingDamageEventArgs(hero, target, hero.GetAutoAttackDamage(target), InComingDamageEventArgs.Type.HeroAttack));
                     if (turret != null)
-                        OnIncomingDamage?.Invoke(new InComingDamageEventArgs(target, turret.GetAutoAttackDamage(target), InComingDamageEventArgs.Type.TurretAttack));
+                        OnIncomingDamage?.Invoke(new InComingDamageEventArgs(turret, target, turret.GetAutoAttackDamage(target), InComingDamageEventArgs.Type.TurretAttack));
                     if (minion != null)
-                        OnIncomingDamage?.Invoke(new InComingDamageEventArgs(target, minion.GetAutoAttackDamage(target), InComingDamageEventArgs.Type.MinionAttack));
+                        OnIncomingDamage?.Invoke(new InComingDamageEventArgs(minion, target, minion.GetAutoAttackDamage(target), InComingDamageEventArgs.Type.MinionAttack));
                 };
             #endregion
 

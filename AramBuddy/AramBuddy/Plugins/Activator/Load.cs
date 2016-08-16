@@ -7,6 +7,7 @@ namespace AramBuddy.Plugins.Activator
     internal class Load
     {
         internal static Menu MenuIni;
+
         public static void Init()
         {
             try

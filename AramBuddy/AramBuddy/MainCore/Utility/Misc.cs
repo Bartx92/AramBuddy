@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
@@ -183,7 +184,36 @@ namespace AramBuddy.MainCore.Utility
         /// </summary>
         public static float KiteDistance(GameObject target)
         {
-            return (Player.Instance.GetAutoAttackRange() + target.BoundingRadius) - Player.Instance.GetAutoAttackRange() *  (Player.Instance.IsMelee ? 0.40f : 0.30f);
+            var extra = 0f;
+            if (!Player.Instance.IsMelee)
+                extra = target.BoundingRadius;
+
+            return (Player.Instance.GetAutoAttackRange() * (Player.Instance.IsMelee ? 0.2f : 0.65f)) + extra;
+        }
+        
+        public static bool Added(this AIHeroClient target)
+        {
+            var read = File.ReadAllLines(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat");
+            return read.Any(a => a.Equals(target.NetworkId.ToString()));
+        }
+
+        public static void Add(this AIHeroClient target)
+        {
+            using (var stream = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat", true))
+            {
+                stream.WriteLine(target.NetworkId);
+                stream.Close();
+            }
+        }
+
+        public static List<string> NoManaHeros = new List<string>
+        {
+            "Akali", "Gnar", "Katarina", "Kennen", "Kled", "LeeSin", "Mordekaiser", "RekSai", "Renekton", "Rengar", "Riven", "Rumble", "Shen", "Shyvana", "Tryndamere", "Vladimir", "Yasuo"
+        };
+
+        public static bool IsNoManaHero(this AIHeroClient target)
+        {
+            return NoManaHeros.Contains(target.BaseSkinName.Trim());
         }
 
         /// <summary>

@@ -52,6 +52,7 @@ namespace AramBuddy.AutoShop
         {
             try
             {
+                Buy.CanShop = !Player.Instance.Buffs.Any(b => b.DisplayName.Equals("aramshopdisableplayer", StringComparison.CurrentCultureIgnoreCase)) || Player.Instance.IsDead;
                 var useDefaultBuild = false;
                 // When the game starts
                 AramBuddy.Events.OnGameStart += Events_OnGameStart;
@@ -62,8 +63,6 @@ namespace AramBuddy.AutoShop
                         Core.DelayAction(
                             () =>
                                 {
-                                    Buy.TempValue -= price;
-
                                     // Try to buy more than one item if we can afford it
                                     Buy.BuyNextItem(CurrentChampionBuild);
                                 },
@@ -123,10 +122,7 @@ namespace AramBuddy.AutoShop
 
                     // and set up event listeners
                     SetUpEventListeners();
-                    if (Player.Instance.IsInShopRange() || Player.Instance.IsDead)
-                    {
-                        Buy.BuyNextItem(CurrentChampionBuild);
-                    }
+                    Buy.BuyNextItem(CurrentChampionBuild);
                 }
             }
             catch (Exception ex)

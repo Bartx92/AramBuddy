@@ -87,7 +87,7 @@ namespace AramBuddy.MainCore.Utility
             if (caster != null)
             {
                 var trap = new traps { Trap = caster, IsSpecial = false };
-                var Specialtrap = new traps { Trap = caster, IsSpecial = true };
+                //var Specialtrap = new traps { Trap = caster, IsSpecial = true };
                 if (EnemyTraps.Contains(trap) && trap.Trap.IsEnemy)
                 {
                     EnemyTraps.Remove(trap);
@@ -245,7 +245,7 @@ namespace AramBuddy.MainCore.Utility
                     EntityManager.Heroes.Allies.OrderByDescending(a => Misc.TeamTotal(a.PredictPosition()))
                         .ThenByDescending(a => a.Distance(AllyNexues))
                         .Where(
-                            a =>
+                            a => !a.Added() &&
                             a.IsValidTarget() && ((a.IsUnderEnemyturret() && Misc.SafeToDive) || !a.IsUnderEnemyturret()) && a.CountAlliesInRange(1300) > 1 && a.HealthPercent > 10
                             && !a.IsInShopRange() && !a.IsDead && !a.IsZombie && !a.IsMe
                             && (a.Spellbook.IsCharging || a.Spellbook.IsChanneling || a.Spellbook.IsAutoAttacking || a.IsAttackPlayer() || a.Spellbook.IsCastingSpell
@@ -282,7 +282,7 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return BestAlliesToFollow.OrderBy(a => a.Distance(Player.Instance)).FirstOrDefault(a => Misc.TeamTotal(a.PredictPosition()) - Misc.TeamTotal(a.PredictPosition(), true) > 0);
+                return BestAlliesToFollow.OrderBy(a => a.Distance(Player.Instance)).FirstOrDefault(a => Misc.TeamTotal(a.PredictPosition()) - Misc.TeamTotal(a.PredictPosition(), true) > 0 && Player.Instance.HealthPercent >= a.HealthPercent);
             }
         }
 

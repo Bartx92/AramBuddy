@@ -11,15 +11,9 @@ namespace AramBuddy.Plugins.Activator.Items
 {
     internal class Potions
     {
-        private static List<Item> Pots = new List<Item>
-        {
-            HealthPotion, Biscuit, CorruptingPotion, RefillablePotion
-        };
+        private static readonly List<Item> Pots = new List<Item> { HealthPotion, Biscuit, CorruptingPotion, RefillablePotion };
 
-        private static List<string> PotBuffs = new List<string>
-        {
-            "Health Potion", "ItemCrystalFlask", "ItemDarkCrystalFlask", "ItemMiniRegenPotion"
-        };
+        private static readonly List<string> PotBuffs = new List<string> { "Health Potion", "ItemCrystalFlask", "ItemDarkCrystalFlask", "ItemMiniRegenPotion" };
 
         private static Menu PotionsMenu;
 

@@ -11,20 +11,11 @@ namespace AramBuddy.Plugins.Activator.Items
 {
     internal class Offence
     {
-        private static List<Item> HPItems = new List<Item>
-        {
-            Botrk, Cutlass, Hextech_Gunblade
-        };
+        private static readonly List<Item> HPItems = new List<Item> { Botrk, Cutlass, Hextech_Gunblade };
 
-        private static List<Item> DmgItems = new List<Item>
-        {
-            Hextech_GLP, Hextech_ProtoBelt
-        };
+        private static readonly List<Item> DmgItems = new List<Item> { Hextech_GLP, Hextech_ProtoBelt };
 
-        private static List<Item> AAItems = new List<Item>
-        {
-            Hydra, TitanicHydra, Tiamat, Youmuus
-        };
+        private static readonly List<Item> AAItems = new List<Item> { Hydra, TitanicHydra, Tiamat, Youmuus };
 
         private static Menu Offen;
 
@@ -77,7 +68,8 @@ namespace AramBuddy.Plugins.Activator.Items
             try
             {
                 var hero = target as AIHeroClient;
-                if (!Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) || hero == null) return;
+                if (!Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) || hero == null)
+                    return;
 
                 foreach (var i in AAItems.Where(a => a.ItemReady(Offen)))
                 {

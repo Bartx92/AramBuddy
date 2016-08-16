@@ -31,7 +31,7 @@ namespace AramBuddy.MainCore
                 SpecialChamps.Init();
 
                 // Overrides Orbwalker Movements
-                Orbwalker.OverrideOrbwalkPosition = OverrideOrbwalkPosition;
+                Orbwalker.OverrideOrbwalkPosition += OverrideOrbwalkPosition;
 
                 // Initialize AutoLvlup.
                 LvlupSpells.Init();
@@ -52,12 +52,27 @@ namespace AramBuddy.MainCore
         }
 
         /// <summary>
+        ///     Returns LastUpdate for the bot current postion.
+        /// </summary>
+        public static float LastUpdate;
+
+        /// <summary>
         ///     Decisions picking for the bot.
         /// </summary>
         public static void Decisions()
         {
             // Picks best position for the bot.
-            Pathing.BestPosition();
+            if (Core.GameTickCount - LastUpdate > 75)
+            {
+                foreach (var hero in EntityManager.Heroes.AllHeroes.Where(a => a != null && a.IsValidTarget() && !a.Added() && ObjectsManager.HealthRelics.Any(hr => a.Path.LastOrDefault().Distance(hr.Position) <= 1)))
+                {
+                    hero.Add();
+                    Logger.Send("Added: " + hero.BaseSkinName + " - " + hero.NetworkId, Logger.LogLevel.Warn);
+                }
+
+                Pathing.BestPosition();
+                LastUpdate = Core.GameTickCount;
+            }
 
             // Ticks for the modes manager.
             ModesManager.OnTick();

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace AramBuddy.MainCore.Utility
 {
-    class Logger
+    internal class Logger
     {
         public enum LogLevel
         {
@@ -38,10 +37,6 @@ namespace AramBuddy.MainCore.Utility
 
         public static void Send(string str, Exception ex, LogLevel level)
         {
-            var st = new StackTrace(ex, true);
-            var frame = st.GetFrame(0);
-            var line = frame.GetFileLineNumber();
-
             var date = DateTime.Now.ToString("[H:mm:ss - ") + "AramBuddy ";
             var text = string.Empty;
             switch (level)
@@ -59,7 +54,7 @@ namespace AramBuddy.MainCore.Utility
                     text = date + " Error] ";
                     break;
             }
-            Console.WriteLine(text + str + " AT LINE: " + line + " FROM: " + ex.Source);
+            Console.WriteLine(text);
             Console.WriteLine(ex);
             Console.ResetColor();
         }

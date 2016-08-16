@@ -13,19 +13,12 @@ namespace AramBuddy
     internal class CheckVersion
     {
         private static Text text;
-
         private static string UpdateMsg = string.Empty;
-
         private const string UpdateMsgPath = "https://raw.githubusercontent.com/plsfixrito/AramBuddy/master/AramBuddy/AramBuddy/msg.txt";
-
         private const string WebVersionPath = "https://raw.githubusercontent.com/plsfixrito/AramBuddy/master/AramBuddy/AramBuddy/Properties/AssemblyInfo.cs";
-
         private static readonly Version CurrentVersion = typeof(CheckVersion).Assembly.GetName().Version;
-
         public static bool Outdated;
-
-        public static bool Sent;
-
+        private static bool Sent;
         public static void Init()
         {
             try

@@ -45,8 +45,35 @@ namespace AramBuddy.Plugins.Champions.Fiora
                 LaneClearMenu.CreateSlider(spell.Slot + "mana", spell.Slot + " Mana Manager", 60);
                 KillStealMenu.CreateCheckBox(spell.Slot, "Use " + spell.Slot);
             }
-            SpellsDetector.OnTargetedSpellDetected += SpellsDetector_OnTargetedSpellDetected;
+            Events.OnIncomingDamage += Events_OnIncomingDamage;
+            //SpellsDetector.OnTargetedSpellDetected += SpellsDetector_OnTargetedSpellDetected;
             Orbwalker.OnPostAttack += Orbwalker_OnPostAttack;
+        }
+
+        private static void Events_OnIncomingDamage(Events.InComingDamageEventArgs args)
+        {
+            if(args.Target == null || !args.Target.IsMe || !W.IsReady() || args.DamageType.Equals(Events.InComingDamageEventArgs.Type.TurretAttack)) return;
+
+            var CastPos = user.Direction.To2D().Perpendicular().To3D();
+            
+            if (args.Sender != null && args.Sender.IsKillable(W.Range))
+            {
+                CastPos = W.GetPrediction(args.Sender).CastPosition;
+            }
+            else
+            {
+                var target = EntityManager.Heroes.Enemies.OrderBy(a => a.Health).FirstOrDefault(e => e != null && e.IsKillable(W.Range));
+                if (target != null)
+                {
+                    CastPos = W.GetPrediction(target).CastPosition;
+                }
+            }
+
+            var DamagePercent = (args.InComingDamage / user.Health) * 100;
+            if (args.InComingDamage >= user.Health || DamagePercent > 20)
+            {
+                W.Cast(CastPos);
+            }
         }
 
         private static void Orbwalker_OnPostAttack(AttackableUnit target, System.EventArgs args)
@@ -77,6 +104,7 @@ namespace AramBuddy.Plugins.Champions.Fiora
         public override void Active()
         {
             UpdateFioraPassives();
+            /*
             foreach (var spell in Collision.NewSpells.Where(s => s.spell.DangerLevel >= 2))
             {
                 if (user.IsInDanger(spell) && W.IsReady())
@@ -91,7 +119,7 @@ namespace AramBuddy.Plugins.Champions.Fiora
                         W.Cast(user.Direction.To2D().Perpendicular().To3D());
                     }
                 }
-            }
+            }*/
         }
 
         private static void UpdateFioraPassives()
