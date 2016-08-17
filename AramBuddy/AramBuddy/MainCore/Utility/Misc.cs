@@ -37,10 +37,10 @@ namespace AramBuddy.MainCore.Utility
             
             enemyteamTotal +=
                 EntityManager.Heroes.Enemies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, SafeValue))
-                    .Sum(enemy => enemy.Health + (enemy.Mana * 0.25f) + enemy.Armor + enemy.SpellBlock + enemy.TotalMagicalDamage + enemy.TotalAttackDamage);
+                    .Sum(enemy => (enemy.Health + (enemy.Mana * 0.25f) + enemy.Armor + enemy.SpellBlock + enemy.TotalMagicalDamage + enemy.TotalAttackDamage) * (enemy.Distance(Player.Instance) * 0.001f));
             allyteamTotal +=
                 EntityManager.Heroes.Allies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, SafeValue))
-                    .Sum(ally => ally.Health + (ally.Mana * 0.25f) + ally.Armor + ally.SpellBlock + ally.TotalMagicalDamage + ally.TotalAttackDamage);
+                    .Sum(ally => (ally.Health + (ally.Mana * 0.25f) + ally.Armor + ally.SpellBlock + ally.TotalMagicalDamage + ally.TotalAttackDamage) * (ally.Distance(Player.Instance) * 0.001f));
             
             enemyteamTotal += TeamDamage(Position, true);
             allyteamTotal += TeamDamage(Position);
@@ -202,15 +202,11 @@ namespace AramBuddy.MainCore.Utility
         public static bool Added(this AIHeroClient target)
         {
             var read = File.ReadAllLines(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat");
-            return read.Any(a => a.Equals(target.NetworkId.ToString()));
+            return read.Contains(target.NetworkId.ToString());
         }
 
         public static void Add(this AIHeroClient target)
         {
-            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat"))
-            {
-                File.Create(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat");
-            }
             using (var stream = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat", true))
             {
                 stream.WriteLine(target.NetworkId);

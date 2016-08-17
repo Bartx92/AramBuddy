@@ -152,7 +152,7 @@ namespace AramBuddy.MainCore.Logics
         public static bool MeleeLogic()
         {
             // if there is a TeamFight follow NearestEnemy.
-            if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 25 && !ModesManager.Flee && ObjectsManager.NearestEnemy != null && Player.Instance.Health > ObjectsManager.NearestEnemy.Health && TeamTotal(ObjectsManager.NearestEnemy.PredictPosition()) >= TeamTotal(ObjectsManager.NearestEnemy.PredictPosition(), true)
+            if (Core.GameTickCount - LastTeamFight < 1000 && Player.Instance.HealthPercent > 25 && !ModesManager.Flee && ObjectsManager.NearestEnemy != null && TeamTotal(ObjectsManager.NearestEnemy.PredictPosition()) >= TeamTotal(ObjectsManager.NearestEnemy.PredictPosition(), true)
                 && (ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret() && SafeToDive || !ObjectsManager.NearestEnemy.PredictPosition().UnderEnemyTurret()))
             {
                 // if there is a TeamFight move from NearestEnemy to nearestally.

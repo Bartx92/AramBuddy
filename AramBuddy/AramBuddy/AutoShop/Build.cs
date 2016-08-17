@@ -127,7 +127,7 @@ namespace AramBuddy.AutoShop
         /// </summary>
         public static readonly string[] AD =
             {
-                "Aatrox", "Darius", "Fiora", "Gangplank", "Jax", "Jayce", "KhaZix", "LeeSin", "MasterYi", "Nocturne", "Olaf", "Pantheon", "RekSai", "Renekton", "Rengar",
+                "Aatrox", "Fiora", "Gangplank", "Jax", "Jayce", "KhaZix", "LeeSin", "MasterYi", "Nocturne", "Olaf", "Pantheon", "Rengar",
                 "Riven", "Talon", "Tryndamere", "Wukong", "XinZhao", "Yasuo", "Zed"
             };
 
@@ -136,8 +136,8 @@ namespace AramBuddy.AutoShop
         /// </summary>
         public static readonly string[] Tank =
             {
-                "Alistar", "Amumu", "Blitzcrank", "Bard", "Braum", "ChoGath", "DrMundo", "Garen", "Gnar", "Hecarim", "Kled", "Illaoi", "Irelia", "JarvanIV", "Leona",
-                "Malphite", "Maokai", "Nasus", "Nautilus", "Nunu", "Poppy", "Rammus", "Sejuani", "Shaco", "Shen", "Shyvana", "Singed", "Sion", "Skarner", "TahmKench",
+                "Alistar", "Amumu", "Blitzcrank", "Bard", "Braum", "ChoGath", "Darius", "DrMundo", "Garen", "Gnar", "Hecarim", "Kled", "Illaoi", "Irelia", "JarvanIV", "Leona",
+                "Malphite", "Maokai", "Nasus", "Nautilus", "Nunu", "Poppy", "Rammus", "RekSai", "Renekton", "Sejuani", "Shaco", "Shen", "Shyvana", "Singed", "Sion", "Skarner", "TahmKench",
                 "Taric", "Thresh", "Trundle", "Udyr", "Vi", "Volibear", "Warwick", "Yorick", "Zac"
             };
     }

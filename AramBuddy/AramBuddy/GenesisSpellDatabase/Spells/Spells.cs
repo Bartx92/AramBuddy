@@ -464,6 +464,7 @@ namespace GenesisSpellLibrary.Spells
             this.E = new Spell.Skillshot(SpellSlot.E, 540, SkillShotType.Cone, 250, 100, 120) { AllowedCollisionCount = int.MaxValue };
             this.R = new Spell.Targeted(SpellSlot.R, 460);
             this.EisCC = true;
+            this.EDontWaste = true;
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using AramBuddy.MainCore;
 using AramBuddy.MainCore.Logics;
@@ -50,8 +51,18 @@ namespace AramBuddy
                 // Initialize the AutoShop.
                 AutoShop.Setup.Init();
 
+                if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat"))
+                {
+                    File.Create(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat");
+                }
+
                 Chat.OnInput += delegate (ChatInputEventArgs msg)
                 {
+                    if (msg.Input.Equals("addcount", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        Chat.Print(EntityManager.Heroes.AllHeroes.Count(a => a.Added()));
+                        msg.Process = false;
+                    }
                     if (msg.Input.Equals("Load Custom", StringComparison.CurrentCultureIgnoreCase) && !CustomChamp)
                     {
                         var Instance = (Base)Activator.CreateInstance(null, "AramBuddy.Plugins.Champions." + Player.Instance.Hero + "." + Player.Instance.Hero).Unwrap();

@@ -202,7 +202,7 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return EntityManager.Heroes.Enemies.OrderBy(e => e.Distance(Player.Instance)).FirstOrDefault(e => e.IsValidTarget() && !e.IsDead && !e.IsZombie);
+                return EntityManager.Heroes.Enemies.OrderBy(e => e.Distance(Player.Instance)).ThenByDescending(e => e.CountAlliesInRange(1250)).FirstOrDefault(e => e.IsValidTarget() && !e.IsDead && !e.IsZombie);
             }
         }
 
@@ -245,7 +245,7 @@ namespace AramBuddy.MainCore.Utility
                     EntityManager.Heroes.Allies.OrderByDescending(a => Misc.TeamTotal(a.PredictPosition()))
                         .ThenByDescending(a => a.Distance(AllyNexues))
                         .Where(
-                            a => !a.Added() &&
+                            a => //!a.Added() &&
                             a.IsValidTarget() && ((a.UnderEnemyTurret() && Misc.SafeToDive) || !a.UnderEnemyTurret()) && a.CountAlliesInRange(1350) > 1 && a.HealthPercent > 10
                             && !a.IsInFountainRange() && !a.IsDead && !a.IsZombie && !a.IsMe
                             && (a.Spellbook.IsCharging || a.Spellbook.IsChanneling || a.Spellbook.IsAutoAttacking || a.IsAttackPlayer() || a.Spellbook.IsCastingSpell
@@ -282,7 +282,7 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return BestAlliesToFollow.OrderBy(a => a.Distance(Player.Instance)).FirstOrDefault(a => Misc.TeamTotal(a.PredictPosition()) - Misc.TeamTotal(a.PredictPosition(), true) > 0);
+                return BestAlliesToFollow.OrderBy(a => a.Distance(Player.Instance)).FirstOrDefault(a => Misc.TeamTotal(a.PredictPosition()) - Misc.TeamTotal(a.PredictPosition(), true) > -100);
             }
         }
 
@@ -294,7 +294,7 @@ namespace AramBuddy.MainCore.Utility
             get
             {
                 return BestAlliesToFollow.OrderByDescending(a => Misc.TeamTotal(a.PredictPosition()) - Misc.TeamTotal(a.PredictPosition(), true))
-                        .FirstOrDefault(a => a.CountAlliesInRange(SafeValue) > a.CountEnemiesInRange(SafeValue));
+                        .FirstOrDefault(a => a.CountAlliesInRange(SafeValue) >= a.CountEnemiesInRange(SafeValue));
             }
         }
 
