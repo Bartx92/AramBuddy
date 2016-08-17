@@ -46,7 +46,8 @@ namespace AramBuddy.MainCore.Logics
             }
 
             // Moves to HealthRelic if the bot needs heal.
-            if ((Player.Instance.HealthPercent <= HealthRelicHP || (Player.Instance.ManaPercent <= HealthRelicMP && !Player.Instance.IsNoManaHero())) && ObjectsManager.HealthRelic != null)
+            if ((Player.Instance.HealthPercent <= HealthRelicHP || (Player.Instance.ManaPercent <= HealthRelicMP && !Player.Instance.IsNoManaHero())) && ObjectsManager.HealthRelic != null
+                && ((DontStealHR && !EntityManager.Heroes.Allies.Any(a => Player.Instance.Health > a.Health && a.Path.LastOrDefault().IsInRange(ObjectsManager.HealthRelic, ObjectsManager.HealthRelic.BoundingRadius + a.BoundingRadius) && !a.IsMe && a.IsValidTarget() && !a.IsDead)) || !DontStealHR))
             {
                 var formana = Player.Instance.ManaPercent < HealthRelicMP && !Player.Instance.IsNoManaHero();
                 var rect = new Geometry.Polygon.Rectangle(Player.Instance.ServerPosition, ObjectsManager.HealthRelic.Position, 375);
@@ -80,14 +81,14 @@ namespace AramBuddy.MainCore.Logics
                         {
                             if (!formana)
                             {
-                                Program.Moveto = "BardShrine";
+                                Program.Moveto = "BardShrine2";
                                 Position = ObjectsManager.HealthRelic.Position;
                                 return;
                             }
                         }
                         else
                         {
-                            Program.Moveto = "HealthRelic";
+                            Program.Moveto = "HealthRelic2";
                             Position = ObjectsManager.HealthRelic.Position;
                             return;
                         }
@@ -128,9 +129,9 @@ namespace AramBuddy.MainCore.Logics
             }
 
             // Moves to AllySpawn if the bot is diving and it's not safe to dive.
-            if (((Player.Instance.IsUnderEnemyturret() && !SafeToDive) || Core.GameTickCount - Brain.LastTurretAttack < 2000) && ObjectsManager.AllySpawn != null)
+            if (((Player.Instance.UnderEnemyTurret() && !SafeToDive) || Core.GameTickCount - Brain.LastTurretAttack < 2000) && ObjectsManager.AllySpawn != null)
             {
-                Program.Moveto = "AllySpawn";
+                Program.Moveto = "AllySpawn2";
                 Position = ObjectsManager.AllySpawn.Position.Random();
                 return;
             }
@@ -276,7 +277,7 @@ namespace AramBuddy.MainCore.Logics
             // Well if it ends up like this then best thing is to let it end.
             if (ObjectsManager.AllySpawn != null)
             {
-                Program.Moveto = "AllySpawn";
+                Program.Moveto = "AllySpawn3";
                 Position = ObjectsManager.AllySpawn.Position.Random();
                 return true;
             }
@@ -405,7 +406,7 @@ namespace AramBuddy.MainCore.Logics
             // Well if it ends up like this then best thing is to let it end.
             if (ObjectsManager.AllySpawn != null)
             {
-                Program.Moveto = "AllySpawn";
+                Program.Moveto = "AllySpawn3";
                 Position = ObjectsManager.AllySpawn.Position.Random();
                 return true;
             }
@@ -424,7 +425,7 @@ namespace AramBuddy.MainCore.Logics
         {
             // This to prevent the bot from spamming unnecessary movements.
             var rnddis = new Random().Next(50, 100);
-            if (!Player.Instance.Path.LastOrDefault().IsInRange(pos, rnddis) && !Player.Instance.IsInRange(pos, rnddis) && Core.GameTickCount - lastmove >= new Random().Next(300 + Game.Ping, 1000 + Game.Ping))
+            if (!Player.Instance.Path.LastOrDefault().IsInRange(pos, rnddis) && !Player.Instance.IsInRange(pos, rnddis) && Core.GameTickCount - lastmove >= new Random().Next(200 + Game.Ping, 900 + Game.Ping))
             {
                 // This to prevent diving.
                 if (pos.UnderEnemyTurret() && !SafeToDive)

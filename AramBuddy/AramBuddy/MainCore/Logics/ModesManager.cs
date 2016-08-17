@@ -201,7 +201,7 @@ namespace AramBuddy.MainCore.Logics
             {
                 return Misc.TeamTotal(Player.Instance.PredictPosition()) > Misc.TeamTotal(Player.Instance.PredictPosition(), true)
                        && Player.Instance.CountAlliesInRange(1000) >= Player.Instance.CountEnemiesInRange(1000) && Player.Instance.CountEnemiesInRange(1000) > 0
-                       && ((Player.Instance.PredictPosition().UnderEnemyTurret() && Misc.SafeToDive) || !Player.Instance.IsUnderEnemyturret());
+                       && ((Player.Instance.PredictPosition().UnderEnemyTurret() && Misc.SafeToDive) || !Player.Instance.UnderEnemyTurret());
             }
         }
 
@@ -213,7 +213,7 @@ namespace AramBuddy.MainCore.Logics
             get
             {
                 return (Misc.TeamTotal(Player.Instance.PredictPosition()) < Misc.TeamTotal(Player.Instance.PredictPosition(), true) || Player.Instance.IsUnderHisturret())
-                       && Player.Instance.CountEnemiesInRange(800) > 0 && ((Player.Instance.PredictPosition().UnderEnemyTurret() && Misc.SafeToDive) || !Player.Instance.IsUnderEnemyturret()) && !Flee;
+                       && Player.Instance.CountEnemiesInRange(1000) > 0 && ((Player.Instance.PredictPosition().UnderEnemyTurret() && Misc.SafeToDive) || !Player.Instance.PredictPosition().UnderEnemyTurret()) && !Flee;
             }
         }
 
@@ -238,8 +238,8 @@ namespace AramBuddy.MainCore.Logics
             {
                 return !Player.Instance.IsUnderHisturret()
                        && ((Misc.TeamTotal(Player.Instance.PredictPosition()) < Misc.TeamTotal(Player.Instance.PredictPosition(), true) && Player.Instance.CountAlliesInRange(800) < 2)
-                           || (Player.Instance.IsUnderEnemyturret() && !Misc.SafeToDive) || (Player.Instance.CountEnemiesInRange(800) > Player.Instance.CountAlliesInRange(800))
-                           || (Player.Instance.HealthPercent < 15 && (Player.Instance.IsUnderEnemyturret() || Player.Instance.CountEnemiesInRange(1000) > 1)));
+                           || (Player.Instance.UnderEnemyTurret() && !Misc.SafeToDive) || (Player.Instance.CountEnemiesInRange(800) > Player.Instance.CountAlliesInRange(800))
+                           || (Player.Instance.HealthPercent < 15 && (Player.Instance.UnderEnemyTurret() || Player.Instance.CountEnemiesInRange(1000) > 1)));
             }
         }
 

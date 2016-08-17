@@ -102,6 +102,14 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
+        ///     Returns true if Obj_AI_Base is UnderEnemyTurret.
+        /// </summary>
+        public static bool UnderEnemyTurret(this Obj_AI_Base target)
+        {
+            return EntityManager.Turrets.Enemies.Any(t => !t.IsDead && t.IsValidTarget() && t.IsInRange(target, t.GetAutoAttackRange() + (target.BoundingRadius * 2)));
+        }
+
+        /// <summary>
         ///     Returns true if Vector3 is UnderEnemyTurret.
         /// </summary>
         public static bool UnderEnemyTurret(this Vector3 pos)
@@ -145,7 +153,7 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
-        ///     Returns true if you can deal damage to the target and kill him.
+        ///     Returns true if you can deal damage to the target.
         /// </summary>
         public static bool IsKillable(this Obj_AI_Base target, float range)
         {
@@ -155,7 +163,7 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
-        ///     Returns true if you can deal damage to the target and kill him.
+        ///     Returns true if you can deal damage to the target.
         /// </summary>
         public static bool IsKillable(this Obj_AI_Base target)
         {
@@ -199,6 +207,10 @@ namespace AramBuddy.MainCore.Utility
 
         public static void Add(this AIHeroClient target)
         {
+            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat"))
+            {
+                File.Create(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat");
+            }
             using (var stream = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat", true))
             {
                 stream.WriteLine(target.NetworkId);
@@ -368,7 +380,6 @@ namespace AramBuddy.MainCore.Utility
             var rnd = new Random();
             var X = rnd.Next((int)(pos.X - 200), (int)(pos.X + 200));
             var Y = rnd.Next((int)(pos.Y - 200), (int)(pos.Y + 200));
-
             return new Vector3(X, Y, pos.Z);
         }
     }

@@ -246,10 +246,10 @@ namespace AramBuddy.MainCore.Utility
                         .ThenByDescending(a => a.Distance(AllyNexues))
                         .Where(
                             a => !a.Added() &&
-                            a.IsValidTarget() && ((a.IsUnderEnemyturret() && Misc.SafeToDive) || !a.IsUnderEnemyturret()) && a.CountAlliesInRange(SafeValue) > 1 && a.HealthPercent > 10
-                            && !a.IsInShopRange() && !a.IsDead && !a.IsZombie && !a.IsMe
+                            a.IsValidTarget() && ((a.UnderEnemyTurret() && Misc.SafeToDive) || !a.UnderEnemyTurret()) && a.CountAlliesInRange(1350) > 1 && a.HealthPercent > 10
+                            && !a.IsInFountainRange() && !a.IsDead && !a.IsZombie && !a.IsMe
                             && (a.Spellbook.IsCharging || a.Spellbook.IsChanneling || a.Spellbook.IsAutoAttacking || a.IsAttackPlayer() || a.Spellbook.IsCastingSpell
-                                || a.Path.LastOrDefault().Distance(a) > 50 || EntityManager.Heroes.Enemies.Any(e => e.IsValidTarget() && e.IsInRange(a, Player.Instance.GetAutoAttackRange()))));
+                            || a.Path.LastOrDefault().Distance(a) > 30 || EntityManager.Heroes.Enemies.Any(e => e.IsValidTarget() && e.IsInRange(a, Player.Instance.GetAutoAttackRange()))));
             }
         }
 
@@ -282,7 +282,7 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return BestAlliesToFollow.OrderBy(a => a.Distance(Player.Instance)).FirstOrDefault(a => Misc.TeamTotal(a.PredictPosition()) - Misc.TeamTotal(a.PredictPosition(), true) > 0 && Player.Instance.Health >= a.Health);
+                return BestAlliesToFollow.OrderBy(a => a.Distance(Player.Instance)).FirstOrDefault(a => Misc.TeamTotal(a.PredictPosition()) - Misc.TeamTotal(a.PredictPosition(), true) > 0);
             }
         }
 
@@ -293,9 +293,8 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return
-                    BestAlliesToFollow.OrderByDescending(a => Misc.TeamTotal(a.PredictPosition()) - Misc.TeamTotal(a.PredictPosition(), true))
-                        .FirstOrDefault(a => a.CountAlliesInRange(SafeValue) > a.CountEnemiesInRange(SafeValue) && a.Health >= Player.Instance.Health);
+                return BestAlliesToFollow.OrderByDescending(a => Misc.TeamTotal(a.PredictPosition()) - Misc.TeamTotal(a.PredictPosition(), true))
+                        .FirstOrDefault(a => a.CountAlliesInRange(SafeValue) > a.CountEnemiesInRange(SafeValue));
             }
         }
 
@@ -306,13 +305,13 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return
-                    EntityManager.MinionsAndMonsters.AlliedMinions.OrderByDescending(a => a.Distance(AllyNexues))
+                return EntityManager.MinionsAndMonsters.AlliedMinions.OrderByDescending(a => a.Distance(AllyNexues))
                         .FirstOrDefault(
-                            m =>
-                            m.CountAlliesInRange(SafeValue) - m.CountEnemiesInRange(SafeValue) >= 0 && ((m.IsUnderEnemyturret() && Misc.SafeToDive) || !m.IsUnderEnemyturret()) && m.IsValidTarget(2500)
-                            && m.IsValid && m.IsHPBarRendered && !m.IsDead && !m.IsZombie && m.HealthPercent > 25
-                            && Misc.TeamTotal(m.PredictPosition()) - Misc.TeamTotal(m.PredictPosition(), true) >= 0);
+                        m =>
+                        m.CountAlliesInRange(SafeValue) - m.CountEnemiesInRange(SafeValue) >= 0
+                        && ((m.UnderEnemyTurret() && Misc.SafeToDive) || !m.UnderEnemyTurret()) && m.IsValidTarget(2500)
+                        && m.IsValid && m.IsHPBarRendered && !m.IsDead && !m.IsZombie && m.HealthPercent > 25
+                        && Misc.TeamTotal(m.PredictPosition()) - Misc.TeamTotal(m.PredictPosition(), true) >= 0);
             }
         }
 
@@ -327,7 +326,7 @@ namespace AramBuddy.MainCore.Utility
                     EntityManager.MinionsAndMonsters.AlliedMinions.OrderBy(a => a.Distance(Player.Instance))
                         .FirstOrDefault(
                             m =>
-                            m.CountAlliesInRange(SafeValue) - m.CountEnemiesInRange(SafeValue) >= 0 && ((m.IsUnderEnemyturret() && Misc.SafeToDive) || !m.IsUnderEnemyturret()) && m.IsValidTarget(2500)
+                            m.CountAlliesInRange(SafeValue) - m.CountEnemiesInRange(SafeValue) >= 0 && ((m.UnderEnemyTurret() && Misc.SafeToDive) || !m.UnderEnemyTurret()) && m.IsValidTarget(2500)
                             && m.IsValid && m.IsHPBarRendered && !m.IsDead && !m.IsZombie && m.HealthPercent > 25
                             && Misc.TeamTotal(m.PredictPosition()) - Misc.TeamTotal(m.PredictPosition(), true) >= 0);
             }
@@ -340,9 +339,8 @@ namespace AramBuddy.MainCore.Utility
         {
             get
             {
-                return Player.Instance.Team == GameObjectTeam.Order
-                           ? EntityManager.Turrets.Allies.FirstOrDefault(t => t.IsValidTarget() && !t.IsDead && t.BaseSkinName.ToLower().Equals("ha_ap_orderturret"))
-                           : EntityManager.Turrets.Allies.FirstOrDefault(t => t.IsValidTarget() && !t.IsDead && t.BaseSkinName.ToLower().Equals("ha_ap_chaosturret"));
+                var name = Player.Instance.Team == GameObjectTeam.Order ? "ha_ap_orderturret" : "ha_ap_chaosturret";
+                return EntityManager.Turrets.Allies.FirstOrDefault(t => t.IsValidTarget() && !t.IsDead && t.BaseSkinName.Equals(name, StringComparison.CurrentCultureIgnoreCase));
             }
         }
 
@@ -386,7 +384,7 @@ namespace AramBuddy.MainCore.Utility
                 if (EnemyTurret != null)
                     list.Add(EnemyTurret);
 
-                return list.OrderBy(o => o.Distance(Player.Instance)).FirstOrDefault(o => o.IsValid && !o.IsDead);
+                return list.OrderBy(o => o.Distance(AllySpawn)).FirstOrDefault(o => o.IsValid && !o.IsDead);
             }
         }
 

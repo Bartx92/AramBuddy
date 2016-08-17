@@ -85,9 +85,13 @@ namespace AramBuddy.Plugins.Champions.Gangplank
 
             if (Q.IsReady() && ComboMenu.CheckBoxValue(Q.Slot))
             {
-                foreach (var barrel in BarrelsList.OrderByDescending(b => b.CountEnemiesInRange(E.Width)).Where(b => b.IsInRange(target, E.Width) && b.Health <= 1))
+                foreach (var barrel in BarrelsList.OrderByDescending(b => b.CountEnemiesInRange(E.Width)).Where(b => b.IsInRange(target, E.Width)))
                 {
-                    Q.Cast(barrel);
+                    var bhealt = Prediction.Health.GetPrediction(barrel, (int)((Player.Instance.Distance(barrel) / 2600) * 1000) + Q.CastDelay);
+                    if (bhealt <= 1)
+                    {
+                        Q.Cast(barrel);
+                    }
                 }
 
                 if (target.IsKillable(Q.Range))

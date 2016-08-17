@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using AramBuddy.MainCore;
 using AramBuddy.MainCore.Logics;
@@ -50,11 +49,6 @@ namespace AramBuddy
 
                 // Initialize the AutoShop.
                 AutoShop.Setup.Init();
-
-                if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat"))
-                {
-                    File.Create(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\EloBuddy\\AramBuddy\\temp\\temp123.dat");
-                }
 
                 Chat.OnInput += delegate (ChatInputEventArgs msg)
                 {
@@ -120,6 +114,7 @@ namespace AramBuddy
                 var activator = MenuIni.CreateCheckBox("activator", "Enable Built-In Activator");
                 var DisableSpells = MenuIni.CreateCheckBox("DisableSpells", "Disable Built-in Casting Logic", false);
                 var quit = MenuIni.CreateCheckBox("quit", "Quit On Game End");
+                var stealhr = MenuIni.CreateCheckBox("stealhr", "Dont Steal Health Relics From Allies", false);
                 MenuIni.AddSeparator(0);
                 var Safe = MenuIni.CreateSlider("Safe", "Safe Slider (Recommended 1250)", 1250, 0, 2500);
                 MenuIni.AddLabel("More Safe Value = more defensive playstyle");
@@ -137,6 +132,7 @@ namespace AramBuddy
                             activator.CurrentValue = true;
                             DisableSpells.CurrentValue = false;
                             quit.CurrentValue = true;
+                            stealhr.CurrentValue = false;
                             Safe.CurrentValue = 1250;
                             HRHP.CurrentValue = 75;
                             HRMP.CurrentValue = 15;

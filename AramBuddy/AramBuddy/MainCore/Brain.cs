@@ -76,6 +76,11 @@ namespace AramBuddy.MainCore
 
             // Ticks for the modes manager.
             ModesManager.OnTick();
+            
+            if (Pathing.Position.UnderEnemyTurret() && !Misc.SafeToDive && ObjectsManager.AllySpawn != null)
+            {
+                Pathing.Position = Pathing.Position.Extend(ObjectsManager.AllySpawn.Position, 250).To3D();
+            }
 
             // Moves to the Bot selected Position.
             if (Pathing.Position != Vector3.Zero && Pathing.Position.IsValid() && !Pathing.Position.IsZero)
