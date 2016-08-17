@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
@@ -10,7 +11,7 @@ namespace AramBuddy.Plugins.Champions.Gangplank
 {
     class Gangplank : Base
     {
-        private static readonly List<Obj_AI_Minion> BarrelsList = new List<Obj_AI_Minion>();
+        private static readonly List<Barrels> BarrelsList = new List<Barrels>();
         private static Spell.Targeted Q { get; }
         private static Spell.Active W { get; }
         private static Spell.Skillshot E { get; }
@@ -53,12 +54,13 @@ namespace AramBuddy.Plugins.Champions.Gangplank
         {
             foreach (var barrel in ObjectManager.Get<Obj_AI_Minion>().Where(o => !o.IsDead && o.HasBuff("GangplankEBarrelActive") && o.GetBuff("GangplankEBarrelActive").Caster.IsMe))
             {
-                if (!BarrelsList.Contains(barrel))
+                var b = new Barrels(barrel, Core.GameTickCount);
+                if (!BarrelsList.Contains(b))
                 {
-                    BarrelsList.Add(barrel);
+                    BarrelsList.Add(b);
                 }
             }
-            BarrelsList.RemoveAll(o => o.IsDead || o.Health <= 0);
+            BarrelsList.RemoveAll(o => o.barrel.IsDead || o.barrel.Health <= 0);
 
             if (user.IsCC() && user.HealthPercent <= 80)
             {
@@ -85,12 +87,12 @@ namespace AramBuddy.Plugins.Champions.Gangplank
 
             if (Q.IsReady() && ComboMenu.CheckBoxValue(Q.Slot))
             {
-                foreach (var barrel in BarrelsList.OrderByDescending(b => b.CountEnemiesInRange(E.Width)).Where(b => b.IsInRange(target, E.Width)))
+                foreach (var barrel in BarrelsList.OrderByDescending(b => b.barrel.CountEnemiesInRange(E.Width)).Where(b => b.barrel.IsInRange(target, E.Width)))
                 {
-                    var bhealt = Prediction.Health.GetPrediction(barrel, (int)((Player.Instance.Distance(barrel) / 2600) * 1000) + Q.CastDelay);
+                    var bhealt = Prediction.Health.GetPrediction(barrel.barrel, (int)((Player.Instance.Distance(barrel.barrel) / 2600) * 1000) + Q.CastDelay);
                     if (bhealt <= 1)
                     {
-                        Q.Cast(barrel);
+                        Q.Cast(barrel.barrel);
                     }
                 }
 
@@ -114,9 +116,9 @@ namespace AramBuddy.Plugins.Champions.Gangplank
 
             if (Q.IsReady() && HarassMenu.CheckBoxValue(Q.Slot) && HarassMenu.CompareSlider(Q.Slot + "mana", user.ManaPercent))
             {
-                foreach (var barrel in BarrelsList.OrderByDescending(b => b.CountEnemiesInRange(E.Width)).Where(b => b.IsInRange(target, E.Width) && b.Health <= 1))
+                foreach (var barrel in BarrelsList.OrderByDescending(b => b.barrel.CountEnemiesInRange(E.Width)).Where(b => b.barrel.IsInRange(target, E.Width) && b.barrel.Health <= 1))
                 {
-                    Q.Cast(barrel);
+                    Q.Cast(barrel.barrel);
                 }
 
                 if (target.IsKillable(Q.Range))
@@ -137,9 +139,9 @@ namespace AramBuddy.Plugins.Champions.Gangplank
             {
                 if (Q.IsReady() && LaneClearMenu.CheckBoxValue(Q.Slot) && LaneClearMenu.CompareSlider(Q.Slot + "mana", user.ManaPercent))
                 {
-                    foreach (var barrel in BarrelsList.OrderByDescending(b => b.CountEnemyMinionsInRange(E.Width)).Where(b => b.IsInRange(target, E.Width) && b.Health <= 1))
+                    foreach (var barrel in BarrelsList.OrderByDescending(b => b.barrel.CountEnemyMinionsInRange(E.Width)).Where(b => b.barrel.IsInRange(target, E.Width) && b.barrel.Health <= 1))
                     {
-                        Q.Cast(barrel);
+                        Q.Cast(barrel.barrel);
                     }
 
                     if (target.IsKillable(Q.Range))
@@ -159,15 +161,46 @@ namespace AramBuddy.Plugins.Champions.Gangplank
         {
         }
 
+        private bool Killable(Obj_AI_Base target)
+        {
+            if (target.Health < 2)
+            {
+                return true;
+            }
+            var barrel = BarrelsList.FirstOrDefault(b => b.barrel.NetworkId == target.NetworkId);
+            if (barrel != null)
+            {
+                var t = Environment.TickCount - barrel.tick - 2 * 1.975f * 1000;
+                t = Math.Abs(Math.Min(t, 0));
+                if (t - 2600f * 1000 <= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        internal class Barrels
+        {
+            public Obj_AI_Minion barrel;
+            public float tick;
+
+            public Barrels(Obj_AI_Minion Barrel, int Tick)
+            {
+                barrel = Barrel;
+                tick = Tick;
+            }
+        }
+
         public override void KillSteal()
         {
             foreach (var target in EntityManager.Heroes.Enemies.Where(e => e != null))
             {
                 if (Q.IsReady() && target.IsKillable(Q.Range) && KillStealMenu.CheckBoxValue(Q.Slot))
                 {
-                    foreach (var barrel in BarrelsList.OrderByDescending(b => b.CountEnemiesInRange(E.Width)).Where(b => b.IsInRange(target, E.Width) && b.Health <= 1 && E.WillKill(target)))
+                    foreach (var barrel in BarrelsList.OrderByDescending(b => b.barrel.CountEnemiesInRange(E.Width)).Where(b => b.barrel.IsInRange(target, E.Width) && b.barrel.Health <= 1 && E.WillKill(target)))
                     {
-                        Q.Cast(barrel);
+                        Q.Cast(barrel.barrel);
                     }
 
                     if (target.IsKillable(Q.Range) && Q.WillKill(target))
