@@ -157,7 +157,7 @@ namespace AramBuddy.MainCore.Logics
                     && ObjectsManager.AllySpawn != null)
                 {
                     Logger.Send("Cast Flash FleeMode HealthPercent " + (int)Player.Instance.HealthPercent, Logger.LogLevel.Info);
-                    SummonerSpells.Flash.Cast(Player.Instance.PredictPosition().Extend(ObjectsManager.AllySpawn, SummonerSpells.Flash.Range).To3D());
+                    SummonerSpells.Flash.Cast(Player.Instance.PredictPosition().Extend(ObjectsManager.AllySpawn, 400).To3D());
                 }
             }
             if (SummonerSpells.Cleanse.IsReady() && Program.SpellsMenu["Cleanse"].Cast<CheckBox>().CurrentValue && SummonerSpells.Cleanse.Slot != SpellSlot.Unknown && Player.Instance.IsCC()

@@ -111,6 +111,13 @@ namespace AramBuddy.MainCore.Logics
                 return;
             }
 
+            if (Brain.Alone() && ObjectsManager.FarthestAllyToFollow != null && Player.Instance.Distance(ObjectsManager.AllySpawn) <= 3000)
+            {
+                Program.Moveto = "FarthestAllyToFollow";
+                Position = ObjectsManager.FarthestAllyToFollow.PredictPosition().Random();
+                return;
+            }
+
             // Stays Under tower if the bot health under 10%.
             if ((ModesManager.Flee || (Player.Instance.HealthPercent < 10 && Player.Instance.CountAlliesInRange(2000) < 3)) && EntityManager.Heroes.Enemies.Count(e => !e.IsDead) > 0)
             {

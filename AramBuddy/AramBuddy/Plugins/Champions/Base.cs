@@ -8,7 +8,7 @@ namespace AramBuddy.Plugins.Champions
     public abstract class Base
     {
         public static AIHeroClient user = Player.Instance;
-        public static string MenuName = "AramBuddy " + user.ChampionName;
+        public static string MenuName = "AB " + user.ChampionName;
         public static readonly List<Spell.SpellBase> SpellList = new List<Spell.SpellBase>();
         public static Menu MenuIni, AutoMenu, ComboMenu, HarassMenu, LaneClearMenu, KillStealMenu;
         public abstract void Active();

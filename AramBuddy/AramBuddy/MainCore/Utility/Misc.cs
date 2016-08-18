@@ -25,27 +25,48 @@ namespace AramBuddy.MainCore.Utility
         }
 
         /// <summary>
+        ///     Cache the TeamTotal to prevent lags.
+        /// </summary>
+        private static float EnemyTeamTotal;
+        private static float AllyTeamTotal;
+
+        /// <summary>
+        ///     Last Update Done To The Damages.
+        /// </summary>
+        private static int lastTeamTotalupdate;
+
+        /// <summary>
         ///     Returns teams totals - used for picking best fights.
         /// </summary>
         public static float TeamTotal(Vector3 Position, bool Enemy = false)
         {
-            float enemyteamTotal = EntityManager.Turrets.Enemies.Where(t => !t.IsDead && t.Health > 0 && t.CountEnemiesInRange(t.GetAutoAttackRange()) > 1).Sum(turret => turret.Health + turret.TotalAttackDamage);
-            float allyteamTotal = EntityManager.Turrets.Allies.Where(t => !t.IsDead && t.Health > 0 && t.CountAlliesInRange(t.GetAutoAttackRange()) > 1 && t.Distance(Player.Instance) <= 1000).Sum(turret => turret.Health + turret.TotalAttackDamage);
+            if (Core.GameTickCount - lastTeamTotalupdate > 1000)
+            {
+                EnemyTeamTotal = 0;
+                AllyTeamTotal = 0;
+                float enemyteamTotal = EntityManager.Turrets.Enemies.Where(t => !t.IsDead && t.Health > 0 && t.CountEnemiesInRange(t.GetAutoAttackRange()) > 1).Sum(turret => turret.Health + turret.TotalAttackDamage);
+                float allyteamTotal = EntityManager.Turrets.Allies.Where(t => !t.IsDead && t.Health > 0 && t.CountAlliesInRange(t.GetAutoAttackRange()) > 1 && t.Distance(Player.Instance) <= 1000).Sum(turret => turret.Health + turret.TotalAttackDamage);
 
-            enemyteamTotal += EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => !m.IsDead && m.Health > 0 && m.IsValidTarget() && m.CountEnemiesInRange(700) > 1).Sum(minion => (minion.Health * 0.30f) + minion.Armor + minion.SpellBlock + minion.TotalMagicalDamage + minion.TotalAttackDamage);
-            allyteamTotal += EntityManager.MinionsAndMonsters.AlliedMinions.Where(m => !m.IsDead && m.Health > 0 && m.IsValidTarget() && m.CountAlliesInRange(700) > 1).Sum(minion => (minion.Health * 0.30f) + minion.Armor + minion.SpellBlock + minion.TotalMagicalDamage + minion.TotalAttackDamage);
-            
-            enemyteamTotal +=
-                EntityManager.Heroes.Enemies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, SafeValue))
-                    .Sum(enemy => (enemy.Health + (enemy.Mana * 0.25f) + enemy.Armor + enemy.SpellBlock + enemy.TotalMagicalDamage + enemy.TotalAttackDamage) * (enemy.Distance(Player.Instance) * 0.001f));
-            allyteamTotal +=
-                EntityManager.Heroes.Allies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, SafeValue))
-                    .Sum(ally => (ally.Health + (ally.Mana * 0.25f) + ally.Armor + ally.SpellBlock + ally.TotalMagicalDamage + ally.TotalAttackDamage) * (ally.Distance(Player.Instance) * 0.001f));
-            
-            enemyteamTotal += TeamDamage(Position, true);
-            allyteamTotal += TeamDamage(Position);
-            
-            return Enemy ? enemyteamTotal : allyteamTotal;
+                enemyteamTotal += EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => !m.IsDead && m.Health > 0 && m.IsValidTarget() && m.CountEnemiesInRange(700) > 1).Sum(minion => (minion.Health * 0.30f) + minion.Armor + minion.SpellBlock + minion.TotalMagicalDamage + minion.TotalAttackDamage);
+                allyteamTotal += EntityManager.MinionsAndMonsters.AlliedMinions.Where(m => !m.IsDead && m.Health > 0 && m.IsValidTarget() && m.CountAlliesInRange(700) > 1).Sum(minion => (minion.Health * 0.30f) + minion.Armor + minion.SpellBlock + minion.TotalMagicalDamage + minion.TotalAttackDamage);
+
+                enemyteamTotal +=
+                    EntityManager.Heroes.Enemies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, SafeValue))
+                        .Sum(enemy => enemy.Health + (enemy.Mana * 0.25f) + enemy.Armor + enemy.SpellBlock + enemy.TotalMagicalDamage + enemy.TotalAttackDamage + enemy.GetAutoAttackDamage(Player.Instance, true));
+                allyteamTotal +=
+                    EntityManager.Heroes.Allies.Where(e => !e.IsDead && e.IsValidTarget() && !e.IsMe && e.IsInRange(Position, SafeValue))
+                        .Sum(ally => ally.Health + (ally.Mana * 0.25f) + ally.Armor + ally.SpellBlock + ally.TotalMagicalDamage + ally.TotalAttackDamage + ally.GetAutoAttackDamage(Player.Instance, true));
+                allyteamTotal += Player.Instance.Health + (Player.Instance.Mana * 0.25f) + Player.Instance.Armor + Player.Instance.SpellBlock
+                    + Player.Instance.TotalMagicalDamage + Player.Instance.TotalAttackDamage + Player.Instance.GetAutoAttackDamage(Player.Instance, true);
+
+                enemyteamTotal += TeamDamage(Position, true);
+                allyteamTotal += TeamDamage(Position);
+
+                EnemyTeamTotal += enemyteamTotal;
+                AllyTeamTotal += allyteamTotal;
+                lastTeamTotalupdate = Core.GameTickCount;
+            }
+            return Enemy ? EnemyTeamTotal : AllyTeamTotal;
         }
 
         /// <summary>
@@ -77,11 +98,12 @@ namespace AramBuddy.MainCore.Utility
                     {
                         EnemyTeamDamage += enemy.GetSpellDamage(Player.Instance, slot);
                     }
-                    foreach (var ally in EntityManager.Heroes.Allies.Where(e => !e.IsDead && e.IsValidTarget() && e.IsInRange(Position, SafeValue)
+                    foreach (var ally in EntityManager.Heroes.Allies.Where(e => !e.IsDead && e.IsValidTarget() && !e.IsMe && e.IsInRange(Position, SafeValue)
                     && e.Spellbook.GetSpell(slot).IsLearned && e.Spellbook.GetSpell(slot).SData.Mana < e.Mana))
                     {
                         AllyTeamDamage += ally.GetSpellDamage(Player.Instance, slot);
                     }
+                    AllyTeamDamage += Player.Instance.GetSpellDamage(Player.Instance, slot);
                 }
                 lastupdate = Core.GameTickCount;
             }
@@ -334,7 +356,7 @@ namespace AramBuddy.MainCore.Utility
         /// </summary>
         public static bool IsAttackPlayer(this Obj_AI_Base target)
         {
-            return AutoAttacks.FirstOrDefault(a => a.Attacker.NetworkId.Equals(target.NetworkId) && 300 + (a.Attacker.AttackCastDelay * 1000) + (a.Attacker.AttackDelay * 1000) > Core.GameTickCount - a.LastAttackSent) != null;
+            return AutoAttacks.FirstOrDefault(a => a.Attacker.NetworkId.Equals(target.NetworkId) && 500 + (a.Attacker.AttackCastDelay * 1000) + (a.Attacker.AttackDelay * 1000) > Core.GameTickCount - a.LastAttackSent) != null;
         }
 
         /// <summary>

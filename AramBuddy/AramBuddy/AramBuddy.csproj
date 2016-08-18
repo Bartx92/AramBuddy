@@ -71,6 +71,7 @@
     <Compile Include="Plugins\Champions\Ahri\Ahri.cs" />
     <Compile Include="Plugins\Champions\Akali\Akali.cs" />
     <Compile Include="Plugins\Champions\Alistar\Alistar.cs" />
+    <Compile Include="Plugins\Champions\Amumu\Amumu.cs" />
     <Compile Include="Plugins\Champions\Ashe\Ashe.cs" />
     <Compile Include="Plugins\Champions\Azir\Azir.cs" />
     <Compile Include="Plugins\Champions\Base.cs" />

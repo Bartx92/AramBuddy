@@ -58,11 +58,6 @@ namespace AramBuddy
 
                 Chat.OnInput += delegate (ChatInputEventArgs msg)
                 {
-                    if (msg.Input.Equals("addcount", StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        Chat.Print(EntityManager.Heroes.AllHeroes.Count(a => a.Added()));
-                        msg.Process = false;
-                    }
                     if (msg.Input.Equals("Load Custom", StringComparison.CurrentCultureIgnoreCase) && !CustomChamp)
                     {
                         var Instance = (Base)Activator.CreateInstance(null, "AramBuddy.Plugins.Champions." + Player.Instance.Hero + "." + Player.Instance.Hero).Unwrap();
@@ -179,16 +174,23 @@ namespace AramBuddy
             try
             {
                 if (!EnableDebug) return;
+                var AllyTeamTotal = " | AllyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.PredictPosition());
+                var EnemyTeamTotal = " | EnemyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.PredictPosition(), true);
+                var MoveTo = " | MoveTo: " + Moveto;
+                var ActiveMode = " | ActiveMode: " + Orbwalker.ActiveModesFlags;
+                var Alone = " | Alone: " + Brain.Alone();
+                var AttackObject = " | AttackObject: " + ModesManager.AttackObject;
+                var LastTurretAttack = " | LastTurretAttack: " + (Core.GameTickCount - Brain.LastTurretAttack);
+                var SafeToDive = " | SafeToDive: " + Misc.SafeToDive;
+                var LastTeamFight = " | LastTeamFight: " + (int)(Core.GameTickCount - Pathing.LastTeamFight);
+                var MovementCommands = " | Movement Commands Issued: " + MoveToCommands;
 
-                Drawing.DrawText(
-                    Drawing.Width * 0.01f,
-                    Drawing.Height * 0.025f,
-                    System.Drawing.Color.White,
-                    "AllyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.PredictPosition()) + " | EnemyTeamTotal: " + (int)Misc.TeamTotal(Player.Instance.PredictPosition(), true) + " | MoveTo: "
-                    + Moveto + " | ActiveMode: " + Orbwalker.ActiveModesFlags + " | Alone: " + Brain.Alone() + " | AttackObject: " + ModesManager.AttackObject + " | LastTurretAttack: "
-                    + (Core.GameTickCount - Brain.LastTurretAttack) + " | SafeToDive: " + Misc.SafeToDive + " | LastTeamFight: " + (int)(Core.GameTickCount - Pathing.LastTeamFight));
+                Drawing.DrawText(Drawing.Width * 0.01f, Drawing.Height * 0.025f, System.Drawing.Color.White, AllyTeamTotal + EnemyTeamTotal);
 
-                Drawing.DrawText(Drawing.Width * 0.01f, Drawing.Height * 0.050f, System.Drawing.Color.White, "Movement Commands Issued: " + MoveToCommands);
+                Drawing.DrawText(Drawing.Width * 0.01f, Drawing.Height * 0.04f, System.Drawing.Color.White, ActiveMode + Alone + AttackObject + SafeToDive);
+                Drawing.DrawText(Drawing.Width * 0.01f, Drawing.Height * 0.055f, System.Drawing.Color.White, LastTurretAttack + LastTeamFight);
+
+                Drawing.DrawText(Drawing.Width * 0.01f, Drawing.Height * 0.07f, System.Drawing.Color.White, MovementCommands + MoveTo);
 
                 Drawing.DrawText(
                     Game.CursorPos.WorldToScreen().X + 50,

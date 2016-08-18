@@ -64,11 +64,12 @@ namespace AramBuddy.MainCore
             // Picks best position for the bot.
             if (Core.GameTickCount - LastUpdate > 75)
             {
+                /*
                 foreach (var hero in EntityManager.Heroes.AllHeroes.Where(a => a != null && a.IsValidTarget() && !a.Added() && ObjectsManager.HealthRelics.Any(hr => a.Path.LastOrDefault().Distance(hr.Position) <= 1)))
                 {
                     hero.Add();
                     Logger.Send("Added: " + hero.BaseSkinName + " - " + hero.NetworkId, Logger.LogLevel.Warn);
-                }
+                }*/
 
                 Pathing.BestPosition();
                 LastUpdate = Core.GameTickCount;

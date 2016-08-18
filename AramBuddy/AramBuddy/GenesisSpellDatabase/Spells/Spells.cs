@@ -1605,6 +1605,7 @@ namespace GenesisSpellLibrary.Spells
             this.Q = new Spell.Skillshot(SpellSlot.Q, 1150, SkillShotType.Linear, 250, 1000, 70) { AllowedCollisionCount = int.MaxValue };
             this.W = new Spell.Skillshot(SpellSlot.W, 700, SkillShotType.Circular);
             this.E = new Spell.Targeted(SpellSlot.E, 325);
+            this.R = null;
             this.QDontWaste = true;
             this.EisSaver = true;
         }

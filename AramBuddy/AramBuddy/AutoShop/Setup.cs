@@ -210,6 +210,7 @@ namespace AramBuddy.AutoShop
             // Delete the index file if it exists
             if (File.Exists(TempFile))
             {
+                Buy.CanShop = false;
                 File.Delete(TempFile);
             }
         }
